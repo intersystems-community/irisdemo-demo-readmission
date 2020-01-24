@@ -1,0 +1,93 @@
+ROUTINE TestPMML
+
+	Try
+	{
+		Set tSC = $System.Status.OK()
+
+		Set pModel = ##class(IRISDemo.ImportedModel.RandomForest.MiningModel).%New()
+		set tInput("Comorbidities_CEREBROVASCULAR_DISEASE") = 1
+		set tInput("Comorbidities_CHRONIC_PULMONARY_DISEASE") = 0
+		set tInput("Comorbidities_CONGESTIVE_HEART_FAILURE") = 0
+		set tInput("Comorbidities_DIABETES_WITHOUT_CHRONIC_COMPLICATION") = 0
+		set tInput("Comorbidities_HEMIPLEGIA_OR_PARAPLEGIA") = 0
+		set tInput("Comorbidities_METASTATIC_SOLID_TUMOR") = 0
+		set tInput("Comorbidities_MILD_LIVER_DISEASE") = 0
+		set tInput("Comorbidities_MYOCARDIAL_INFARCTION") = 0
+		set tInput("Comorbidities_PERIPHERY_VASCULAR_DISEASE") = 0
+		set tInput("CurrentComorbidities_CHRONIC_PULMONARY_DISEASE") = 0
+		set tInput("CurrentComorbidities_CONGESTIVE_HEART_FAILURE") = 0
+		set tInput("CurrentComorbidities_METASTATIC_SOLID_TUMOR") = 0
+		set tInput("CurrentComorbidities_MYOCARDIAL_INFARCTION") = 0
+		set tInput("CurrentComorbidities_PERIPHERY_VASCULAR_DISEASE") = 0
+		set tInput("DxAdmissionSource") = 5
+		set tInput("DxAgeGroup") = 5
+		set tInput("DxEncounterType") = 3
+		set tInput("DxEndDateDayOfMonth") = 10
+		set tInput("DxEndDateDayOfWeek") = 7
+		set tInput("DxEndDateMonth") = 13
+		set tInput("DxEndDateYear") = 6
+		set tInput("DxGenderViaPatient") = 1
+		set tInput("DxStartDateDayOfMonth") = 6
+		set tInput("DxStartDateDayOfWeek") = 2
+		set tInput("DxStartDateMonth") = 6
+		set tInput("DxStartDateYear") = 5
+		set tInput("MxAgeDischarged") = 46 //continuous
+		set tInput("MxAlcohol") = 0
+		set tInput("MxDrugs") = 0
+		set tInput("MxExSmoker") = 0
+		set tInput("MxIsReAdmit") = 0
+		set tInput("MxLOS") = 2 //continuous
+		set tInput("MxNeverSmoked") = 1
+		set tInput("MxSmoker") = 0
+
+
+ //		set tInput("Comorbidities_CEREBROVASCULAR_DISEASE") = 1.0
+ //		set tInput("Comorbidities_CHRONIC_PULMONARY_DISEASE") = 0.0
+ //		set tInput("Comorbidities_CONGESTIVE_HEART_FAILURE") = 0.0
+ //		set tInput("Comorbidities_DIABETES_WITHOUT_CHRONIC_COMPLICATION") = 0.0
+ //		set tInput("Comorbidities_HEMIPLEGIA_OR_PARAPLEGIA") = 0.0
+ //		set tInput("Comorbidities_METASTATIC_SOLID_TUMOR") = 0.0
+ //		set tInput("Comorbidities_MILD_LIVER_DISEASE") = 0.0
+ //		set tInput("Comorbidities_MYOCARDIAL_INFARCTION") = 0.0
+ //		set tInput("Comorbidities_PERIPHERY_VASCULAR_DISEASE") = 0.0
+ //		set tInput("CurrentComorbidities_CHRONIC_PULMONARY_DISEASE") = 0.0
+ //		set tInput("CurrentComorbidities_CONGESTIVE_HEART_FAILURE") = 0.0
+ //		set tInput("CurrentComorbidities_METASTATIC_SOLID_TUMOR") = 0.0
+ //		set tInput("CurrentComorbidities_MYOCARDIAL_INFARCTION") = 0.0
+ //		set tInput("CurrentComorbidities_PERIPHERY_VASCULAR_DISEASE") = 0.0
+ //		set tInput("DxAdmissionSource") = 6.0
+ //		set tInput("DxAgeGroup") = 2.0
+ //		set tInput("DxEncounterType") = 2.0
+ //		set tInput("DxEndDateDayOfMonth") = 2.0
+ //		set tInput("DxEndDateDayOfWeek") = 2.0
+ //		set tInput("DxEndDateMonth") = 2.0
+ //		set tInput("DxEndDateYear") = 2.0
+ //		set tInput("DxGenderViaPatient") = 1.0
+ //		set tInput("DxStartDateDayOfMonth") = 3.0
+ //		set tInput("DxStartDateDayOfWeek") = 1.0
+ //		set tInput("DxStartDateMonth") = 9.0
+ //		set tInput("DxStartDateYear") = 2.0
+ //		set tInput("MxAgeDischarged") = 0 //continuous
+ //		set tInput("MxAlcohol") = 0.0
+ //		set tInput("MxDrugs") = 0.0
+ //		set tInput("MxExSmoker") = 0.0
+ //		set tInput("MxIsReAdmit") = 0.0
+ //		set tInput("MxLOS") = 1 //continuous
+ //		set tInput("MxNeverSmoked") = 1.0
+ //		set tInput("MxSmoker") = 0.0
+ //
+
+		//Set tInput("MxWillReAdmit")=0	// what I am trying to predict! But the PMML wants it too! Go figure...
+		
+		// Now, let's execute the model...
+		Set tSC = pModel.%ExecuteModel(.tInput, .pModelDataOutput)
+		Quit:$System.Status.IsError(tSC)
+		
+		ZWrite pModelDataOutput
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	Do $System.Status.DisplayError(tSC)

@@ -1,0 +1,13 @@
+ROUTINE ExportCubeGlobals
+	Set tSC=1
+	Try
+	{	
+		Set requiredGbls = "PublishedABT.GBL, DeepSee.Fact.GBL, DeepSee.FactRelation.GBL, DeepSee.Index.GBL, DeepSee.Cubes.GBL, DeepSee.Dimension.GBL, DeepSee.DimensionI.GBL, PublishedABT.*"
+		Do $System.OBJ.Export(requiredGbls, "/common_shared/CubeGbls.xml")
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	Do $System.Status.DisplayError(tSC)

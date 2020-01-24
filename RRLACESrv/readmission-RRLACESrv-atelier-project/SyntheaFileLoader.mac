@@ -1,0 +1,17 @@
+ROUTINE SyntheaFileLoader
+#include %occInclude
+
+	Set statement=##class(%SQL.Statement).%New()
+	Set status=statement.%PrepareClassQuery("%Library.File", "FileSet")
+	
+	If $$$ISERR(status){ 
+		Do $system.OBJ.DisplayError(status) 
+	}
+	
+	Set resultset=statement.%Execute("/data/fhir/", "*json")
+	
+	While resultset.%Next() {
+		Write !, resultset.%Get("Name")
+		Do ##class(IRISDemo.DataLake.Utils).LoadSyntheaFile(resultset.%Get("Name"))
+		Write !!, "-------------------------------FINISHED LOADING FILE-----------------------------"
+	}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="UTF-8">
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="pragma" content="no-cache" />
+
+		<title>Machine Learning Workflow</title>
+		
+	</head>
+	
+	<body onload="javascript:on_load();">
+	
+		
+		<center>
+			<img src="MLWorkflow.png" id="img">
+		</center>
+			
+		<script language="javascript">
+			var img = document.getElementById('img');
+			
+			img.style.width="90%";
+		</script>
+		
+			
+	</body>
+</html>

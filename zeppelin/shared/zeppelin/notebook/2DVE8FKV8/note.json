@@ -1,0 +1,301 @@
+{
+  "paragraphs": [
+    {
+      "text": "%md \n\nRun each notebook one by one so you can jump to IRIS and the Spark App Screens and evaluate the results accordingly to suggestions on notes below.",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:03:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": false,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eRun each notebook one by one so you can jump to IRIS and the Spark App Screens and evaluate the results accordingly to suggestions on notes below.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541526049555_-535302531",
+      "id": "20181106-174049_2065684581",
+      "dateCreated": "Nov 6, 2018 5:40:49 PM",
+      "dateStarted": "Nov 6, 2018 5:41:35 PM",
+      "dateFinished": "Nov 6, 2018 5:41:35 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import com.intersystems.spark._\n\nval df \u003d spark.read.iris(\"IRISDemo.BC_TRANSACTIONS\").selectExpr(\"count(ID)\")\n\ndf.explain()\n\ndf.show()",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:27:38 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import com.intersystems.spark._\ndf: org.apache.spark.sql.DataFrame \u003d [count(ID): bigint]\n\u003d\u003d Physical Plan \u003d\u003d\n*HashAggregate(keys\u003d[], functions\u003d[count(1)])\n+- Exchange SinglePartition\n   +- *HashAggregate(keys\u003d[], functions\u003d[partial_count(1)])\n      +- *Scan Relation(SELECT * FROM (IRISDemo.BC_TRANSACTIONS)) [] ReadSchema: struct\u003c\u003e\n+---------+\n|count(ID)|\n+---------+\n|   500000|\n+---------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541200588662_-53249277",
+      "id": "20181102-231628_1693682927",
+      "dateCreated": "Nov 2, 2018 11:16:28 PM",
+      "dateStarted": "Nov 6, 2018 7:27:38 PM",
+      "dateFinished": "Nov 6, 2018 7:28:15 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nYou will notice that:\n\n 1. No predicate push down is happeing. The explain() shows that it is spark that is doing the count(), not IRIS. You will notice with the JDBC example below when predicate push down really happens. The plan is much simpler.\n 2. A single worker is being used. I reached this conclusion because of three things:\n    * Because of *Exchange SinglePartition* on the plan\n    * Because as you will see bellow, IRIS doesn\u0027t appear to receive a query that filters by ID (suggesting that each worker would be reading a portion of the table)\n    * Because if you look at the [Spark Executors Page](http://localhost:4141/executors/) you will see that only one of the workers (worker 0) has *Task Time* (of 7 seconds in my machine)\n    * If you look at the [Query Details](http://localhost:4141/SQL/execution/?id\u003d0), you will notice that the dataframe has not been partitioned at all. It is a big 500K. After the count is done, one row containing the final count is exchanged with the driver. \n\nWe can now jump to the [IRIS Data Source](http://localhost:9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE\u003dAPP\u0026$NAMESPACE\u003dAPP). \nThe APP namespace starts already with 8 Cached Queries. You can ignore them.\n\nAfter running the code above, two new cached queries are generated: \n\n**%sqlcq.APP.cls9**\n\n```\nSELECT * FROM ( SELECT * FROM ( IRISDemo . BC_TRANSACTIONS ) ) WHERE ? \u003d ? \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"PP\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\nTable *IRISDemo.BC_TRANSACTIONS* has default storage and has a standard ID a IdKey. Anton suggested that this query is used to fetch meta data and the two parameters ?\u003d? are sent as 1\u003d0 so that no records are actually returned, only metadata from the table.\n\n**%sqlcq.APP.cls10**\n\n```\nSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"DQ\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\nThis looks like the query it uses to fetch all the IDs so it can apply the COUNT on them on the spark cluster.\n\n**Final Comment**\n\nOn the Spark Plan, you will notice that it issues a SELECT * instead of a SELECT ID. As the cached query on the server \nis cached with a ? I am not sure if we are receiving a * or an ID. It looks like Spark is sending a * what relly adds more \nunncessary latency to the mix.",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:03:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eYou will notice that:\u003c/p\u003e\n\u003col\u003e\n  \u003cli\u003eNo predicate push down is happeing. The explain() shows that it is spark that is doing the count(), not IRIS. You will notice with the JDBC example below when predicate push down really happens. The plan is much simpler.\u003c/li\u003e\n  \u003cli\u003eA single worker is being used. I reached this conclusion because of three things:\n    \u003cul\u003e\n      \u003cli\u003eBecause of \u003cem\u003eExchange SinglePartition\u003c/em\u003e on the plan\u003c/li\u003e\n      \u003cli\u003eBecause as you will see bellow, IRIS doesn\u0026rsquo;t appear to receive a query that filters by ID (suggesting that each worker would be reading a portion of the table)\u003c/li\u003e\n      \u003cli\u003eBecause if you look at the \u003ca href\u003d\"http://localhost:4141/executors/\"\u003eSpark Executors Page\u003c/a\u003e you will see that only one of the workers (worker 0) has \u003cem\u003eTask Time\u003c/em\u003e (of 7 seconds in my machine)\u003c/li\u003e\n      \u003cli\u003eIf you look at the \u003ca href\u003d\"http://localhost:4141/SQL/execution/?id\u003d0\"\u003eQuery Details\u003c/a\u003e, you will notice that the dataframe has not been partitioned at all. It is a big 500K. After the count is done, one row containing the final count is exchanged with the driver.\u003c/li\u003e\n    \u003c/ul\u003e\n  \u003c/li\u003e\n\u003c/ol\u003e\n\u003cp\u003eWe can now jump to the \u003ca href\u003d\"http://localhost:9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE\u003dAPP\u0026$NAMESPACE\u003dAPP\"\u003eIRIS Data Source\u003c/a\u003e.\u003cbr/\u003eThe APP namespace starts already with 8 Cached Queries. You can ignore them.\u003c/p\u003e\n\u003cp\u003eAfter running the code above, two new cached queries are generated: \u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls9\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT * FROM ( SELECT * FROM ( IRISDemo . BC_TRANSACTIONS ) ) WHERE ? \u003d ? \n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;PP\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eTable \u003cem\u003eIRISDemo.BC_TRANSACTIONS\u003c/em\u003e has default storage and has a standard ID a IdKey. Anton suggested that this query is used to fetch meta data and the two parameters ?\u003d? are sent as 1\u003d0 so that no records are actually returned, only metadata from the table.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls10\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) \n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;DQ\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThis looks like the query it uses to fetch all the IDs so it can apply the COUNT on them on the spark cluster.\u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003eFinal Comment\u003c/strong\u003e\u003c/p\u003e\n\u003cp\u003eOn the Spark Plan, you will notice that it issues a SELECT * instead of a SELECT ID. As the cached query on the server\u003cbr/\u003eis cached with a ? I am not sure if we are receiving a * or an ID. It looks like Spark is sending a * what relly adds more\u003cbr/\u003eunncessary latency to the mix.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541525375831_1480664046",
+      "id": "20181106-172935_1070250096",
+      "dateCreated": "Nov 6, 2018 5:29:35 PM",
+      "dateStarted": "Nov 6, 2018 7:03:46 PM",
+      "dateFinished": "Nov 6, 2018 7:03:48 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val df \u003d spark.read\n    .option(\"numPartitions\", 20)\n    .option(\"lowerBound\",1)\n    .option(\"upperBound\",500000)\n    .option(\"partitionColumn\",\"ID\")\n    .iris(\"IRISDemo.BC_TRANSACTIONS\")\n    .selectExpr(\"count(ID)\")\n    \ndf.explain()\n\ndf.show()",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:03:46 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df: org.apache.spark.sql.DataFrame \u003d [count(ID): bigint]\n\u003d\u003d Physical Plan \u003d\u003d\n*HashAggregate(keys\u003d[], functions\u003d[count(1)])\n+- Exchange SinglePartition\n   +- *HashAggregate(keys\u003d[], functions\u003d[partial_count(1)])\n      +- *Scan Relation(SELECT * FROM (IRISDemo.BC_TRANSACTIONS)) [] ReadSchema: struct\u003c\u003e\n+---------+\n|count(ID)|\n+---------+\n|   500000|\n+---------+\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541200601129_1953246885",
+      "id": "20181102-231641_604431121",
+      "dateCreated": "Nov 2, 2018 11:16:41 PM",
+      "dateStarted": "Nov 6, 2018 7:03:49 PM",
+      "dateFinished": "Nov 6, 2018 7:04:27 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nAgain:\n1. No predicate push down is happening.\n2. A single worker is being used\n3. But if you look at the [Spark Query Plan](http://localhost:4141/SQL/execution/?id\u003d1), you will see that it didn\u0027t ignore the option()s I have passed. On that single worker, we have the table split into 20 partitions. But we are still not using the full cluster.\n\nYou can further confirm that the dataframe is being worked on a single worker by caching it:\n```\nval df \u003d spark.read\n    .option(\"numPartitions\", 20)\n    .option(\"lowerBound\",1)\n    .option(\"upperBound\",500000)\n    .option(\"partitionColumn\",\"ID\")\n    .iris(\"IRISDemo.BC_TRANSACTIONS\")\n    .selectExpr(\"count(ID)\").cache()    //Add .cache() to the end of the line\n```\n\nand then looking at the [Spark Storage](http://localhost:4141/storage/) page. There will be able to see how each partition is distributed between all the workers. I am not doing this here because it will impact the next tests.\n\nAnyway, at least now it is partitioning the data. We can now jump to the [IRIS Data Source](http://localhost:9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE\u003dAPP\u0026$NAMESPACE\u003dAPP). \n\nAfter running the code above, three new cached queries are generated: \n\n**%sqlcq.APP.cls11**\n\n```\nSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) WHERE ( ( ID \u003e\u003d ? ) \u0026 ( ID \u003c ? ) )\n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"DQ\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\n**%sqlcq.APP.cls12**\n\n```\nSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) WHERE ( ID \u003e\u003d ? ) \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"DQ\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\n**%sqlcq.APP.cls13**\n\n```\nSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) WHERE ( ( ID \u003c ? ) ! ( ID IS NULL ) ) \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"DQ\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\nAll these queries are used to fetch the partitions. Cool! It is a shame that this is not being done by different Spark Workers though.\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:03:49 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown",
+        "editorHide": true,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eAgain:\u003cbr/\u003e1. No predicate push down is happening.\u003cbr/\u003e2. A single worker is being used\u003cbr/\u003e3. But if you look at the \u003ca href\u003d\"http://localhost:4141/SQL/execution/?id\u003d1\"\u003eSpark Query Plan\u003c/a\u003e, you will see that it didn\u0026rsquo;t ignore the option()s I have passed. On that single worker, we have the table split into 20 partitions. But we are still not using the full cluster.\u003c/p\u003e\n\u003cp\u003eYou can further confirm that the dataframe is being worked on a single worker by caching it:\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eval df \u003d spark.read\n    .option(\u0026quot;numPartitions\u0026quot;, 20)\n    .option(\u0026quot;lowerBound\u0026quot;,1)\n    .option(\u0026quot;upperBound\u0026quot;,500000)\n    .option(\u0026quot;partitionColumn\u0026quot;,\u0026quot;ID\u0026quot;)\n    .iris(\u0026quot;IRISDemo.BC_TRANSACTIONS\u0026quot;)\n    .selectExpr(\u0026quot;count(ID)\u0026quot;).cache()    //Add .cache() to the end of the line\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eand then looking at the \u003ca href\u003d\"http://localhost:4141/storage/\"\u003eSpark Storage\u003c/a\u003e page. There will be able to see how each partition is distributed between all the workers. I am not doing this here because it will impact the next tests.\u003c/p\u003e\n\u003cp\u003eAnyway, at least now it is partitioning the data. We can now jump to the \u003ca href\u003d\"http://localhost:9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE\u003dAPP\u0026$NAMESPACE\u003dAPP\"\u003eIRIS Data Source\u003c/a\u003e. \u003c/p\u003e\n\u003cp\u003eAfter running the code above, three new cached queries are generated: \u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls11\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) WHERE ( ( ID \u0026gt;\u003d ? ) \u0026amp; ( ID \u0026lt; ? ) )\n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;DQ\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls12\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) WHERE ( ID \u0026gt;\u003d ? ) \n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;DQ\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls13\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT ? FROM ( IRISDemo . BC_TRANSACTIONS ) WHERE ( ( ID \u0026lt; ? ) ! ( ID IS NULL ) ) \n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;DQ\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eAll these queries are used to fetch the partitions. Cool! It is a shame that this is not being done by different Spark Workers though.\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541527270105_-546677552",
+      "id": "20181106-180110_1514122473",
+      "dateCreated": "Nov 6, 2018 6:01:10 PM",
+      "dateStarted": "Nov 6, 2018 7:03:49 PM",
+      "dateFinished": "Nov 6, 2018 7:03:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "var df \u003d spark.read\n    .format(\"jdbc\")\n    .option(\"driver\",\"com.intersystems.jdbc.IRISDriver\")\n    .option(\"url\",\"jdbc:IRIS://datalake:51773/APP\")\n    .option(\"user\",\"SuperUser\")\n    .option(\"password\",\"sys\")\n    .option(\"numPartitions\", 20)\n    .option(\"lowerBound\",1)\n    .option(\"upperBound\",500000)\n    .option(\"partitionColumn\",\"ID\")\n    .option(\"dbtable\",\"IRISDemo.BC_TRANSACTIONS\")\n    .load()\n    \ndf.explain()\n\ndf.show()\n\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:19:36 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala"
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "df: org.apache.spark.sql.DataFrame \u003d [ID: bigint, BC_TRANS_AMOUNT: double ... 11 more fields]\n\u003d\u003d Physical Plan \u003d\u003d\n*Scan JDBCRelation(IRISDemo.BC_TRANSACTIONS) [numPartitions\u003d20] [ID#178L,BC_TRANS_AMOUNT#179,BC_TRANS_SRC_ACC#180L,BC_TRANS_SRC_ACC_NEW_BAL#181,BC_TRANS_SRC_ACC_OLD_BAL#182,BC_TRANS_IS_FRAUD#183,BC_TRANS_DEST_ACC#184L,BC_TRANS_DEST_ACC_NEW_BAL#185,BC_TRANS_DEST_ACC_OLD_BAL#186,BC_TRANS_DATE#187,BC_TRANS_TYPE#188,BC_TRANS_NUM#189,BC_TRANS_WHITELISTED_BY#190L] ReadSchema: struct\u003cID:bigint,BC_TRANS_AMOUNT:double,BC_TRANS_SRC_ACC:bigint,BC_TRANS_SRC_ACC_NEW_BAL:double,B...\n+---+---------------+----------------+------------------------+------------------------+-----------------+-----------------+-------------------------+-------------------------+--------------------+-------------+------------+-----------------------+\n| ID|BC_TRANS_AMOUNT|BC_TRANS_SRC_ACC|BC_TRANS_SRC_ACC_NEW_BAL|BC_TRANS_SRC_ACC_OLD_BAL|BC_TRANS_IS_FRAUD|BC_TRANS_DEST_ACC|BC_TRANS_DEST_ACC_NEW_BAL|BC_TRANS_DEST_ACC_OLD_BAL|       BC_TRANS_DATE|BC_TRANS_TYPE|BC_TRANS_NUM|BC_TRANS_WHITELISTED_BY|\n+---+---------------+----------------+------------------------+------------------------+-----------------+-----------------+-------------------------+-------------------------+--------------------+-------------+------------+-----------------------+\n|  1|           4.55|               1|                 5995.45|                  6000.0|            false|                2|                 -5995.45|                  -6000.0|2018-01-01 00:00:...|      PAYMENT|           1|                   null|\n|  2|          39.68|               3|                 5960.32|                  6000.0|            false|                2|      -5955.7699999999995|                 -5995.45|2018-01-01 00:00:...|      PAYMENT|           2|                   null|\n|  3|          26.89|               5|                 5973.11|                  6000.0|            false|                4|                 -5973.11|                  -6000.0|2018-01-01 00:00:...|      PAYMENT|           3|                   null|\n|  4|          17.25|               6|                 5982.75|                  6000.0|            false|                2|      -5938.5199999999995|      -5955.7699999999995|2018-01-01 00:00:...|      PAYMENT|           4|                   null|\n|  5|          35.72|               7|                 5964.28|                  6000.0|            false|                2|       -5902.799999999999|      -5938.5199999999995|2018-01-01 00:00:...|      PAYMENT|           5|                   null|\n|  6|          25.81|               8|                 5974.19|                  6000.0|            false|                2|       -5876.989999999999|       -5902.799999999999|2018-01-01 00:00:...|      PAYMENT|           6|                   null|\n|  7|            9.1|               9|                  5990.9|                  6000.0|            false|                2|      -5867.8899999999985|       -5876.989999999999|2018-01-01 00:00:...|      PAYMENT|           7|                   null|\n|  8|          21.17|              10|                 5978.83|                  6000.0|            false|                2|       -5846.719999999998|      -5867.8899999999985|2018-01-01 00:00:...|      PAYMENT|           8|                   null|\n|  9|           32.4|              11|                  5967.6|                  6000.0|            false|                2|       -5814.319999999999|       -5846.719999999998|2018-01-01 00:00:...|      PAYMENT|           9|                   null|\n| 10|           35.4|              12|                  5964.6|                  6000.0|            false|                2|       -5778.919999999999|       -5814.319999999999|2018-01-01 00:00:...|      PAYMENT|          10|                   null|\n| 11|          14.95|              13|                 5985.05|                  6000.0|            false|                2|       -5763.969999999999|       -5778.919999999999|2018-01-01 00:00:...|      PAYMENT|          11|                   null|\n| 12|           1.51|              14|                 5998.49|                  6000.0|            false|                4|       -5971.599999999999|                 -5973.11|2018-01-01 00:00:...|      PAYMENT|          12|                   null|\n| 13|          68.79|              15|                 5931.21|                  6000.0|            false|               16|                 -5931.21|                  -6000.0|2018-01-01 00:00:...|      PAYMENT|          13|                   null|\n| 14|          20.32|              17|                 5979.68|                  6000.0|            false|                4|                 -5951.28|       -5971.599999999999|2018-01-01 00:00:...|      PAYMENT|          14|                   null|\n| 15|          13.56|              18|                 5986.44|                  6000.0|            false|                2|       -5750.409999999999|       -5763.969999999999|2018-01-01 00:00:...|      PAYMENT|          15|                   null|\n| 16|          30.19|              19|                 5969.81|                  6000.0|            false|                2|       -5720.219999999999|       -5750.409999999999|2018-01-01 00:00:...|      PAYMENT|          16|                   null|\n| 17|          17.54|              20|                 5982.46|                  6000.0|            false|                4|                 -5933.74|                 -5951.28|2018-01-01 00:00:...|      PAYMENT|          17|                   null|\n| 18|          40.69|              21|                 5959.31|                  6000.0|            false|                2|                 -5679.53|       -5720.219999999999|2018-01-01 00:00:...|      PAYMENT|          18|                   null|\n| 19|          21.21|              22|                 5978.79|                  6000.0|            false|                2|                 -5658.32|                 -5679.53|2018-01-01 00:00:...|      PAYMENT|          19|                   null|\n| 20|          10.09|              23|                 5989.91|                  6000.0|            false|                2|                 -5648.23|                 -5658.32|2018-01-01 00:00:...|      PAYMENT|          20|                   null|\n+---+---------------+----------------+------------------------+------------------------+-----------------+-----------------+-------------------------+-------------------------+--------------------+-------------+------------+-----------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541201131165_-1146354840",
+      "id": "20181102-232531_2074437157",
+      "dateCreated": "Nov 2, 2018 11:25:31 PM",
+      "dateStarted": "Nov 6, 2018 7:19:36 PM",
+      "dateFinished": "Nov 6, 2018 7:19:38 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n\nYes... JDBC... Now the Spark Plan is very different. It seems that no worker is working at all! That is probably because **Predicate Push Down** is finally working!\n\nYou can see the [Spark Query Plan](http://localhost:4141/SQL/execution/?id\u003d2) graphically too. It is simple because IRIS is doing all the work! Cool!\n\n We can now jump to the [IRIS Data Source](http://localhost:9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE\u003dAPP\u0026$NAMESPACE\u003dAPP). \n\nAfter running the code above, two new cached queries are generated: \n\n**%sqlcq.APP.cls14**\n\n```\nSELECT * FROM IRISDemo . BC_TRANSACTIONS WHERE ? \u003d ? \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"PP\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n\n```\n\n**%sqlcq.APP.cls15**\n\n```\nSELECT ? FROM IRISDemo . BC_TRANSACTIONS WHERE ID \u003e\u003d ? AND ID \u003c ? \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"PP\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\n**%sqlcq.APP.cls16**\n```\nSELECT ? FROM IRISDemo . BC_TRANSACTIONS WHERE ID \u003c ? or ID is null \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"PP\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\n**%sqlcq.APP.cls17**\n```\nSELECT ? FROM IRISDemo . BC_TRANSACTIONS WHERE ID \u003e\u003d ? \n/*#OPTIONS {\"xDBC\":1,\"xDBCFunction\":\"PP\",\"xDBCServerProtocol\":10,\"xDBCCompileMode\":1,\"xDBCfastSelectSupported\":1,\"xDBCIsoLevel\":0} */\n```\n\nThe first query is similar to query **%sqlcq.APP.cls9** above except for the fact that it is simpler. It is there just to gather metadata which is fine.\n\nThe following three queries are similar to queries 11, 12 and 13, but also simpler. With no parenthesis.\n\nAs there is full predicate pushdown going on, it made no sense for spark to use any worker at all and that is also fine. All the work is being done by IRIS.",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:08:52 PM",
+      "config": {
+        "colWidth": 12.0,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true
+        },
+        "editorMode": "ace/mode/markdown"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "\u003cdiv class\u003d\"markdown-body\"\u003e\n\u003cp\u003eYes\u0026hellip; JDBC\u0026hellip; Now the Spark Plan is very different. It seems that no worker is working at all! That is probably because \u003cstrong\u003ePredicate Push Down\u003c/strong\u003e is finally working!\u003c/p\u003e\n\u003cp\u003eYou can see the \u003ca href\u003d\"http://localhost:4141/SQL/execution/?id\u003d2\"\u003eSpark Query Plan\u003c/a\u003e graphically too. It is simple because IRIS is doing all the work! Cool!\u003c/p\u003e\n\u003cp\u003eWe can now jump to the \u003ca href\u003d\"http://localhost:9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE\u003dAPP\u0026$NAMESPACE\u003dAPP\"\u003eIRIS Data Source\u003c/a\u003e. \u003c/p\u003e\n\u003cp\u003eAfter running the code above, two new cached queries are generated: \u003c/p\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls14\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT * FROM IRISDemo . BC_TRANSACTIONS WHERE ? \u003d ? \n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;PP\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003cstrong\u003e%sqlcq.APP.cls15\u003c/strong\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003eSELECT \u0026quot;ID\u0026quot; , \u0026quot;BC_TRANS_AMOUNT\u0026quot; , \u0026quot;BC_TRANS_SRC_ACC\u0026quot; , \u0026quot;BC_TRANS_SRC_ACC_NEW_BAL\u0026quot; , \u0026quot;BC_TRANS_SRC_ACC_OLD_BAL\u0026quot; , \u0026quot;BC_TRANS_IS_FRAUD\u0026quot; , \u0026quot;BC_TRANS_DEST_ACC\u0026quot; , \u0026quot;BC_TRANS_DEST_ACC_NEW_BAL\u0026quot; , \u0026quot;BC_TRANS_DEST_ACC_OLD_BAL\u0026quot; , \u0026quot;BC_TRANS_DATE\u0026quot; , \u0026quot;BC_TRANS_TYPE\u0026quot; , \u0026quot;BC_TRANS_NUM\u0026quot; , \u0026quot;BC_TRANS_WHITELISTED_BY\u0026quot; FROM IRISDemo . BC_TRANSACTIONS WHERE ID \u0026lt; ? or ID is null \n/*#OPTIONS {\u0026quot;xDBC\u0026quot;:1,\u0026quot;xDBCFunction\u0026quot;:\u0026quot;PP\u0026quot;,\u0026quot;xDBCServerProtocol\u0026quot;:10,\u0026quot;xDBCCompileMode\u0026quot;:1,\u0026quot;xDBCfastSelectSupported\u0026quot;:1,\u0026quot;xDBCIsoLevel\u0026quot;:0} */\n\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003eThe first query is similar to query \u003cstrong\u003e%sqlcq.APP.cls9\u003c/strong\u003e above except for the fact that it is simpler. It is there just to gather metadata which is fine.\u003c/p\u003e\n\u003cp\u003eThe second query is\u003c/p\u003e\n\u003c/div\u003e"
+          }
+        ]
+      },
+      "apps": [],
+      "jobName": "paragraph_1541524582511_-584429441",
+      "id": "20181106-171622_741986755",
+      "dateCreated": "Nov 6, 2018 5:16:22 PM",
+      "dateStarted": "Nov 6, 2018 7:03:49 PM",
+      "dateFinished": "Nov 6, 2018 7:03:49 PM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%md\n",
+      "user": "anonymous",
+      "dateUpdated": "Nov 6, 2018 7:03:49 PM",
+      "config": {},
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "jobName": "paragraph_1541531029441_-1899910074",
+      "id": "20181106-190349_2101198000",
+      "dateCreated": "Nov 6, 2018 7:03:49 PM",
+      "status": "READY",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "Test",
+  "id": "2DVE8FKV8",
+  "angularObjects": {
+    "2DHWQ7A7V:shared_process": [],
+    "2DGTFGFBC:shared_process": [],
+    "2DHATZD9M:shared_process": [],
+    "2DKDARDPF:shared_process": [],
+    "2DG8A819A:shared_process": [],
+    "2DJVV28U3:shared_process": [],
+    "2DKCAA3TS:shared_process": [],
+    "2DHEPV9M3:shared_process": [],
+    "2DKW8P766:shared_process": [],
+    "2DGHX224C:shared_process": [],
+    "2DGRSNE7G:shared_process": [],
+    "2DGUG4SEP:shared_process": [],
+    "2DHM86BYR:shared_process": [],
+    "2DHYW1ZN6:shared_process": [],
+    "2DJ16C4UE:shared_process": [],
+    "2DJ4VH5DW:shared_process": [],
+    "2DJBEDGYM:shared_process": [],
+    "2DM19CFTF:shared_process": [],
+    "2DHHCF91E:shared_process": [],
+    "2DKCPR9P1:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}

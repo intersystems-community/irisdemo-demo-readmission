@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+		<meta charset="UTF-8">
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="pragma" content="no-cache" />
+
+		<title>IRIS for Health Readmission Risk Demo</title>
+		
+		<script language="javascript">
+		
+		var ip = window.location.hostname;
+		
+		/*
+		AMIR: Not required anymore now that we are using setTimeout()
+		var is_chrome = navigator.userAgent.indexOf('Chrome') > -1;
+		var is_explorer = navigator.userAgent.indexOf('MSIE') > -1;
+		var is_firefox = navigator.userAgent.indexOf('Firefox') > -1;
+		var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+		var is_opera = navigator.userAgent.toLowerCase().indexOf("op") > -1;
+		if ((is_chrome)&&(is_safari)) { is_safari = false; }
+		if ((is_chrome)&&(is_opera)) { is_chrome = false; }
+		
+		var TIMEOUT = 2000;
+		if (is_firefox == true) {
+			TIMEOUT = 0;
+		}
+
+		function sleep() {
+			var currentTime = new Date().getTime();
+			while (currentTime + TIMEOUT >= new Date().getTime()) {
+			}
+		}
+		*/
+		
+		function openWindows(allWindows)
+		{
+			var time=1000;
+			var callNumber=0
+			var timeout = function () { return ++callNumber*time };
+
+				//openSparkMaster();
+				
+				/*
+				A timeout between each opened tab is necessary for Safari.
+				Otherwise, Safari will simply open all windows on a single tab.
+				With the timeout, Safari will first block the popups. Once the user tells
+				safari that it should allow popups, the user should be able to try opening all
+				windows again and all the tabs will be opened, one every second, on a new tab.
+				*/
+				
+				setTimeout("openMLCube()", timeout());
+				
+				setTimeout("openWFInbox()", timeout());
+				
+				setTimeout("openHISUI()", timeout());
+				
+				setTimeout("openMessageTrace()", timeout());
+				
+				setTimeout("openIFHintBP()", timeout());
+				
+				setTimeout("openIFHintDTL()", timeout());
+				
+				setTimeout("openIFHintRoutingRule()", timeout());
+				
+				setTimeout("openIFHint()", timeout());
+				
+				if (allWindows)
+				{
+					setTimeout("openHSDBMessageTrace()", timeout());
+	
+					setTimeout("openHSDBPIDSubDTL()", timeout());
+					
+					setTimeout("openHSDBADTA03DTL()", timeout());
+					
+					setTimeout("openHSDBProduction()", timeout());
+				}			
+			}
+			
+		function openBuildingTheModelDemo()
+		{
+			var time=1000;
+			var callNumber=0
+			var timeout = function () { return ++callNumber*time };
+
+				// 16 - Integration - Workflow
+				//setTimeout("openWFInbox()", timeout());
+				
+				// 15 - Integration - Message Trace
+				//setTimeout("openMessageTrace()", timeout());
+				
+				// 14 - Integration - Business Process
+				//setTimeout("openIFHintBP()", timeout());
+				
+				// 13 - Integration - DTL
+				//setTimeout("openIFHintDTL()", timeout());
+				
+				// 12 - Integration - Routing Rule
+				//setTimeout("openIFHintRoutingRule()", timeout());
+				
+				// 11 - Integration - Production
+				//setTimeout("openIFHint()", timeout());
+				
+				// 10 - Demo Landing Page
+				//setTimeout("openDemoLandingPage()", timeout());
+
+				// 9 - EMR UI
+				//setTimeout("openHISUI()", timeout());
+				
+				// 8 - Data Lake - Production
+				setTimeout("openDataLakeProduction()", timeout());
+
+				// 7 - Zeppelin
+				setTimeout("openZeppelin()", timeout());
+				
+				// 6 - Data Lake - SQL
+				setTimeout("openDataLakeSQL()", timeout());
+				
+				// 5 - Data Lake - Architect
+				setTimeout("openMLCube()", timeout());
+				
+				// 4 - ML Workflow
+				//setTimeout("openMLWorkflow()", timeout());
+
+				// 3 - Demo Landing Page
+				//setTimeout("openDemoLandingPage()", timeout());
+
+				// 2 - Data Lake - Message Trace of ML Risk call
+				//setTimeout("openScoreMessageTrace()", timeout());
+				
+				// 1 - EMR UI
+				setTimeout("openHISUI()", timeout());
+						
+			}
+			
+			function window_open(url)
+			{
+				var winReference = window.open();
+				winReference.location = url;
+				winReference.parent.focus();
+			}
+			
+			function openMLWorkflow()
+			{
+				window_open('workflow.csp')
+			}
+
+			function openDemoLandingPage()
+			{
+				window_open('demo.csp')
+			}
+			
+			function openIFHintBP()
+			{
+				window_open('EnsPortal.BPLEditor.zen?BP=IRISDemo.BP.ReadmissionRisk.Process.bpl&$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+
+			function openHISUI()
+			{
+				window_open('http://'+ip+':9098');
+			}
+			
+			function openHISdb()
+			{
+				window_open('http://'+ip+':9096/csp/appint/EnsPortal.ProductionConfig.zen?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys');
+			}
+			
+			function openIFHint()
+			{
+				window_open('EnsPortal.ProductionConfig.zen?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+
+			function openHSDBProduction()
+			{
+				window_open('http://'+ip+':9096/csp/appint/EnsPortal.ProductionConfig.zen?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openDataLakeSQL()
+			{
+				window_open('http://'+ip+':9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+
+			function openDataLakeProduction()
+			{
+				window_open('http://'+ip+':9094/csp/appint/EnsPortal.ProductionConfig.zen?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openHSDBADTA03DTL()
+			{
+				window_open('http://'+ip+':9096/csp/appint/EnsPortal.DTLEditor.zen?DT=IRISDemo.DTL.HL7AppTrigger.ADTA03.dtl&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openHSDBPIDSubDTL()
+			{
+				window_open('http://'+ip+':9096/csp/appint/EnsPortal.DTLEditor.zen?DT=IRISDemo.DTL.HL7AppTrigger.Sub.PID.dtl&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+
+			function openHSDBMessageTrace()
+			{
+				window_open('http://'+ip+':9096/csp/appint/EnsPortal.MessageViewer.zen?$NAMESPACE=APPINT&$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openIFHintRoutingRule()
+			{
+				window_open('EnsPortal.RuleEditor.zen?RULE=IRISDemo.HISHL7v2FileFeedRoutingRule&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openIFHintDTL()
+			{
+				window_open('EnsPortal.DTLEditor.zen?DT=IRISDemo.DTL.HL7Discharge.dtl&NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openMLCube()
+			{
+				window_open('http://'+ip+':9094/csp/appint/_DeepSee.UI.Architect.zen?$NAMESPACE=APPINT&CUBE=MLEncounter.cube&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openMessageTrace()
+			{
+				window_open('EnsPortal.MessageViewer.zen?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+
+			function openScoreMessageTrace()
+			{
+				window_open('http://'+ip+':9094/csp/appint/EnsPortal.MessageViewer.zen?$NAMESPACE=APPINT&$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openPMMLTestPage()
+			{
+				window_open('BankingSrv.PMML.FraudPrevModel.cls?$NAMESPACE=APPINT&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openPMML()
+			{
+				window_open('pmml.xml')
+			}
+
+			function openSparkCluster()
+			{
+				window_open('http://'+ip+':8080')
+			}
+
+			function openZeppelin()
+			{
+				window_open('http://'+ip+':10000/')
+			}
+			
+			function openDatalake()
+			{
+				window_open('http://'+ip+':9094/csp/sys/exp/%25CSP.UI.Portal.SQL.Home.zen?$NAMESPACE=APP&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openZeppelinSparkUI()
+			{
+				window_open('http://'+ip+':10001')
+			}
+			
+			function openZeppelinModelResults()
+			{
+				window_open('http://'+ip+':10000/#/notebook/2EESSFSGF')
+			}
+			
+			function openZeppelinModelBuilding()
+			{
+				window_open('http://'+ip+':10000/#/notebook/2EB115RNY')
+			}
+			
+			function openWFInbox()
+			{
+				window_open('_DeepSee.UserPortal.Workflow.zen?$NAMESPACE=APP&IRISUserName=SuperUser&IRISPassword=sys')
+			}
+			
+			function openInstructions()
+			{
+				var btn = document.getElementById('instructionsbtn');
+				var instructions = document.getElementById('instructions');
+				
+				if (btn.value == 'Show Instructions')
+				{
+					btn.value = 'Hide Instructions';
+					instructions.hidden=false;
+					instructions.scrollIntoView(true);
+				}
+				else
+				{
+					btn.value = 'Show Instructions';
+					instructions.hidden=true;
+				}
+			}
+			
+		</script>
+		<style>
+		.Button {
+			font-family: Arial;
+			font-size: 12px;
+			font-weight: bold;
+			color: #A4BFDB;
+			background-color: #FFFFFF;
+			width: 200px;
+			border-radius: 10px;
+		}
+		.Button:hover {
+			color: #000000;
+			background-color: #FFFFFF;
+		}
+		</style>
+	</head>
+	
+	<body onload="javascript:on_load();">
+	
+		<!-- Image Map Generated by http://www.image-map.net/ -->
+		<center>
+			<img src="DemoLangingPage.png" usemap="#image-map" id="demoimg">
+		</center>
+		
+		<map name="image-map">
+		    <area alt="Health Information System" title="Health Information System" href="javascript:openHISUI()" coords="294,382,31,215" shape="rect">
+		    <area alt="HIS Database and Integration" title="HIS Database and Integration" href="javascript:openHISdb()" coords="202,391,386,507" shape="rect">
+		    <area alt="Readmission Risk Production" title="Readmission Risk Production" href="javascript:openIFHint()" coords="720,353,974,405" shape="rect">
+		    <area alt="Message Viewer" title="Message Viewer" href="javascript:openMessageTrace()" coords="725,414,937,462" shape="rect">
+		    <area alt="Workflow Inbox" title="Workflow Inbox" href="javascript:openWFInbox()" coords="884,472,714,521" shape="rect">
+		    <area alt="Workflow Inbox" title="Workflow Inbox" href="javascript:openWFInbox()" coords="747,749,865,890" shape="rect">
+		    <area alt="Dashboard" title="Dashboard" href="javascript:openMLCube()" coords="1157,303,1387,472" shape="rect">
+		    <area alt="Zeppelin" title="Zeppelin" href="javascript:openZeppelin()" coords="1610,313,1844,488" shape="rect">
+		    <area alt="Spark UI" title="Spark UI" href="javascript:openZeppelinSparkUI()" coords="1818,554,1920,592" shape="rect">
+		    <area alt="Spark Cluster" title="Spark Cluster" href="javascript:openSparkCluster()" coords="1821,613,1916,647" shape="rect">
+		</map>
+		<!-- Image Map Generated by http://www.image-map.net/ -->
+		
+		<table width="100%" style="text-align: center; background-color: #b7c8e2;">
+			<tr>
+				<td><input ID="btFunctionalDemo" type="button" class="Button" value="Global Summit Demo" onclick="openBuildingTheModelDemo()"/></td>
+				<td><input ID="btOriginalDemo" type="button" class="Button" value="Short Demo" onclick="openWindows(false)"/></td>
+				<td><input type="button" class="Button" value="Show Instructions" onclick="openInstructions()" id="instructionsbtn"/></td>
+			</tr>
+			<!--
+				<td><input type="button" class="Button" value="1 - Open HIS UI" onclick="openHISUI()"/></td>
+				<td><input type="button" class="Button" value="2 - Open HIS Database" onclick="openHISdb()"/></td>
+				<td><input type="button" class="Button" value="3 - Open Interoperability" onclick="openIFHint()"/></td>
+				<td><input type="button" class="Button" value="4 - Open Routing Rule" onclick="openIFHintRoutingRule()"/></td>
+				<td><input type="button" class="Button" value="5 - Open Data Transfromation" onclick="openIFHintDTL()"/></td>
+				<td><input type="button" class="Button" value="6 - Open LACE BI" onclick="openMLCube()"/></td>
+			</tr-->
+			<tr>
+				<td>&nbsp;</td>
+			</tr>
+			<tr>
+				<!--
+				<td><input type="button" class="Button" value="7 - Open Message Trace" onclick="openMessageTrace()"/></td>
+				<td><input type="button" class="Button" value="8 - Open Zeppelin" onclick="openZeppelin()"/></td>
+				<td><input type="button" class="Button" value="9 - Open Spark Master" onclick="openSparkMaster()"/></td>
+				<td><input type="button" class="Button" value="10 - Open PMML Test Page" onclick="openPMMLTestPage()"/></td>
+				<td><input type="button" class="Button" value="11 - Open PMML" onclick="openPMML()"/></td>
+				-->
+				
+			</tr>
+		</table>
+	
+	
+		<script type="text/javascript" src="imageMapResizer.min.js"></script>	
+		
+		<script language="javascript">
+			var demoimg = document.getElementById('demoimg');
+			
+			demoimg.style.width="90%";
+			
+			imageMapResize();
+		</script>
+		
+		<div id="instructions" hidden="true">
+			<p>This demo uses the LACE method in addition to Machine Learning to compute the readmission score. See <a href="https://intersystemscorporation.sharepoint.com/sites/IRISDemoRepository/Shared%20Documents/3%20-%20IRIS%20Health%20Readmissions%20Demo/Readmission%20Demo%202%20-%20What%20is%20LACE.mp4" target="_blank">this</a> video to understand the LACE method.</p>
+			
+			<p>See <a href="https://intersystemscorporation.sharepoint.com/sites/IRISDemoRepository/Shared%20Documents/3%20-%20IRIS%20Health%20Readmissions%20Demo/Readmission%20Demo%201%20-%20How%20to%20demo%20the%20demo.mp4" target="_blank">this video</a> to understand how to demo the demo.</p>
+			
+			<p>If you want to understand a little bit more about how this demo was built, see this <a href="https://intersystemscorporation.sharepoint.com/sites/IRISDemoRepository/Shared%20Documents/3%20-%20IRIS%20Health%20Readmissions%20Demo/Readmission%20Demo%203%20-%20How%20was%20it%20built.mp4" target="_blank">third video</a>.</p> 
+			
+			<p>
+				If you want to take a look into the building of the underlying Machine Learning Model,
+				see this: <a href="javascript:openZeppelinModelBuilding();">Examine Model Building</a>
+			</p>
+			
+			<p>
+				If you want to take a look into LACE performance vs Machine Learning performance,
+				see this: <a href="javascript:openZeppelinModelResults();">Examine Model Results</a>
+			</p>
+			
+			<p>Most of the text here is on the videos above. Explain what they are going to see using the image on this page.</p>
+			
+			<p>Click on either <b>Short Demo</b> or <b>Long Demo</b> button to open the right windows so you can do the demo. Many tabs will be opened for you. 
+			If many tabs hasn't been opened for you or just a single tab has been opened, check to see if your browser has blocked your popups. 
+			If it has, tell it to allow popups and close any tab that has been opened before trying clickin on the button again.</p> 
+			
+			<p>
+			You will be left on the tab you should start with. You should click each tab and explain what is it 
+			accordingly to the following script:</p>
+			
+			<ol>
+				<li>On the production tab, explain what services, processes and operations are.</li>
+					<ul>
+						<li>
+							Click on the green circle of the business service that receives the HL7 message from the HIS. 
+						    Talk about the fact that all messages are sent to a message router.
+						</li>
+					</ul>
+				<li>At this point you can click on the 2nd tab (Rule Editor) and show them what happens to the incoming messages.</li>
+					<ul>
+						<li>The Rule Editor currently deals with 2 message types.</li>
+						<li>The first type (ADT_A01) deals with a patient being admitted. It is transformed into a different message type and then sent to the LACE operation</li>
+						<li>The 2nd type (ADT_A03) deals with a patient being discharged. It is transformed and then sent to the Business Process.</li>
+					</ul>
+				<li>You should now click on the 3rd tab (Data Transformation) and show the transformation of the HL7 message to the internal message type</li>
+					<ul>
+						<li>Click on the images to at the top left to show the different displays in terms of diagrams and action lists</li>
+						<li> Also click on a line and show the right hand panel with its ability to edit the action item</li>
+					</ul>
+				<li>Now go back to the first tab (Production Configuration) and click on the green circle of the File Router</li>
+					<ul>
+						<li>You will  see that one of the lines connects with the Readmission Risk Process</li>
+					</ul>
+				<li>You should now click on the 4th browser tab (Business Process)</li>
+					<ul>
+						<li>You will now see the BPL. Explain that the business processes can be created graphically and work down the logic steps showing what is happening.</li>
+						<li>You should also click on some of the logic diagrams and show the details on the right hand pane for easy editing</li>
+						<li>
+							Show them how complex processes can be designed in a low code aproach that is easy to understand and to maintain. 
+							Synchronous and Asynchronous activities, calling business rules, data transformations, initiating human workflows, sending alerts, all can be easily designed here.
+						</li>
+					</ul>
+				<li>
+					Clicking on the 5th tab (Message Viewer), you can explain that at the moment the system is 'empty' and that nothing has happened.
+					This step is to prove that this is 'real' and that nothing has been pre-loaded.
+				</li>
+				<li>Now click on the 6th tab (Readmission UI)
+					<ul>
+						<li>This is an application written in Angular 6 that connects to an instance of IRIS for Health via REST services. It is created to act as a 'dummy' HIS application</li>
+						<li>You can select one of the following patients:</li>
+						<ul>
+							<li>MRN: 900001, Frederick Masters</li>
+							<li>MRN: 900002, Katherine Smith</li>
+							<li>MRN: 900003, James Davidson</li>
+						</ul>
+						<li>You will see that each patient has an open episode. Click on that line in the display.</li>
+						<li>The discharge date defaults to today. Click on 'Discharge'</li>
+					</ul>
+				<li>You can now return to the Message Viewer tab (#5) and click on the 'Search' button to refresh the display. A new line appears showing input for an HL7 message.</li>
+					<ul>
+						<li>Click on this new line. The right hand frame will show four tabs: Header, Body, Contents, Trace</li>
+						<ul>
+							<li>Header: the message header showing the types of message, the timestamps and where the message was sent</li>
+							<li>Body: The first line of the HL7 message (MSH segment) broken down into its parts</li>
+							<li>
+								Contents: The full display of the HL7 message.
+								 Hovering the mouse over each part will show you its definition in the HL7 library.
+								  Clicking on any part will open up a new tab showing the relevant HL7 structure.
+							</li>
+							<li>
+								Trace: this will show you the trace of the components used by processing the message.
+								 Click on 'View Full Trace' to show a new browser tab with the trace
+							</li>
+							<li>
+								Note that both a LACE SOAP service is being called as well as a Machine learning prediction service. The demo is showing
+								both LACE and michine learning being used in conjuction with one another with complete visibility.
+							</li>
+						</ul>
+						<li>
+							Click on each box on the left and look at the display of the contents on the right. 
+							Explain how easy it is to see what is happening and to be able to debug and test.
+							
+							Note that the green circle under the Feed Router will show you which rule has been met. (rule#2)
+							You can return to the Rule Editor page if you wish to show that rule.
+						</li>
+					</ul>
+				</li>
+				<li>The next tab is 'Workflow'. You can show the ticket open, take it and take an action (.i.e: Called The Patient). You can go
+				back to the message trace you opened and refresh it. You can show that the trace has been updated with the response from the workflow. 
+				You can also show the workflow by clicking on the Workflow tab on the EMR UI.</li>
+				<li>
+					The last tab is the display of the dashboards from the BI showing the LACE risk scores by 3 different categories.
+					At the top left is a 'filter' box (Month discharged) which can be changed to increase/decrease the range. This dashboard can also
+					be opened from the Dashboard tab on the EMR UI:
+					<ul>
+						<li>On the right hand graph (LACE by Age), click on one of the bars (e.g. 11-20)</li>
+						<li>Now click on the down pointing arrow at the top of the frame. This will drill down into the data to show per year</li>
+						<li>Click on the image at the top left of the frame (3 dots and 3 lines). This will change the display to show the actual numbers</li>
+						<li>Each age has an arrow to the left of it. Clicking on this will allow 'drilling-up'</li>
+						<li>Clicking on the graph image at the top will return the display to a bar chart</li>
+					</ul>
+				</li>
+				<li>
+					The demo is running a ML random forest model together with LACE. We run both in paralell and check whether a person has a LACE score greater 
+					than 11 or if the machine learning model returns a higher than 15% probability that the patient will need to be readmitted. If either check is triggered we will
+					send out a workflow alert. We will showcase our Business Process capabilities, traceability and how we can help with
+					operationalization of machine learning models in complex and sensitive scenarios.
+				</li>
+			</ol>
+		</div>		
+	</body>
+</html>

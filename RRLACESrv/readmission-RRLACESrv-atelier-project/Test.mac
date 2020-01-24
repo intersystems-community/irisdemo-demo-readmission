@@ -1,0 +1,46 @@
+ROUTINE Test
+
+	Set tSC=1
+	Try
+	{
+		//Set pFeaturesStmt = ##class(%SQL.Statement).%New()
+		//Set tSC = pFeaturesStmt.%PrepareClassQuery("PublishedABT.MLEncounterDecisionTrees", "MLEncounterDecisionTreesGetFeatures")
+
+		//Set oRS = pFeaturesStmt.%Execute(526)
+
+		//If oRS.%Next() 
+		//{
+		//	Write !,oRS.%GetData(1)
+		//}
+		//Write !!
+		
+		//q
+		Set tEncounterID = 28471
+		
+		Set tSC = ##class(ML.Model.Util).GetModelInstance("IRISDemo.ImportedModel.DecisionTreeClassifier", .oModel)
+		Quit:$System.Status.IsError(tSC)
+		
+		Set tSC = ##class(ML.Director).RunModelOnABTSourceId("MLEncounter",  tEncounterID, oModel, .oModelDataOutput)
+		Quit:$System.Status.IsError(tSC)
+		
+		zwrite oModelDataOutput
+		
+			
+	}
+	Catch (oException)
+	{
+		Set tSC = oException.AsStatus()
+	}
+	
+	Do $System.Status.DisplayError(tSC)
+	
+	
+	 //set resultSet = ##class(%SQL.Statement).%ExecDirect(,"select Top 1000 * from IRISDemo_Cube_MLEncounter.Fact")
+	 //WHILE resultSet.%Next() {
+	//	set comorbidities = resultSet.%Get("Comorbidities")
+	//	w !
+	//	Set listRS = ##class(%SQL.Statement).%ExecDirect(,"SELECT * from IRISDemo_Cube_MLEncounter.Comorbidities Where ID IN ( "_comorbidities_" )")
+	//	WHILE listRS.%Next() {
+	//		w listRS.%Get("Comorbidities"), " ," 
+	  //  }
+	//}
