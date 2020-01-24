@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e 
+
+echo
+echo "### HOOK - build environment:"
+echo "   SOURCE_BRANCH  : $SOURCE_BRANCH"
+echo "   SOURCE_COMMIT  : $SOURCE_COMMIT"
+echo "   COMMIT_MSG     : $COMMIT_MSG"
+echo "   DOCKER_REPO    : $DOCKER_REPO"
+echo "   DOCKERFILE_PATH: $DOCKERFILE_PATH"
+echo "   DOCKER_TAG     : $DOCKER_TAG"
+echo "   IMAGE_NAME     : $IMAGE_NAME"
+
+cd ./RRLACESrv
+echo "### HOOK - Generating Synthetic Patient Data For RRLACE Build"
+./synthea-loader.sh
+cd ..
+
+echo
+echo "### HOOK - building readmission risk service..."
+docker build -t ${DOCKER_REPO}:readmissionrisksrv-${DOCKER_TAG} ./readmissionrisksrv
+
+echo
+echo "### HOOK - building RRLACE Service..."
+docker build -t ${DOCKER_REPO}:RRLACESrv-${DOCKER_TAG} ./RRLACESrv
+
+echo
+echo "### HOOK - building hisDB..."
+docker build -t ${DOCKER_REPO}:hisdb-${DOCKER_TAG} ./hisdb
+
+echo
+echo "### HOOK - building hisUI..."
+docker build -t ${DOCKER_REPO}:hisui-${DOCKER_TAG} ./hisui

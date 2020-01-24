@@ -1,6 +1,6 @@
 ARG SOURCE_BRANCH
 
-FROM intersystemsdc/irisdemo-demo-readmissiondemo:readmission_RRLACESrv-version-v1.0
+FROM intersystemsdc/irisdemo-demo-readmission:RRLACESrv-version-1.8.0
 
 FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.5
 

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+echo
+echo "### HOOK - Pushing banking transactions service..."
+docker push ${DOCKER_REPO}:readmissionrisksrv-${DOCKER_TAG}
+
+echo
+echo "### HOOK - Pushing RRLACE Service..."
+docker push ${DOCKER_REPO}:RRLACESrv-${DOCKER_TAG}
+
+echo
+echo "### HOOK - Pushing hisDB..."
+docker push ${DOCKER_REPO}:hisdb-${DOCKER_TAG}
+
+echo
+echo "### HOOK - Pushing hisUI..."
+docker push ${DOCKER_REPO}:hisui-${DOCKER_TAG}
