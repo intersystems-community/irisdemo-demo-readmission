@@ -1,3 +1,7 @@
+## 1.8.1 (January 24, 2020)
+  - Merge pull request #10 from intersystems-community/docker-autobuild-configuration
+  - fixing error with docker-push command in hook
+
 ## 1.8.0 (January 24, 2020)
   - adding updates for 5000 synthea generated pateints and fix to docker push hook
 
