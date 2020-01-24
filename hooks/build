@@ -17,16 +17,16 @@ echo "### HOOK - Generating Synthetic Patient Data For RRLACE Build"
 
 echo
 echo "### HOOK - building readmission risk service..."
-docker build -t ${DOCKER_REPO}:readmission_readmissionrisksrv-${DOCKER_TAG} ./readmissionrisksrv
+docker build -t ${DOCKER_REPO}:readmissionrisksrv-${DOCKER_TAG} ./readmissionrisksrv
 
 echo
 echo "### HOOK - building RRLACE Service..."
-docker build -t ${DOCKER_REPO}:readmission_RRLACESrv-${DOCKER_TAG} ./RRLACESrv
+docker build -t ${DOCKER_REPO}:RRLACESrv-${DOCKER_TAG} ./RRLACESrv
 
 echo
 echo "### HOOK - building hisDB..."
-docker build -t ${DOCKER_REPO}:readmission_hisdb-${DOCKER_TAG} ./hisdb
+docker build -t ${DOCKER_REPO}:hisdb-${DOCKER_TAG} ./hisdb
 
 echo
 echo "### HOOK - building hisUI..."
-docker build -t ${DOCKER_REPO}:readmission_hisui-${DOCKER_TAG} ./hisui
+docker build -t ${DOCKER_REPO}:hisui-${DOCKER_TAG} ./hisui
