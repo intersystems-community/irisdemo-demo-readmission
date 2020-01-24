@@ -1,3 +1,6 @@
+## 1.8.0 (January 24, 2020)
+  - adding updates for 5000 synthea generated pateints and fix to docker push hook
+
 ## 1.7.0 (January 24, 2020)
   - updating bumpversion to update RRLACESrc Image reference in hisDB Dockerfile
 
