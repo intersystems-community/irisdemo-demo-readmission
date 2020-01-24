@@ -1,0 +1,44 @@
+.workflow-content-container{
+  display: grid;
+  grid-template-columns: 25% auto;
+  grid-auto-rows: auto;
+}
+
+.chart-container{
+  grid-column-start: 1;
+  grid-column-end: 2;
+  padding: 5%;
+  box-sizing: content-box;
+}
+
+.table-container{
+  grid-column-start: 2;
+  padding: 5%;
+  border-left: 2px solid;
+  border-left-color: #673ab7;
+}
+
+.chart-item{
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.circular-wrapper{
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 3px solid;
+  border-color: #673ab7
+}
+
+
+
+.task-number-text{
+  font-size: 30px;
+}

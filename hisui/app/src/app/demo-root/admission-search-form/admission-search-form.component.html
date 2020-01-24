@@ -1,0 +1,53 @@
+<div class="admission-form">
+  <div class="patient-search-section">
+      <form #searchForm="ngForm">
+        <div class="form-header">
+          <h2>Patient Admissions Search</h2>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="Admission Number" [(ngModel)]="userSearchRequest.encounterNumber" name="admissionNumber">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput placeholder="Medical Record Number" [(ngModel)]="userSearchRequest.MRN" name="MRN">
+          </mat-form-field>
+        </div>
+        <div>
+          <table class="name-input-wrapper" cellspacing="5">
+            <tr>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="First name" [(ngModel)]="userSearchRequest.firstName" name="firstName">
+                </mat-form-field></td>
+              <td>
+                <mat-form-field class="example-full-width">
+                  <input matInput placeholder="Last Name" [(ngModel)]="userSearchRequest.lastName" name="lastName">
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Admission Date" [(ngModel)]="userSearchRequest.admissionDate" name="admissionDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker>
+            </mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="search-button-wrapper">
+          <button mat-raised-button color="primary" (click)="submit()">Search For Patient</button>
+        </div>
+      </form>
+  </div>
+  <div class="new-admission-section">
+    <div class="form-header">
+      <h2>New Admission</h2>
+    </div>
+    <div class="admission-button-wrapper">
+      <button mat-raised-button color="primary">Create New Admission</button>
+    <div>
+  </div>
+</div>

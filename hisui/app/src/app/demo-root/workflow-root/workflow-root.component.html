@@ -1,0 +1,33 @@
+<div class="workflow-content-container">
+  <div class="chart-container">
+    <div class="chart-item">
+      <div class="circular-wrapper">
+        <div class="circle-text-wrapper">
+          <h2>My Tasks</h2>
+          <h1>{{GRAPHDATA.assigned}}</h1>
+          <h4>incomplete tasks</h4>
+        </div>
+      </div>
+    </div>
+    <div class="chart-item">
+      <ngx-charts-advanced-pie-chart
+        class="chart-container"
+        [label]="chartLabel"
+        [view]="view"
+        [scheme]="colorScheme"
+        [results]="results"
+        [animations]="animations"
+        [gradient]="gradient"
+        [tooltipDisabled]="tooltipDisabled"
+        [tooltipText]="pieTooltipText"
+        (select)="onChartSelect($event)">
+      </ngx-charts-advanced-pie-chart>
+    </div>
+  </div>
+  <div class="table-container">
+    <app-workflow-table
+    [taskList]="taskList"
+    >
+    </app-workflow-table>
+  </div>
+</div>

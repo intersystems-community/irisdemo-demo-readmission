@@ -1,0 +1,78 @@
+<div class="discharge-form">
+  <form #searchForm="ngForm">
+    <div>
+      <table class="name-input-wrapper" cellspacing="1">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Admission Number" disabled [(ngModel)]="user.encounterNumber" name="admissionNumber">
+            </mat-form-field></td>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Medical Record Number" disabled [(ngModel)]="user.MRN" name="MRN">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <table class="name-input-wrapper" cellspacing="1">
+        <tr>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="First name" disabled [(ngModel)]="user.firstName" name="firstName">
+            </mat-form-field></td>
+          <td>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Last Name" disabled [(ngModel)]="user.lastName" name="lastName">
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput disabled [matDatepicker]="picker1" placeholder="Admission Start Date" [(ngModel)]="user.startDate" name="admissionStartDate">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1>
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput [matDatepicker]="picker2" placeholder="Discharge Date" [(ngModel)]="user.endDate" name="admissionEndDate">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2>
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div>
+      <table class="name-input-wrapper" cellspacing="1">
+        <tr>
+          <td>
+            <mat-form-field>
+              <mat-select placeholder="Discharge Type" [compareWith]="compareFn" [(ngModel)]="user.dischargeDestination" name="dischargeType">
+                <mat-option *ngFor="let dtype of dtypes" [value]="dtype.value">
+                  {{dtype.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          <td *ngIf="hasHighReadmissionProbability">
+            <mat-form-field>
+              <mat-select (selectionChange)="careRecommendationUpdated($event)" placeholder="Care Recomendation" [compareWith]="compareFn" [(ngModel)]="treatment" name="careType">
+                <mat-option *ngFor="let ctype of ctypes" [value]="ctype.value">
+                  {{ctype.viewValue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="Discharge By" name="dischargedBy" value="Costanza, George">
+      </mat-form-field>
+    </div>
+  </form>
+</div>

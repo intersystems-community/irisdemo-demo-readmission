@@ -1,0 +1,19 @@
+.admission-content-container{
+    display: grid;
+    grid-template-columns: 33% auto;
+    grid-auto-rows: auto;
+}
+
+.side-form-container{
+  grid-column-start: 1;
+  grid-column-end: 2;
+  padding: 5%;
+  border-right: 2px solid;
+  border-right-color: #673ab7;
+  box-sizing: content-box;
+}
+
+.table-container{
+  grid-column-start: 2;
+  padding: 5%;
+}

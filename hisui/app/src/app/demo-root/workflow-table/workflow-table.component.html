@@ -1,0 +1,73 @@
+<div class="table-select-control">
+  <section>
+      <mat-checkbox [name]="'Assigned'" class="table-filter" [(ngModel)]="showAssigned" (change)="tableFilterChange($event)">Assigned Tasks</mat-checkbox>
+  </section>
+</div>
+
+<div class="mat-elevation-z8">
+  <table class="admission-table" mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="Id">
+      <th class="id-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Id </th>
+      <td class="id-cell" mat-cell *matCellDef="let row"> {{row.taskId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Subject">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th>
+      <td mat-cell *matCellDef="let row"> <strong>{{row.subject}}</strong> </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+      <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Assigned To">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+      <td mat-cell *matCellDef="let row"> {{row.assignedTo}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Priority">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+      <td mat-cell *matCellDef="let row"> {{row.priority}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Time Created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Time Created </th>
+      <td mat-cell *matCellDef="let row"> {{row.timeCreated}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let row">
+
+        <mat-form-field *ngIf="isAssigned(row); else elseBlock">
+          <mat-select (selectionChange)="selectionChange($event, row)">
+            <mat-option>None</mat-option>
+            <mat-option value="Relinquish">Relinquish Task</mat-option>
+            <mat-option value="Called the Patient">Called Patient</mat-option>
+            <mat-option value="Visited the Patient">Visited Patient</mat-option>
+          </mat-select>
+        </mat-form-field>
+         <ng-template #elseBlock>Accept Task</ng-template>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Action Processor">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td class="action-btn-cell" mat-cell *matCellDef="let row">
+        <button mat-raised-button color="primary" *ngIf="row.status==='Unassigned'" (click)="acceptTask(row)">Accept</button>
+        <button mat-raised-button color="primary" *ngIf="row.status==='Assigned' && row.followUpResponse === 'Relinquish'" (click)="relinquishTask(row)">Relinquish</button>
+        <button mat-raised-button color="primary" *ngIf="row.status==='Assigned' && row.followUpResponse && row.followUpResponse !== 'Relinquish'" (click)="completeTask(row)">Complete</button>
+      </td>
+    </ng-container>
+
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'isActive': row.status === 'Unassigned'}">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5]"></mat-paginator>
+</div>

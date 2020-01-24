@@ -1,0 +1,33 @@
+# IRIS licenses
+**/license.key
+**/iris.key
+**/IRIS.DAT
+**/*.csv
+**/*.tar.gz
+
+# Mac specific files
+**/.DS_Store
+
+# Eclipse specific files
+**/.buildpath
+#**/.settings
+!**/.settings/atelier.prefs
+# **/.project
+**/target/
+**/bin/
+
+#PMML
+**/*.pmml
+**/imported_pmml
+
+# Demos
+container_runtime
+target/*
+**/.metadata/
+
+#ignore generated output files
+**/RRLACESrv/output/
+**/RRLACESrv/patient-data.tar.gz
+
+#VSCode
+.metals

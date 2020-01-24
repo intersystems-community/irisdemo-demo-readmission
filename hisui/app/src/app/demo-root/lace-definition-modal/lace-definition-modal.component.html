@@ -1,0 +1,66 @@
+<div>
+  <div>
+    <h3 style="text-align:center">{{patient.firstName + " " + patient.lastName}}</h3>
+  </div>
+  <div class="modal-content-wrapper">
+    <div class="modal-section-wrapper modal-lace-wrapper">
+      <div class="prediction-split-wrapper">
+        <div class="lace-prediction-wrapper">
+          <h2 style="text-align: center">{{patient.laceScoreAggregate}}</h2>
+          <h2 style="text-decoration:underline;">LACE</h2>
+          <h3 style="text-align: center">L: {{patient.laceScore.split(",")[1]}}</h3>
+          <h3 style="text-align: center">A: {{patient.laceScore.split(",")[2]}}</h3>
+          <h3 style="text-align: center">C: {{patient.laceScore.split(",")[3]}}</h3>
+          <h3 style="text-align: center">E: {{patient.laceScore.split(",")[4]}}</h3>
+        </div>
+      </div>
+    </div>
+    <div class=" modal-section-wrapper modal-definition-wrapper">
+      <div class="">
+        <p>
+          <span class="special-highlight">LACE</span> is a risk assessment tool to prospectively identify patients at risk for unplanned
+          Readmission or Death within 30 days of discharge. Variables contributing to the score are
+          <span class="special-highlight">L</span>ength of stay, <span class="special-highlight">A</span>cuity of admission
+           (emergent vs. non-emerent). <span class="special-highlight">C</span>omorbidities (type & number)
+          of coexisting medical conditions). and number of <span class="special-highlight">E</span>mergency department
+          visitis in the last 6 months.
+        </p>
+      </div>
+      <div>
+        <table>
+          <colgroup span="4"></colgroup>
+          <tr>
+            <th>LACE Score</th>
+            <th>Risk Level</th>
+            <th>Readmission Rate - 30 day</th>
+            <th>Mortality Rate - 30 Day</th>
+          </tr>
+          <tr>
+            <td>1-4</td>
+            <td>Low</td>
+            <td>3.3%</td>
+            <td>0.1%</td>
+          </tr>
+          <tr>
+            <td>5-9</td>
+            <td>Moderate</td>
+            <td>7.9%</td>
+            <td>0.7%</td>
+          </tr>
+          <tr>
+            <td>10-12</td>
+            <td>High</td>
+            <td>14.7%</td>
+            <td>2.5%</td>
+          </tr>
+          <tr>
+            <td>13-19</td>
+            <td>Highest</td>
+            <td>20.8%</td>
+            <td>5.8%</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

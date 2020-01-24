@@ -1,0 +1,48 @@
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table class="admission-table" mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="patientName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.lastName+ ", " + row.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Age/Sex/DOB">
+      <th mat-header-cell *matHeaderCellDef> Age/Sex/DOB </th>
+      <td mat-cell *matCellDef="let row"> {{PCUS.getDemographic(row)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="mrn">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> MRN </th>
+      <td mat-cell *matCellDef="let row"> {{row.MRN}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="admissionDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Admission Date </th>
+      <td mat-cell *matCellDef="let row"> {{row.prettyPrintDate(row.startDate)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="los">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> LOS </th>
+      <td mat-cell *matCellDef="let row"> {{PCUS.getLOS(row.startDate, row.endDate)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="laceScoreAggregate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> LACE Readmission Probability </th>
+      <td (click)="selectLACEColumn($event, row)" [style.background-color]="PCUS.getLACERiskStatusColor(row.laceScoreAggregate)" mat-cell *matCellDef="let row"> {{PCUS.getLACERiskProbability(row.laceScoreAggregate)}} %</td>
+    </ng-container>
+
+    <ng-container matColumnDef="readmissionProbability">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Readmission Probability </th>
+      <td [style.background-color]="PCUS.getMLRiskStatusColor(PCUS.getReadmissionPercentage(row.readmissionProbability))" mat-cell *matCellDef="let row"> {{PCUS.getReadmissionPercentage(row.readmissionProbability).toFixed(2)}} %</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5]"></mat-paginator>
+</div>

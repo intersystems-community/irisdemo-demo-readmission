@@ -1,0 +1,59 @@
+<mat-form-field>
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table class="admission-table" mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="Admission Number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Admission Number </th>
+      <td mat-cell *matCellDef="let row"> {{row.encounterNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Medical Record Number">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> MRN </th>
+      <td mat-cell *matCellDef="let row"> {{row.MRN}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="First Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Last Name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Name </th>
+      <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Date Of Birth">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> DoB </th>
+      <td mat-cell *matCellDef="let row"> {{row.prettyPrintDate(row.DoB)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Gender">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Gender </th>
+      <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Admitted">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Admitted </th>
+      <td mat-cell *matCellDef="let row"> {{row.prettyPrintDate(row.startDate)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Discharged">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Discharged </th>
+      <td mat-cell *matCellDef="let row"> {{row.encounterStatus === 'D' ? row.prettyPrintDate(row.endDate): null}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Admission Status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Admission Status </th>
+      <td mat-cell *matCellDef="let row"> {{row.encounterStatus === 'D' ? 'Discharged' : 'Admitted'}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectRow(row)" [ngClass]="{'isActive': row.encounterStatus === 'A'}">
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5]"></mat-paginator>
+</div>

@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+}
+
+td, th {
+  width: 14.2%;
+}
+
+tr:hover{
+   cursor: pointer;
+   background: #b4b4b433;
+ }
+
+.mat-elevation-z8 {
+  overflow-y: scroll;
+}
+
+.mat-form-field {
+  font-size: 16px;
+  width: 100%;
+}
+
+.mat-column-laceScoreAggregate {
+  text-align: center;
+}
+
+.mat-column-readmissionProbability {
+  text-align: center;
+}

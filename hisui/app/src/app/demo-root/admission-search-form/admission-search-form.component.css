@@ -1,0 +1,16 @@
+.form-header{
+  text-align: center;
+  border-bottom: 1px solid;
+  margin-bottom: 5px;
+}
+
+.search-button-wrapper{
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.admission-button-wrapper{
+  display: flex;
+  justify-content: center;
+  padding-top: 15px;
+}

@@ -1,0 +1,29 @@
+table {
+  width: 100%;
+}
+
+td, th {
+  width: 9.6%;
+}
+
+td.cdk-column-Admission-Number, td.cdk-column-Admission-Number{
+  width: 13%;
+}
+
+tr:hover{
+   cursor: pointer;
+   background: #b4b4b433;
+ }
+
+.mat-elevation-z8 {
+  overflow-y: scroll;
+}
+
+.mat-form-field {
+  font-size: 16px;
+  width: 100%;
+}
+
+.isActive {
+  background-color: #e2d8f3;
+}

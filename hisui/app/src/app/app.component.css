@@ -1,0 +1,46 @@
+.application{
+  display: grid;
+  grid-template-rows: 10% auto 10%;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  border-bottom: 2px solid;
+  border-bottom-color: #673ab7;
+}
+
+.header-icon{
+  font-size: 70px;
+  color: #673ab7;
+}
+
+.user-icon{
+  font-size: 40px;
+  color: #673ab7;
+}
+
+.logged-in-user-wrapper{
+  display: flex;
+  flex-direction: row;
+}
+
+.sign-out-wrapper{
+  padding-right: 20px;
+}
+
+.content{
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.footer{
+  grid-row-start: 3;
+  grid-row-end: 4;
+  background-color: #673ab7;
+}

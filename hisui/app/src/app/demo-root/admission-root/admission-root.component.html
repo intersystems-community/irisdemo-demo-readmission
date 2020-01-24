@@ -1,0 +1,14 @@
+<div class="admission-content-container">
+  <div class="side-form-container">
+    <app-admission-search-form
+      [(userSearchRequest)]="userSearchRequest"
+      [searchPatients]="sharedUserSearch">
+    </app-admission-search-form>
+  </div>
+  <div class="table-container">
+    <app-admission-search-table
+      [(patientList)]="patientList"
+      [dialogOpen]="sharedDialogOpen">
+    </app-admission-search-table>
+  </div>
+</div>

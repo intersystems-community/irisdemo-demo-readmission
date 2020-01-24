@@ -1,0 +1,50 @@
+<ngx-spinner
+  bdColor="rgba(51,51,51,0.8)"
+  size="medium"
+  color="#673ab7"
+  type="ball-atom">
+  <p style="font-size: 20px; color: white">Discharging {{patient.firstName}}</p>
+</ngx-spinner>
+<div class="discharge-modal-wrapper">
+  <div class="modal-flex-item user-image-wrapper">
+    <i class="material-icons modal-user-icon">account_circle</i>
+  </div>
+
+  <div class="modal-flex-item modal-content-wrapper">
+
+    <div class="modal-flex-item modal-form-wrapper">
+      <app-user-discharge-form
+        [(user)]="patient"
+        [careRecommendationUpdated]="sharedCareRecommendationUpdated"
+      >
+      </app-user-discharge-form>
+    </div>
+
+    <div class=" modal-flex-item modal-prediction-wrapper">
+      <h1 style="text-align:center;">Readmission Probability</h1>
+      <div class="prediction-split-wrapper">
+        <div class="lace-prediction-wrapper">
+          <h2 [style.color]="laceStatusColor" style="text-align:center; text-decoration:underline; background-color: #e2d8f3;">{{PCUS.getLACERiskProbability(patient.laceScoreAggregate)}} %</h2>
+          <h2 style="text-decoration:underline;">LACE</h2>
+          <h3 style="text-align:center">L: {{patient.laceScore.split(",")[1]}}</h3>
+          <h3 style="text-align:center">A: {{patient.laceScore.split(",")[2]}}</h3>
+          <h3 style="text-align:center">C: {{patient.laceScore.split(",")[3]}}</h3>
+          <h3 style="text-align:center">E: {{patient.laceScore.split(",")[4]}}</h3>
+        </div>
+        <div class=" ml-prediction-wrapper">
+          <mat-spinner *ngIf="isLoadingProbability" [color]="color"> </mat-spinner>
+          <h2  *ngIf="!isLoadingProbability" [style.color]="mlStatusColor" style="text-align:center;text-decoration:underline; background-color: #e2d8f3;">{{(100 * patient.readmissionProbability).toFixed(2)}}%</h2>
+          <h2  *ngIf="!isLoadingProbability" style="text-decoration:underline;">ML Score</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-flex-item selection-button-wrapper">
+    <button mat-button *ngIf="allowDischarge" color="primary" (click)="dischargePatient()">Discharge</button>
+    <button mat-button color="warn" (click)="onNoClick()">Cancel</button>
+  </div>
+  <div class="modal-flex-item error-message-wrapper" *ngIf="hasError">
+    <h4>Error Discharging {{patient.firstName}}. Please select a discharge destination and retry.</h4>
+  </div>
+</div>
