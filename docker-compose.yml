@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   readmissionrisksrv:
-    image: intersystemsdc/irisdemo-demo-readmission:readmissionrisksrv-version-1.0
+    image: intersystemsdc/irisdemo-demo-readmission:readmissionrisksrv-version-1.4.0
     hostname: readmissionrisksrv
     init: true
     ports:
@@ -15,7 +15,7 @@ services:
       target: /hl7files
 
   RRLACESrv:   # Readmission Risk LACE Service
-    image: intersystemsdc/irisdemo-demo-readmission:RRLACESrv-version-1.0
+    image: intersystemsdc/irisdemo-demo-readmission:RRLACESrv-version-1.4.0
     hostname: RRLACESrv
     init: true
     ports:
@@ -28,7 +28,7 @@ services:
 
 
   hisdb:
-    image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-1.0
+    image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-1.4.0
     hostname: hisdb
     init: true
     ports:
@@ -36,7 +36,7 @@ services:
     - "9096:52773" # 52773 is the webserver/management portal port
 
   hisui:
-    image: intersystemsdc/irisdemo-demo-readmission:hisui-version-1.0
+    image: intersystemsdc/irisdemo-demo-readmission:hisui-version-1.4.0
     hostname: hisui
     init: true
     ports:

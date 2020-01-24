@@ -1,3 +1,6 @@
+## 1.4.0 (January 24, 2020)
+  - adding updayes for autobuild
+
 ## 1.3.0 (January 24, 2020)
   - adding  dummy Dockerfile for sutobuild
 
