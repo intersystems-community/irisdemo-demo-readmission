@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e 
+set -e
 
 echo
 echo "### HOOK - Pushing banking transactions service..."
@@ -16,4 +16,4 @@ docker push ${DOCKER_REPO}:hisdb-${DOCKER_TAG}
 
 echo
 echo "### HOOK - Pushing hisUI..."
-docker push${DOCKER_REPO}:hisui-${DOCKER_TAG}
+docker push ${DOCKER_REPO}:hisui-${DOCKER_TAG}
