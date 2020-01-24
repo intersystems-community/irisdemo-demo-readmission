@@ -1,3 +1,6 @@
+## 1.6.0 (January 24, 2020)
+  - fixing bad multibuild reference in hisDB Dockerfile
+
 ## 1.5.0 (January 24, 2020)
   - adding missing zipped files for build
 
