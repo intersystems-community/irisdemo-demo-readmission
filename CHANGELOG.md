@@ -1,3 +1,6 @@
+## 1.5.0 (January 24, 2020)
+  - adding missing zipped files for build
+
 ## 1.4.0 (January 24, 2020)
   - adding updayes for autobuild
 
