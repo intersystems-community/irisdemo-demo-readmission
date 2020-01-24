@@ -1,3 +1,6 @@
+## 1.7.0 (January 24, 2020)
+  - updating bumpversion to update RRLACESrc Image reference in hisDB Dockerfile
+
 ## 1.6.0 (January 24, 2020)
   - fixing bad multibuild reference in hisDB Dockerfile
 
