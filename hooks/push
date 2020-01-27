@@ -4,11 +4,11 @@ set -e
 
 echo
 echo "### HOOK - Pushing banking transactions service..."
-docker push ${DOCKER_REPO}:readmissionrisksrv-${DOCKER_TAG}
+docker push ${DOCKER_REPO}:risksrv-${DOCKER_TAG}
 
 echo
 echo "### HOOK - Pushing RRLACE Service..."
-docker push ${DOCKER_REPO}:RRLACESrv-${DOCKER_TAG}
+docker push ${DOCKER_REPO}:riskengine-${DOCKER_TAG}
 
 echo
 echo "### HOOK - Pushing hisDB..."

@@ -583,9 +583,7 @@ ClassMethod CreateDemoEncounter(pMRN As %String, pOffSet As %Integer, pDemoNumbe
 			
 	Set objEncounter.Patient = ##class(IRISDemo.DataLake.Patient).MRNIndexOpen(pMRN)
 	If objEncounter.Patient="" $$$ThrowException("PatientNotFoundException", "Patient with MRN "_pMRN_" was not found.")
-	
-	zwrite objEncounter
-	
+		
 	Set tSC = objEncounter.%Save()
 	$$$ThrowStatusExceptionIfError(tSC, "EncounterSaveException")
 	

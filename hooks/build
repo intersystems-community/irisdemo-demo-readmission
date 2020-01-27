@@ -19,16 +19,16 @@ cd ..
 
 echo
 echo "### HOOK - building readmission risk service..."
-docker build -t ${DOCKER_REPO}:readmissionrisksrv-${DOCKER_TAG} ./readmissionrisksrv
+docker build -t ${DOCKER_REPO}:risksrv-${DOCKER_TAG} ./image-risksrv
 
 echo
 echo "### HOOK - building RRLACE Service..."
-docker build -t ${DOCKER_REPO}:RRLACESrv-${DOCKER_TAG} ./RRLACESrv
+docker build -t ${DOCKER_REPO}:riskengine-${DOCKER_TAG} ./image-riskengine
 
 echo
 echo "### HOOK - building hisDB..."
-docker build -t ${DOCKER_REPO}:hisdb-${DOCKER_TAG} ./hisdb
+docker build -t ${DOCKER_REPO}:hisdb-${DOCKER_TAG} ./image-hisdb
 
 echo
 echo "### HOOK - building hisUI..."
-docker build -t ${DOCKER_REPO}:hisui-${DOCKER_TAG} ./hisui
+docker build -t ${DOCKER_REPO}:hisui-${DOCKER_TAG} ./image-hisui

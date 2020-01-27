@@ -2,9 +2,9 @@ version: '3.7'
 
 services:
 
-  readmissionrisksrv:
-    image: intersystemsdc/irisdemo-demo-readmission:readmissionrisksrv-version-1.8.1
-    hostname: readmissionrisksrv
+  risksrv:
+    image: intersystemsdc/irisdemo-demo-readmission:risksrv-version-1.8.1
+    hostname: risksrv
     init: true
     ports:
     - "9093:51773" # 51773 is the superserver default port
@@ -14,9 +14,9 @@ services:
       source: ./hl7files/
       target: /hl7files
 
-  RRLACESrv:   # Readmission Risk LACE Service
-    image: intersystemsdc/irisdemo-demo-readmission:RRLACESrv-version-1.8.1
-    hostname: RRLACESrv
+  riskengine:   # Readmission Risk LACE Service
+    image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-1.8.1
+    hostname: riskengine
     init: true
     ports:
     - "9095:51773" # 51773 is the superserver default port
@@ -25,7 +25,6 @@ services:
     - type: bind
       source: ./common_shared/
       target: /common_shared
-
 
   hisdb:
     image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-1.8.1
@@ -59,7 +58,7 @@ services:
       target: /shared
 
     environment:
-    - IRIS_MASTER_HOST=RRLACESrv # DNS based on the name of the service!
+    - IRIS_MASTER_HOST=riskengine # DNS based on the name of the service!
     - IRIS_MASTER_PORT=51773
     - IRIS_MASTER_USERNAME=SuperUser
     - IRIS_MASTER_PASSWORD=sys
@@ -72,7 +71,7 @@ services:
     environment:
       SPARK_NODE_TYPE: Master
       SPARK_PUBLIC_DNS: localhost
-      IRIS_MASTER_HOST: RRLACESrv
+      IRIS_MASTER_HOST: riskengine
       IRIS_MASTER_PORT: 51773
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
@@ -95,7 +94,7 @@ services:
     hostname: worker1
     init: true
     environment:
-      IRIS_MASTER_HOST: RRLACESrv
+      IRIS_MASTER_HOST: riskengine
       IRIS_MASTER_PORT: 51773
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
@@ -122,7 +121,7 @@ services:
     hostname: worker2
     init: true
     environment:
-      IRIS_MASTER_HOST: RRLACESrv
+      IRIS_MASTER_HOST: riskengine
       IRIS_MASTER_PORT: 51773
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
