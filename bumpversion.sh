@@ -65,7 +65,7 @@ if [ -f VERSION ]; then
     #
     sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./docker-compose.yml
     sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./README.md
-    sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:RRLACESrv)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./hisdb/Dockerfile
+    sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:RRLACESrv)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./image-hisdb/Dockerfile
 
     echo "## $INPUT_STRING ($NOW)" > tmpfile
     git log --pretty=format:"  - %s" "v$BASE_STRING"...HEAD >> tmpfile
@@ -80,7 +80,7 @@ if [ -f VERSION ]; then
     #
     # Add files that were changed by the bumpversion.sh:
     #
-    git add CHANGELOG.md VERSION ./README.md ./hisdb/Dockerfile ./docker-compose.yml
+    git add ./CHANGELOG.md ./VERSION ./README.md ./image-hisdb/Dockerfile ./docker-compose.yml
 
     git commit -m "Bump version to ${INPUT_STRING}."
     git tag -a -m "Tag version ${INPUT_STRING}." "v$INPUT_STRING"
