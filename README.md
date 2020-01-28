@@ -24,7 +24,7 @@ Leaving this data preparation step to be done by the data scientist/engineer on 
 * **Operation Costs** - when it is time to operationalize the model (use it in production) we will need to leave the machine learning platform (Spark cluster or other solution on some cloud vendor, Python scripts, R scripts, etc) up and running so we can run the model. That can be dangerous because of data privacy/security concerns and adds to cost to the final solution
 * **Operation Latency** - Calling out to the ML platform to run the model adds more latency to the final solution. That doesn't impact the readmission problem but it may impact other problems such as preventing fraud on online transactions.
 
-This demo uses docker compose to start five services:
+This demo uses docker compose which relies on a file called **docker-compose.yml** that describes the services we want to start. Our demo uses 8 services:
 
 * **hisui** - this is the EMR (electronic medical record) simulation. It is not a real EMR. Its UI is built using Angular 8 and its backend in this case is an IRIS Database. We call the backend using REST services.
 * **hisdb** - This is the backend of the EMR. It is a demo in of itself since it shows how to call IRIS using REST services from an Angular application and how changes on the SQL datamodel can trigger HL7 messages being queued up for sending to other systems.
@@ -33,8 +33,6 @@ This demo uses docker compose to start five services:
 * **zeppelin** - This is the notebook we use to drive the Spark Cluster and build the ML models and export them as PMML.
 * **sparkmaster** - This is the Master of the Spark Cluster we use to build the model.
 * **sparkworkerN** - These are spark worker nodes. The idea is to simulate a real spark cluster so that architects can understand how this could be setup on the real world.
-
-When running the demo on our PCs, we use Docker and Docker Compose. Docker Compose expects a **docker-compose.yml** that describes these services and the docker images they use.
 
 ## How to run the demo
 
