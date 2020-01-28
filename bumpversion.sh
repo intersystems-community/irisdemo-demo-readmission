@@ -65,7 +65,7 @@ if [ -f VERSION ]; then
     #
     sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./docker-compose.yml
     sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:.+)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./README.md
-    sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:RRLACESrv)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./image-hisdb/Dockerfile
+    sed -E -i '' "s;(intersystemsdc/irisdemo-demo-readmission:riskengine)-version-[0-9][0-9.]*;\1-version-$INPUT_STRING;g" ./image-hisdb/Dockerfile
 
     echo "## $INPUT_STRING ($NOW)" > tmpfile
     git log --pretty=format:"  - %s" "v$BASE_STRING"...HEAD >> tmpfile
