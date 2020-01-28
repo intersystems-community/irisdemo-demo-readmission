@@ -1,2 +1,2 @@
-## 2.0.0 (January 27, 2020)
+## 2.0.1 (January 28, 2020)
   - Initial version
