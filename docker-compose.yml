@@ -16,7 +16,9 @@ services:
 
   riskengine:   # Readmission Risk LACE Service
     image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.0.4
-    hostname: riskengine
+    hostname: risksrv
+    depends_on:
+    - risksrv
     init: true
     ports:
     - "9095:51773" # 51773 is the superserver default port
@@ -29,6 +31,8 @@ services:
   hisdb:
     image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.0.4
     hostname: hisdb
+    depends_on:
+    - riskengine
     init: true
     ports:
     - "9097:51773" # 51773 is the superserver default port
@@ -37,6 +41,8 @@ services:
   hisui:
     image: intersystemsdc/irisdemo-demo-readmission:hisui-version-2.0.4
     hostname: hisui
+    depends_on:
+    - hisdb
     init: true
     ports:
     - "9098:4200" # Where Nodejs Will be listening
@@ -44,6 +50,8 @@ services:
   zeppelin:
     image: intersystemsdc/irisdemo-base-zeppelin:version-1.3
     init: true
+    depends_on:
+    - hisui
     ports:
     - "10000:9090"     # Zeppelin
     - "10001:4040"     # Zeppelin Spark UI
@@ -68,6 +76,8 @@ services:
     image: intersystemsdc/irisdemo-base-spark-iris:version-1.1
     hostname: sparkmaster # Must be always sparkmaster
     init: true
+    depends_on:
+    - zeppelin
     environment:
       SPARK_NODE_TYPE: Master
       SPARK_PUBLIC_DNS: localhost

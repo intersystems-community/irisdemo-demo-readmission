@@ -19,8 +19,8 @@ ADD --chown=irisowner:irisuser ./IRISDemo.ImportedModel.RandomForest.pmml.tar.gz
 ADD --chown=irisowner:irisuser ./patient-data.tar.gz /tmp/
 
 # IRIS Global buffers and Routine Buffers
-ENV IRIS_GLOBAL_BUFFERS=512
-ENV IRIS_ROUTINE_BUFFERS=256
+ENV IRIS_GLOBAL_BUFFERS=128
+ENV IRIS_ROUTINE_BUFFERS=64
 
 # Running the installer. This will load the source from our project.
 RUN /usr/irissys/demo/irisdemoinstaller.sh
