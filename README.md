@@ -52,9 +52,11 @@ When starting, you will see lots of messages from all the containers that are st
 
 When it is done, it will just hang there, without returning control to you. That is fine too. Just leave this window open. If you CTRL+C on this window, docker compose will stop all the containers and stop the demo.
 
-After all the containers have started, open a browser at [http://localhost:9092/csp/appint/demo.csp](http://localhost:9092/csp/appint/demo.csp) to see the landing page of the demo. 
+After all the containers have started, open a browser at [http://localhost:9092/csp/appint/demo.csp](http://localhost:9092/csp/appint/demo.csp) to see the landing page of the demo. When requested, use the credentials SuperUser/sys to log in. 
 
-A video about this demo will be published here soon.
+A video about this demo will be published here soon. But for now, you can press at the **Instructions** button at the bottom right of the page to see one example of how to use the demo. The demo has different stories for different publics. 
+
+I like to open EMR's UI and click on the "Patient Census" tab to see the three patients that are hospitalized and their risk scores. I show that ML did a better job than lace, scoring a patient with a 55% risk of readmission while LACE was scoring around 7%. You can click on the LACE score to see its individual components and an explanation about how the score relates to a % risk of readmission. I like to click on the ML % score and show that I can simulate sending the patient to a Nursing Home to see the impact of this decision on the ML % risk score in real time. It reduces the risk to 30% or so. Then I actually discharge the patient to a Nursing Home. This is a very high level demo and you could stop there if you want to. Or you can open other parts of IRIS and show how we got the HL7 discharge message on the **risksrv** layer and extracted the data and used the ML model on **riskengine** to compute the risk score and decide if we should alert the care team and add the patient to a program to be monitored. There are plenty to show and many possible stories!
 
 When you are done, go back to that terminal and enter CTRL+C. You may also want to enter with the following commands to stop containers that may still be running and remove them:
 
@@ -64,6 +66,14 @@ docker-compose rm
 ```
 
 This is important, specially if you have other compositions on your machine.
+
+## How to reset the demo?
+
+You discharged the patient on the EMR and now it is gone! How can you repeat this to run the demo again?
+
+It's easy! You can click on the "Log Out" link at the top-right of the EMR's UI. It will reset the demo for you, putting the patient back at the hospital.
+
+Another way of resetting the demo is to stop the docker composition, remove the containers and start it again.
 
 ## What if I want to rebuild the demo on my PC?
 
