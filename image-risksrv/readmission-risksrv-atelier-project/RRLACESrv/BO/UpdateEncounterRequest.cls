@@ -10,15 +10,13 @@ Property EncounterType As %String;
 
 Property AdmissionSource As %String;
 
-Property StartDate As %Date(FORMAT = 3);
+Property EncounterStart As %TimeStamp;
 
-Property StartTime As %Time(FORMAT = 2);
-
-Property EndDate As %Date(FORMAT = 3);
-
-Property EndTime As %Time(FORMAT = 2);
+Property EncounterEnd As %TimeStamp;
 
 Property DischargeLocation As %String;
+
+
 Storage Default
 {
 <Data name="UpdateEncounterRequestDefaultData">
@@ -38,18 +36,12 @@ Storage Default
 <Value>AdmissionSource</Value>
 </Value>
 <Value name="6">
-<Value>StartDate</Value>
+<Value>EncounterStart</Value>
 </Value>
 <Value name="7">
-<Value>StartTime</Value>
+<Value>EncounterEnd</Value>
 </Value>
 <Value name="8">
-<Value>EndDate</Value>
-</Value>
-<Value name="9">
-<Value>EndTime</Value>
-</Value>
-<Value name="10">
 <Value>DischargeLocation</Value>
 </Value>
 </Data>

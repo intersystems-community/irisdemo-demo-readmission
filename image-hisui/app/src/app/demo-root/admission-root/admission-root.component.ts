@@ -31,7 +31,7 @@ export class AdmissionRootComponent implements OnInit {
       this.IPS.resetDemoEmitter.subscribe(shouldReset =>{
         if(shouldReset){
           this.resetDemo();
-          window.alert("Demo Reset");
+          //window.alert("Demo Reset");
         }
       },
       (err) =>{
@@ -39,7 +39,10 @@ export class AdmissionRootComponent implements OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    //On load of demo, reset patients to have suitable start/end dates
+    this.IPS.resetDemo();
+  }
 
   resetDemo() :void {
     this.userSearchRequest = new UserSearchRequest();

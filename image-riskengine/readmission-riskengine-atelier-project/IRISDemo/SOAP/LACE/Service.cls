@@ -48,7 +48,7 @@ Method Admit(PatientID As %String, EncounterNumber As %String, EncounterType As 
 }
 
 /// Discharge
-Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, EncounterType As %String, AdmissionSource As %String, StartDate As %Date, StartTime As %Time, EndDate As %Date, EndTime As %Time, DischargeLocation As %String, Output EncounterID As %String) As %Status [ WebMethod ]
+Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, EncounterType As %String, AdmissionSource As %String, EncounterStart As %TimeStamp, EncounterEnd As %TimeStamp, DischargeLocation As %String, Output EncounterID As %String) As %Status [ WebMethod ]
 {
 	set tSC = $$$OK
 	Set EncounterID=""
@@ -79,13 +79,10 @@ Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, Encount
 		set DischargeLocation = $Extract($translate(DischargeLocation,$char(0)),1)
 		set obj.EncounterType = EncounterType
 		
-		set obj.EncounterEnd = $ZDATETIME($HOROLOG,3,1) 
-		
-		// Making sure this demo encounter started 6 days ago so that the risk score will be 
-		// consistent over time 
-		set obj.EncounterStart = $System.SQL.DATEADD("d",-6,$ZDATETIME($HOROLOG,3,1)) 
-		
-		set obj.DischargeLocation = DischargeLocation
+		Set obj.EncounterStart = EncounterStart
+		Set obj.EncounterEnd = EncounterEnd 
+				
+		Set obj.DischargeLocation = DischargeLocation
 		SEt obj.Status = "finished"
 		
 		set tSC = obj.%Save()
