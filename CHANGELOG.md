@@ -1,10 +1,8 @@
-## 2.2.1 (January 31, 2020)
+## 2.2.2 (January 31, 2020)
+  - Bump version to 2.2.1.
   - Merge branch 'master' of https://github.com/intersystems-community/irisdemo-demo-readmission
   - Merge pull request #14 from intersystems-community/updateencounter-soap-improvement
   - adding updates to fix broken build / keep LOS in sync
-
-## 2.2.1 (January 31, 2020)
-
 
 ## 2.1.0 (January 31, 2020)
   - Using a fixed patient dataset
