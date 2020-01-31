@@ -1,3 +1,6 @@
+## 2.2.1 (January 31, 2020)
+
+
 ## 2.1.0 (January 31, 2020)
   - Using a fixed patient dataset
 
