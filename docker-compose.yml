@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   risksrv:
-    image: intersystemsdc/irisdemo-demo-readmission:risksrv-version-2.0.5
+    image: intersystemsdc/irisdemo-demo-readmission:risksrv-version-2.1.0
     hostname: risksrv
     init: true
     ports:
@@ -15,7 +15,7 @@ services:
       target: /hl7files
 
   riskengine:   # Readmission Risk LACE Service
-    image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.0.5
+    image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.1.0
     hostname: risksrv
     depends_on:
     - risksrv
@@ -29,7 +29,7 @@ services:
       target: /common_shared
 
   hisdb:
-    image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.0.5
+    image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.1.0
     hostname: hisdb
     depends_on:
     - riskengine
@@ -39,7 +39,7 @@ services:
     - "9096:52773" # 52773 is the webserver/management portal port
 
   hisui:
-    image: intersystemsdc/irisdemo-demo-readmission:hisui-version-2.0.5
+    image: intersystemsdc/irisdemo-demo-readmission:hisui-version-2.1.0
     hostname: hisui
     depends_on:
     - hisdb
