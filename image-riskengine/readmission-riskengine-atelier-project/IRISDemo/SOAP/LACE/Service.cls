@@ -78,7 +78,13 @@ Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, Encount
 		//set AdmissionSource = $translate(AdmissionSource,$char(0))
 		set DischargeLocation = $Extract($translate(DischargeLocation,$char(0)),1)
 		set obj.EncounterType = EncounterType
-		set obj.EncounterEnd = $ZDATETIME($HOROLOG,3,1) /*TODO FIX THIS*/
+		
+		set obj.EncounterEnd = $ZDATETIME($HOROLOG,3,1) 
+		
+		// Making sure this demo encounter started 6 days ago so that the risk score will be 
+		// consistent over time 
+		set obj.EncounterStart = $System.SQL.DATEADD("d",-6,$ZDATETIME($HOROLOG,3,1)) 
+		
 		set obj.DischargeLocation = DischargeLocation
 		SEt obj.Status = "finished"
 		
