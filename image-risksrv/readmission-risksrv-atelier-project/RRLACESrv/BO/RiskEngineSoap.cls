@@ -15,7 +15,7 @@ Method Admit(pRequest As RRLACESrv.BO.AdmitRequest, Output pResponse As RRLACESr
 Method UpdateEncounter(pRequest As RRLACESrv.BO.UpdateEncounterRequest, Output pResponse As RRLACESrv.BO.UpdateEncounterResponse) As %Library.Status
 {
  Set ..Adapter.WebServiceClientClass = "RRLACESrv.WSClient.LACESoap"
- Set tSC = ..Adapter.InvokeMethod("UpdateEncounter",.UpdateEncounterResult,pRequest.PatientID,pRequest.EncounterNumber,pRequest.EncounterType,pRequest.AdmissionSource,pRequest.StartDate,pRequest.StartTime,pRequest.EndDate,pRequest.EndTime,pRequest.DischargeLocation,.EncounterID)  Quit:$$$ISERR(tSC) tSC
+ Set tSC = ..Adapter.InvokeMethod("UpdateEncounter",.UpdateEncounterResult,pRequest.PatientID,pRequest.EncounterNumber,pRequest.EncounterType,pRequest.AdmissionSource,pRequest.EncounterStart, pRequest.EncounterEnd, pRequest.DischargeLocation,.EncounterID)  Quit:$$$ISERR(tSC) tSC
  Set tSC = pRequest.NewResponse(.pResponse)  Quit:$$$ISERR(tSC) tSC
  Set pResponse.UpdateEncounterResult=$get(UpdateEncounterResult),pResponse.EncounterID = $get(EncounterID)
  Quit $$$OK
