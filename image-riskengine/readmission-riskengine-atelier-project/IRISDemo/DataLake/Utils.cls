@@ -239,6 +239,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -264,6 +265,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -289,6 +291,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -314,6 +317,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -339,6 +343,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -364,6 +369,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -389,6 +395,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -436,6 +443,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -452,6 +460,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -477,6 +486,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -524,6 +534,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "EMER"
+		set objEnc.AdmitReason = "Emergency Room admission (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -540,6 +551,7 @@ ClassMethod UpdateDemoPatients(debug As %Boolean = 0)
 		Set objEnc.EncounterEnd = end
 		Set objEnc.Status = "finished"
 		set objEnc.ActCode = "IMP"
+		set objEnc.AdmitReason = "Encounter for check up (procedure)"
 		set objEnc.DischargeLocation = "H"
 		Set tSC = objEnc.%Save() 
 		$$$ThrowStatusExceptionIfError(tSC, "UpdateDemoPatientsSaveEncounterException")
@@ -578,6 +590,7 @@ ClassMethod CreateDemoEncounter(pMRN As %String, pOffSet As %Integer, pDemoNumbe
 	Set objEncounter.EncounterStart = $SYSTEM.SQL.DATEADD("day", pOffSet, $Horolog)
 	Set objEncounter.EncounterEnd = $ZDATETIME($Horolog, 3)
 	set objEncounter.ActCode = "IMP"
+	set objEncounter.AdmitReason = "Encounter for problem"
 	set objEncounter.Status = "active"
 	set objEncounter.DischargeLocation = "H"
 			
@@ -592,7 +605,8 @@ ClassMethod CreateDemoEncounter(pMRN As %String, pOffSet As %Integer, pDemoNumbe
 	set tSC = ##class(%DeepSee.Utils).%ProcessFact("MLEncounterV2",objEncounter.%Id())
 	$$$ThrowStatusExceptionIfError(tSC, "ErrorUpdatingMLEncounterCube")
 	
-	write "FINISHED CREATING DEMO ENCOUNTER"
+	write objEncounter.AdmitReason, !
+	write "FINISHED CREATING DEMO ENCOUNTER", !
 }
 
 ClassMethod AddProbabilitiesToDemoEncounters()
