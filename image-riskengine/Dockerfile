@@ -1,3 +1,5 @@
+FROM intersystemsdc/irisdemo-base-synthea:readmission-demo-5000 AS synthea-patients
+
 FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.5
 
 LABEL maintainer="Amir Samary <amir.samary@intersystems.com>"
@@ -15,14 +17,15 @@ ADD ./ComorbidityIndexMapping.tar.gz /tmp/
 # ADD the compressed machine learning model to IRIS because the PMML file is 25MB
 ADD --chown=irisowner:irisuser ./IRISDemo.ImportedModel.RandomForest.pmml.tar.gz /tmp/
 
-# Adding Synthea FHIR Pateint medical histories
-ADD --chown=irisowner:irisuser ./patient-data.tar.gz /tmp/
-
 # IRIS Global buffers and Routine Buffers
 ENV IRIS_GLOBAL_BUFFERS=128
 ENV IRIS_ROUTINE_BUFFERS=64
 
+# Adding Synthea FHIR Pateint medical histories
 # Running the installer. This will load the source from our project.
+# ADD --chown=irisowner:irisuser ./patient-data.tar.gz /tmp/
+COPY --from=synthea-patients /tmp/patient-data.tar.gz /tmp/
+
 RUN /usr/irissys/demo/irisdemoinstaller.sh
 
 # These files need root permissions to delete successfully
