@@ -76,7 +76,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
-  <measure name="LOS" disabled="false" sourceExpression="$System.SQL.DATEDIFF(&quot;day&quot;,%source.EncounterStart,%source.EncounterEnd)" factName="LOS" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  <measure name="LOS" disabled="false" sourceProperty="LOS" factName="LOS" aggregate="AVG" type="integer" hidden="false" searchable="false">
   </measure>
   <measure name="Smoker" displayName="Smoker" disabled="false" sourceExpression="$piece(%expression.Smoking,&quot;,&quot;,3)" factName="MxSmoker" aggregate="SUM" hidden="false" searchable="false">
   </measure>

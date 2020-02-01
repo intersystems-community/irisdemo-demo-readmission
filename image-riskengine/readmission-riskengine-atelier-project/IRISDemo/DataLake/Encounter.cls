@@ -29,7 +29,10 @@ Property DischargeLocation As %String(DISPLAYLIST = ",Home,Deceased,Skilled Nurs
 Property EncounterNumber As %String [ Required ];
 
 Property LOS As %Integer [ SqlComputeCode = {
- Set {LOS} = $System.SQL.DATEDIFF("d",{EncounterStart}, {EncounterEnd})
+ Set {LOS} = $Select(
+ 						{EncounterEnd}'="":$System.SQL.DATEDIFF("d",{EncounterStart}, {EncounterEnd}),
+ 						1:$System.SQL.DATEDIFF("d",{EncounterStart}, $ZDateTime($H,3))
+ 					)
 }, SqlComputed, SqlComputeOnChange = (EncounterStart, EncounterEnd) ];
 
 Property Status As %String(VALUELIST = ",active,finished") [ Required ];
