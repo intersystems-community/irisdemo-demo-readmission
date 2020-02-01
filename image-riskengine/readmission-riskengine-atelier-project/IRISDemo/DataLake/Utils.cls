@@ -195,7 +195,7 @@ ClassMethod AddReadmissionPredictionsToEncounter(encounterID As %Integer)
 			Set tSC = oException.AsStatus()
 		}
 		
-		$$$ThrowStatusExceptionIfError(tSC, "AddDemoEncountersToPublishedABTFactTableException:"_encounterID)
+		$$$ThrowStatusExceptionIfError(tSC, "AddReadmissionPredictionsToEncounterException")
 }
 
 /// Pick the patients we want to use on the demo and give them fixed names
