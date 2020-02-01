@@ -60,7 +60,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </dimension>
   <dimension name="Age Discharged" disabled="false" hasAll="false" allCaption="All Age Discharged" allDisplayName="Age Discharged" type="data" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="Age Group" displayName="Age Group" disabled="false" sourceExpression="%expression.AgeDischarged" factName="DxAgeGroup" list="false" rangeExpression="&quot;&quot;:Age Unknown;[0,10]:0-10;[11,20]:11-20;[21,30]:21-30;[31,40]:31-40;[41,50]:41-50;[51,60]:51-60;[61,70]:61-70;[71,]:71+;" useDisplayValue="false" useAsFilter="true" hidden="false">
+      <level name="Age Group" displayName="Age Group" disabled="false" sourceExpression="%expression.AgeDischarged" factName="DxAgeGroup" list="false" rangeExpression="[0,11):0-10;[11,21):11-20;[21,31):21-30;[31,41):31-40;[41,51):41-50;[51,61):51-60;[61,71):61-70;[71,):71+;" useDisplayValue="false" useAsFilter="true" hidden="false">
       </level>
     </hierarchy>
   </dimension>
@@ -112,7 +112,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </measure>
   <expression name="Smoking" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).Smoking(%source.Patient)">
   </expression>
-  <expression name="AgeDischarged" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).GetAgeAtDischarge(%source.%ID, %source.EncounterEnd, %source.Patient.DateOfBirth)">
+  <expression name="AgeDischarged" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).GetAgeAtDischarge(%source.EncounterStart, %source.EncounterEnd, %source.Patient.DateOfBirth)">
   </expression>
   <listing name="Listing" disabled="false" listingType="table" fieldList="ID,AdmitReason,DischargeLocation,EncounterNumber,EncounterType,LOS">
   </listing>

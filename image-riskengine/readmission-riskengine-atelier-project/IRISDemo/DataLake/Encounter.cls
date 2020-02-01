@@ -28,7 +28,7 @@ Property DischargeLocation As %String(DISPLAYLIST = ",Home,Deceased,Skilled Nurs
 
 Property EncounterNumber As %String [ Required ];
 
-Property LOS As %Integer [ Required, SqlComputeCode = {
+Property LOS As %Integer [ SqlComputeCode = {
  Set {LOS} = $System.SQL.DATEDIFF("d",{EncounterStart}, {EncounterEnd})
 }, SqlComputed, SqlComputeOnChange = (EncounterStart, EncounterEnd) ];
 

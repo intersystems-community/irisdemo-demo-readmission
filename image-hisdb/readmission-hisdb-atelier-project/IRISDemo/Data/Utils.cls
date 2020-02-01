@@ -38,7 +38,7 @@ Class IRISDemo.Data.Utils
 			Set objEncounter.LACEScoreAggregate = objRs.Get("LACEScoreAggregate")
 			Set objEncounter.LACEScore = objRs.Get("LACEScore")
 			Set objEncounter.ReadmissionProbability = objRs.Get("ReadmissionProbability")
-			Set objEncounter.DischargeDestination=##class(EncounterDischargeDest).DischargeDestCodeIndexOpen("001") // Send to home
+			Set objEncounter.DischargeDestination=##class(EncounterDischargeDest).DischargeDestCodeIndexOpen("H") // Send to home
 			Set objEncounter.EncounterStatus="A"	//Active
 			
 			Set objPatient = ##class(IRISDemo.Data.Patient).MRNIndexOpen(objRs.Get("PatientID"))
@@ -88,7 +88,7 @@ Class IRISDemo.Data.Utils
 			}
 			
 			Set objEncounter.EncounterEnd=""
-			Set objEncounter.DischargeDestination=""
+			Set objEncounter.DischargeDestination=##class(EncounterDischargeDest).DischargeDestCodeIndexOpen("H") // Send to home
 			Set objEncounter.EncounterStatus="A"
 			
 			Set tSC = objEncounter.%Save()
@@ -101,9 +101,9 @@ Class IRISDemo.Data.Utils
 	{
 		// That is just another way of doing some quick and dirty SQL:
 		
-		&SQL(INSERT INTO IRISDemo_Data.EncounterDischargeDest (Code, Description) values ('001', 'Home'))
-		&SQL(INSERT INTO IRISDemo_Data.EncounterDischargeDest (Code, Description) values ('002', 'Nursing Facility'))
-		&SQL(INSERT INTO IRISDemo_Data.EncounterDischargeDest (Code, Description) values ('003', 'Deceased'))
+		&SQL(INSERT INTO IRISDemo_Data.EncounterDischargeDest (Code, Description) values ('H', 'Home'))
+		&SQL(INSERT INTO IRISDemo_Data.EncounterDischargeDest (Code, Description) values ('N', 'Nursing Facility'))
+		&SQL(INSERT INTO IRISDemo_Data.EncounterDischargeDest (Code, Description) values ('D', 'Deceased'))
 	}
 
 }

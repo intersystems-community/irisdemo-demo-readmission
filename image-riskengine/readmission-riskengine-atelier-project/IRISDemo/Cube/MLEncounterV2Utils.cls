@@ -1,15 +1,22 @@
 Class IRISDemo.Cube.MLEncounterV2Utils
 {
-ClassMethod GetAgeAtDischarge(pEncounterID As IRISDemo.DataLake.Encounter, pEncounterEnd As %TimeStamp, pPatientDOB As %Date) As %Integer
+ClassMethod GetAgeAtDischarge(pEncounterStart As %TimeStamp, pEncounterEnd As %TimeStamp, pPatientDOB As %Date) As %Integer
 {
 	set age = ""
 	
 	Try 
 	{	
-		If (pEncounterEnd '= "") && (pPatientDOB '= "") {
-			Set endDate = $ZDATETIMEH(pEncounterEnd, 3, 1)
-			set age = $justify((endDate - pPatientDOB)/365.25,0,0)
-		}
+		//Impossible to compute age without date of birth
+		Quit:pPatientDOB="" 
+		
+		//Age to be computed relatively to the encounter end date
+		Set endDateTime=pEncounterEnd 
+		
+		//If the encounter has not ended yet, age is to be computed by encounter start date
+		If (endDateTime="") Set endDateTime=pEncounterStart
+		
+		//Computing age by counting the number of days between the two dates and dividing by 365.25
+		Set age=$System.SQL.DATEDIFF("dd",pPatientDOB, endDateTime)\365.25
 	}
 	Catch {	}
 	
@@ -31,12 +38,14 @@ ClassMethod Smoking(pPatient As IRISDemo.DataLake.Patient) As %String
 
 	//Initialise the smoking to 'non-smoker'
 	set smoking = "1,0,0"
+	
 	// Get the social history for this patient's smoking status. Assume that there is only one
 	set objSql = ##class(%SQL.Statement).%ExecDirect(,"SELECT SNOMEDValue->SNOMEDDescription As Description from IRISDemo_DataLake.SurveyObservation WHERE Code->LOINCCode='72166-2' AND Patient = "_pPatient)
 	if objSql.%Next()
 	{
 		///Code for Tobacco smoking status NHIS is 72166-2
 		Set SNOMEDDescription = objSql.%Get("Description")
+		
 		// Set the position in the string according to the position indicated by the text
 		set position = $get(smoking($zconvert(SNOMEDDescription,"U")))
 		If position

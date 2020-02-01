@@ -14,6 +14,8 @@ Parameter NAMESPACE = "http://tempuri.org";
 /// Namespaces of referenced classes will be used in the WSDL.
 Parameter USECLASSNAMESPACES = 1;
 
+Parameter XMLIGNORENULL=1;
+
 /// Admit patient (new encounter)
 Method Admit(PatientID As %String, EncounterNumber As %String, EncounterType As %String, StartDate As %Date, StartTime As %Time, AdmissionSource As %String) As %Status [ WebMethod ]
 {
@@ -74,30 +76,28 @@ Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, Encount
 			Set obj.Patient = objPatient
 		}
 	
-		// Strip out any empty string set to char(0)
-		//set AdmissionSource = $translate(AdmissionSource,$char(0))
-		set DischargeLocation = $Extract($translate(DischargeLocation,$char(0)),1)
+		Set obj.DischargeLocation = DischargeLocation		
 		set obj.EncounterType = EncounterType
-		
 		Set obj.EncounterStart = EncounterStart
-		Set obj.EncounterEnd = EncounterEnd 
-				
-		Set obj.DischargeLocation = DischargeLocation
-		SEt obj.Status = "finished"
+		Set obj.EncounterEnd = EncounterEnd
+		
+		If EncounterEnd'=""
+		{ 
+			SEt obj.Status = "finished"
+		}
 		
 		set tSC = obj.%Save()
 		$$$ThrowStatusExceptionIfError(tSC, "ErrorSavingObject")
 		
-		//Update DeepSee
-		if tSC {
-			// Immediate update of Cube
-			set tSC = ##class(%DeepSee.Utils).%ProcessFact("LACEV2",obj.%Id())
-			$$$ThrowStatusExceptionIfError(tSC, "ErrorUpdatingLACECube")
-			set tSC = ##class(%DeepSee.Utils).%ProcessFact("MLEncounterV2",obj.%Id())
-			$$$ThrowStatusExceptionIfError(tSC, "ErrorUpdatingMLEncounterCube")
-		}
+		// Synchronize this single fact into the LACEV2 cube because we need it current right now
+		set tSC = ##class(%DeepSee.Utils).%ProcessFact("LACEV2",obj.%Id())
+		$$$ThrowStatusExceptionIfError(tSC, "ErrorUpdatingLACECube")
 		
-		//Recalculate readmission probabilities every single time an encounter message is updated.
+		// Synchronize this single fact into the ML Encounter cube because we need it current right now
+		set tSC = ##class(%DeepSee.Utils).%ProcessFact("MLEncounterV2",obj.%Id())
+		$$$ThrowStatusExceptionIfError(tSC, "ErrorUpdatingMLEncounterCube")
+		
+		//Recalculate LACE scores and readmission probabilities every single time an encounter message is updated.
 		Do ##class(IRISDemo.DataLake.Utils).AddReadmissionPredictionsToEncounter(obj.%Id())
 		
 		//Adding EncounterID so it is available in the production for running machine learning models
