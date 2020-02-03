@@ -49,7 +49,7 @@ Method Admit(PatientID As %String, EncounterNumber As %String, EncounterType As 
 	quit tSC
 }
 
-/// Discharge
+///
 Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, EncounterType As %String, AdmissionSource As %String, EncounterStart As %TimeStamp, EncounterEnd As %TimeStamp, DischargeLocation As %String, Output EncounterID As %String) As %Status [ WebMethod ]
 {
 	set tSC = $$$OK
@@ -79,11 +79,18 @@ Method UpdateEncounter(PatientID As %String, EncounterNumber As %String, Encount
 		Set obj.DischargeLocation = DischargeLocation		
 		set obj.EncounterType = EncounterType
 		Set obj.EncounterStart = EncounterStart
-		Set obj.EncounterEnd = EncounterEnd
 		
+		/*If the encounter is provided it means that the person was discharged from the EMR system*/
 		If EncounterEnd'=""
 		{ 
-			SEt obj.Status = "finished"
+			Set obj.Status = "finished"
+		}Else {
+			/// A running encounter end still needs to be provided so that probabilities can 
+			/// be continuously calculated for every update to the EMR system. Every time a new
+			/// probability is calculated for an active encounter it is calculated as if the person
+			/// was dischared at the current moment.
+			
+			Set obj.EncounterEnd = $ZDATETIME($Horolog, 3)
 		}
 		
 		set tSC = obj.%Save()
