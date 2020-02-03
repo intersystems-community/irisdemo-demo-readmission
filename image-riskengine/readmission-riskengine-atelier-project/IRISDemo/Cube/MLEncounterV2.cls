@@ -18,34 +18,6 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
       </level>
     </hierarchy>
   </dimension>
-  <dimension name="Start Date" displayName="Start Date" disabled="false" hasAll="false" allCaption="All Start Date" allDisplayName="Start Date" sourceProperty="EncounterStart" type="time" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="StartDate DoW" displayName="DxStartDateDayOfWeek" disabled="false" factName="DxStartDateDayOfWeek" timeFunction="DayOfWeek" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-    <hierarchy name="H2" disabled="false" hidden="false">
-      <level name="StartDate DoM" displayName="DxStartDateDayOfMonth" disabled="false" factName="DxStartDateDayOfMonth" timeFunction="DayNumber" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-    <hierarchy name="H3" disabled="false" hidden="false">
-      <level name="StartDate Month" displayName="DxStartDateMonth" disabled="false" factName="DxStartDateMonth" timeFunction="MonthNumber" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-  </dimension>
-  <dimension name="End Date" disabled="false" hasAll="false" allCaption="All End Date" allDisplayName="End Date" sourceProperty="EncounterEnd" type="time" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
-    <hierarchy name="H1" disabled="false" hidden="false">
-      <level name="EndDate DoW" displayName="DxEndDateDayOfWeek" disabled="false" factName="DxEndDateDayOfWeek" timeFunction="DayOfWeek" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-    <hierarchy name="H2" disabled="false" hidden="false">
-      <level name="EndDate DoM" displayName="DxEndDateDayOfMonth" disabled="false" factName="DxEndDateDayOfMonth" timeFunction="DayNumber" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-    <hierarchy name="H3" disabled="false" hidden="false">
-      <level name="EndDate Month" displayName="DxEndDateMonth" disabled="false" factName="DxEndDateMonth" timeFunction="MonthNumber" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
-      </level>
-    </hierarchy>
-  </dimension>
   <dimension name="Discharge Location" displayName="Discharge Location" disabled="false" hasAll="false" allCaption="All Discharge Location" allDisplayName="Discharge Location" type="data" calendar="gregorian" iKnowType="entity" hidden="false" showHierarchies="default">
     <hierarchy name="H1" disabled="false" hidden="false">
       <level name="Discharge Location" displayName="Discharge Location" disabled="false" sourceProperty="DischargeLocation" list="false" useDisplayValue="false" useAsFilter="true" hidden="false">
@@ -109,6 +81,18 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   <measure name="EncounterStartYear" disabled="false" sourceExpression="$system.SQL.YEAR(%source.EncounterStart)" factName="MxEncounterStartYear" aggregate="AVG" type="integer" hidden="false" searchable="false">
   </measure>
   <measure name="EncounterEndYear" disabled="false" sourceExpression="$system.SQL.YEAR(%source.EncounterEnd)" factName="MxEncounterEndYear" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="StartDateDoW" disabled="false" sourceExpression="$system.SQL.DAYOFWEEK(%source.EncounterStart)" factName="MxStartDateDayOfWeek" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="StartDateDoM" disabled="false" sourceExpression="$system.SQL.DAYOFMONTH(%source.EncounterStart)" factName="MxStartDateDayOfMonth" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="StartDateMonth" disabled="false" sourceExpression="$system.SQL.MONTH(%source.EncounterStart)" factName="MxStartDateMonth" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="EndDateDoW" disabled="false" sourceExpression="$system.SQL.DAYOFWEEK(%source.EncounterEnd)" factName="MxEndDateDayOfWeek" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="EndDateDoM" disabled="false" sourceExpression="$system.SQL.DAYOFMONTH(%source.EncounterEnd)" factName="MxEndDateDayOfMonth" aggregate="AVG" type="integer" hidden="false" searchable="false">
+  </measure>
+  <measure name="EndDateMonth" disabled="false" sourceExpression="$system.SQL.MONTH(%source.EncounterEnd)" factName="MxEndDateMonth" aggregate="AVG" type="integer" hidden="false" searchable="false">
   </measure>
   <expression name="Smoking" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).Smoking(%source.Patient)">
   </expression>

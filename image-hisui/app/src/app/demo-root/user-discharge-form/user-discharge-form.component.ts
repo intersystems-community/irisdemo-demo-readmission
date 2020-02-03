@@ -17,9 +17,9 @@ export class UserDischargeFormComponent implements OnInit {
   hasHighReadmissionProbability: boolean = false;
 
   ctypes = [
-    {value: '1', viewValue: 'Schedule Follow up in 72 Hours'},
-    {value: '2', viewValue: 'Send To Nursing Facility'},
-    {value: '3', viewValue: 'Give Focused Medical Education'},
+    {value: '1', viewValue: 'Send To Nursing Facility'},
+    {value: '2', viewValue: 'Schedule Follow up in 72 Hours'},
+    {value: '3', viewValue: 'Give Focused Medical Education'}
   ]
 
   dtypes = [
@@ -35,7 +35,7 @@ export class UserDischargeFormComponent implements OnInit {
 
     if(this.user.endDate === null || this.user.encounterStatus === 'A'){
       this.user.endDate = new Date();
-      this.user.dischargeDestination = "001";
+      this.user.dischargeDestination = "H";
     }
   }
 

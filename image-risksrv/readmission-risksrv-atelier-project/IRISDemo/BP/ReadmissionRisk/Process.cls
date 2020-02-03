@@ -3,14 +3,6 @@ Class IRISDemo.BP.ReadmissionRisk.Process Extends Ens.BusinessProcessBPL
 {
 
 /// BPL Definition
-Storage Default
-{
-<Description>
-<![CDATA[BPL Definition]]></Description>
-<Type>%Storage.Persistent</Type>
-}
-
-/// BPL Definition
 XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 {
 <process language='objectscript' request='RRLACESrv.BO.UpdateEncounterRequest' response='Ens.Response' height='2150' width='2000' >
@@ -106,7 +98,6 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <assign property="callrequest.LACEScore" value="context.LACEScoreAggregate" action="set" />
 <assign property="callrequest.LACEScoreAggregate" value="context.RiskScore" action="set" />
 </request>
-<response type='IRISDemo.BO.EncounterUpdate.EncounterUpdateResponse' />
 </call>
 <if name='Discharge OK?' condition='(request.UpdateMessageType = "A03") &amp;&amp; (context.UpdateEncounterResult=1)' xpos='200' ypos='650' xend='200' yend='1800' >
 <annotation><![CDATA[If the Update Request has completed successfully and the update is a Discharge Request then the risk engine needs to check and see if an alert should be triggered.]]></annotation>
@@ -148,6 +139,14 @@ ML readmission prediction is above 50%]]></annotation>
 </if>
 </sequence>
 </process>
+}
+
+/// BPL Definition
+Storage Default
+{
+<Description>
+<![CDATA[BPL Definition]]></Description>
+<Type>%Storage.Persistent</Type>
 }
 
 }
