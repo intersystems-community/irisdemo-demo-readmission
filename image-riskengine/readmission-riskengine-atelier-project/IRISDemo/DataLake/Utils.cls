@@ -33,7 +33,7 @@ ClassMethod LoadDemoData(debug As %Boolean = 0)
 	write !!,"Generating Demo Patient Data finished",!!
 	
 	Write !!,"Publishing MLEncounterV2 Cube as ABT",!!
-    Do ##class(ML.Director).PublishCubeAsABT("MLEncounterV2","MLEncounter","Drop=DxEncounterEnd,DxEncounterStart")
+    Do ##class(ML.Director).PublishCubeAsABT("MLEncounterV2","MLEncounter")
     
    Write !!,"Adding Probabilities to demo encounters",!!
    Do ..AddProbabilitiesToDemoEncounters()
@@ -195,7 +195,7 @@ ClassMethod AddReadmissionPredictionsToEncounter(encounterID As %Integer)
 			Set tSC = oException.AsStatus()
 		}
 		
-		$$$ThrowStatusExceptionIfError(tSC, "AddDemoEncountersToPublishedABTFactTableException:"_encounterID)
+		$$$ThrowStatusExceptionIfError(tSC, "AddReadmissionPredictionsToEncounterException")
 }
 
 /// Pick the patients we want to use on the demo and give them fixed names

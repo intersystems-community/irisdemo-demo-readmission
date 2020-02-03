@@ -98,7 +98,7 @@ export class UserDischargeModalComponent implements OnInit {
       "DxDischargeLocation": event.value
     }
 
-    if(event.value === '2'){
+    if(event.value === '1'){
       this.recalculatePatientMLScore(dataMapUpdates, this.patient.encounterNumber)
     }
   }
