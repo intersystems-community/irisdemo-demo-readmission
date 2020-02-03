@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   risksrv:
-    image: intersystemsdc/irisdemo-demo-readmission:risksrv-version-2.2.2
+    image: intersystemsdc/irisdemo-demo-readmission:risksrv-version-2.1.0
     hostname: risksrv
     init: true
     ports:
@@ -15,8 +15,8 @@ services:
       target: /hl7files
 
   riskengine:   # Readmission Risk LACE Service
-    image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.2.2
-    hostname: risksrv
+    image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.1.0
+    hostname: riskengine
     depends_on:
     - risksrv
     init: true
@@ -29,7 +29,7 @@ services:
       target: /common_shared
 
   hisdb:
-    image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.2.2
+    image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.1.0
     hostname: hisdb
     depends_on:
     - riskengine
@@ -39,7 +39,7 @@ services:
     - "9096:52773" # 52773 is the webserver/management portal port
 
   hisui:
-    image: intersystemsdc/irisdemo-demo-readmission:hisui-version-2.2.2
+    image: intersystemsdc/irisdemo-demo-readmission:hisui-version-2.1.0
     hostname: hisui
     depends_on:
     - hisdb
@@ -124,29 +124,29 @@ services:
       source: ./common_shared/
       target: /common_shared
 
-  worker2:
-    depends_on:
-      - sparkmaster
-    image: intersystemsdc/irisdemo-base-spark-iris:version-1.1
-    hostname: worker2
-    init: true
-    environment:
-      IRIS_MASTER_HOST: riskengine
-      IRIS_MASTER_PORT: 51773
-      IRIS_MASTER_USERNAME: SuperUser
-      IRIS_MASTER_PASSWORD: sys
-      IRIS_MASTER_NAMESPACE: APPINT
+  # worker2:
+  #   depends_on:
+  #     - sparkmaster
+  #   image: intersystemsdc/irisdemo-base-spark-iris:version-1.1
+  #   hostname: worker2
+  #   init: true
+  #   environment:
+  #     IRIS_MASTER_HOST: riskengine
+  #     IRIS_MASTER_PORT: 51773
+  #     IRIS_MASTER_USERNAME: SuperUser
+  #     IRIS_MASTER_PASSWORD: sys
+  #     IRIS_MASTER_NAMESPACE: APPINT
 
-      SPARK_NODE_TYPE: Worker
-      SPARK_WORKER_CORES: 1
-      SPARK_WORKER_MEMORY: 8g   # You can give more memory to your work if you are getting errors when using Spark
-      SPARK_WORKER_PORT: 8882
-      SPARK_WORKER_WEBUI_PORT: 8082
-      SPARK_PUBLIC_DNS: localhost
-    ports:
-      - 8082:8082   # Spark Worker Portal
-    volumes:
-    # - common_shared:/common_shared   # Shared between all spark nodes. Good place to place a file we are working with.
-    - type: bind
-      source: ./common_shared/
-      target: /common_shared
+  #     SPARK_NODE_TYPE: Worker
+  #     SPARK_WORKER_CORES: 1
+  #     SPARK_WORKER_MEMORY: 8g   # You can give more memory to your work if you are getting errors when using Spark
+  #     SPARK_WORKER_PORT: 8882
+  #     SPARK_WORKER_WEBUI_PORT: 8082
+  #     SPARK_PUBLIC_DNS: localhost
+  #   ports:
+  #     - 8082:8082   # Spark Worker Portal
+  #   volumes:
+  #   # - common_shared:/common_shared   # Shared between all spark nodes. Good place to place a file we are working with.
+  #   - type: bind
+  #     source: ./common_shared/
+  #     target: /common_shared
