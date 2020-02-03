@@ -42,11 +42,6 @@ Class IRISDemo.Data.Encounter Extends %Persistent
 		{
 			Set ..DischargeDestination=##class(EncounterDischargeDest).DischargeDestCodeIndexOpen(pDischargeDestCode)
 			If '$IsObject(..DischargeDestination) $$$ThrowException("DischargeDestinationNotFoundException", "Discharge Destination Code: "_pDischargeDestCode)
-			
-			//Hack to get demo working until new globals provided with Skilled Nursing Facility in StarDischargeDestination Table
-			/*If ..DischargeDestination.Code = "002"{
-				Set ..DischargeDestination = ""
-			}*/
 		}
 		
 		Set tSC = ..%Save()
@@ -57,7 +52,7 @@ Class IRISDemo.Data.Encounter Extends %Persistent
 	{
 		Set %NOHL7=1
 			
-		Set obj = ##class(IRISDemo.Data.Encounter).%OpenId(encounterID)
+		Set obj = ##class(IRISDemo.Data.Encounter).EncounterNumberIndexOpen(encounterID)
 		If '$IsObject(obj) $$$ThrowException("EncounterNotFoundException", "encounterId: "_encounterId)
 			
 		Set obj.LACEScoreAggregate = laceScoreAggregate
@@ -112,9 +107,10 @@ Class IRISDemo.Data.Encounter Extends %Persistent
 			{
 				Do ##class(IRISDemo.BS.AppTrigger.Service).TriggerEvent("ADT_A03", {ID})
 			}
-			Else
+			/*If I am Resetting the Demo to update the start date*/
+			ElseIf ({EncounterStart*O}'={EncounterStart*N})
 			{
-				Do ##class(IRISDemo.BS.AppTrigger.Service).TriggerEvent("ADT_A03", {ID})
+				Do ##class(IRISDemo.BS.AppTrigger.Service).TriggerEvent("ADT_A08", {ID})
 			}
 		}
 		Else

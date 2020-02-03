@@ -16,6 +16,7 @@ Property EncounterEnd As %TimeStamp;
 
 Property DischargeLocation As %String;
 
+Property UpdateMessageType As %String (VALUELIST = ",A01,A03,A08");
 
 Storage Default
 {
@@ -43,6 +44,9 @@ Storage Default
 </Value>
 <Value name="8">
 <Value>DischargeLocation</Value>
+</Value>
+<Value name="9">
+<Value>UpdateMessageType</Value>
 </Value>
 </Data>
 <DataLocation>^RRLACESrv.BO.UpdateEncouFB16D</DataLocation>
