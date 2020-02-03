@@ -37,7 +37,7 @@ XData ProductionDefinition
     <Setting Target="Adapter" Name="Credentials">riskengine</Setting>
     <Setting Target="Adapter" Name="HTTPPort">52773</Setting>
     <Setting Target="Adapter" Name="HTTPServer">hisdb</Setting>
-    <Setting Target="Adapter" Name="URL">/csp/appint/rest/encounterupdate/updateprobabilities</Setting>
+    <Setting Target="Adapter" Name="URL">/csp/appint/rest/encounter/updateprobabilities</Setting>
   </Item>
 </Production>
 }
