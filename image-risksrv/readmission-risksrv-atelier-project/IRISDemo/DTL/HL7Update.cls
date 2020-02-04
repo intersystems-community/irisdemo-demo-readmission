@@ -13,19 +13,18 @@ XData DTL [ XMLNamespace = "http://www.intersystems.com/dtl" ]
 <assign value='source.{PID:PatientID.IDNumber}' property='target.PatientID' action='set' />
 <assign value='source.{PV1:VisitNumber.IDNumber}' property='target.EncounterNumber' action='set' />
 <assign value='source.{PV1:AdmissionType}' property='target.EncounterType' action='set' />
-
 <assign value='..ConvertDateTime(source.{PV1:AdmitDateTime.Time},"%q")' property='target.EncounterStart' action='set' />
 <assign value='..ConvertDateTime(source.{PV1:DischargeDateTime.Time},"%q")' property='target.EncounterEnd' action='set' />
-
 <assign value='source.{PV1:AdmitSource}' property='target.AdmissionSource' action='set' />
 <if condition='source.{PV1:DischargedtoLocation}&apos;=""' >
 <true>
-	<assign value='source.{PV1:DischargedtoLocation}' property='target.DischargeLocation' action='set' />
+<assign value='source.{PV1:DischargedtoLocation}' property='target.DischargeLocation' action='set' />
 </true>
 <false>
-	<assign value='"H"' property='target.DischargeLocation' action='set' />
+<assign value='"H"' property='target.DischargeLocation' action='set' />
 </false>
 </if>
+<assign value='source.{MSH:MessageType.TriggerEvent}' property='target.UpdateMessageType' action='set' />
 </transform>
 }
 
