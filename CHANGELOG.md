@@ -1,3 +1,13 @@
+## 2.3.0 (February 03, 2020)
+  - patch fix for missing DTL property
+  - Merge pull request #15 from intersystems-community/integrated-merge-improvements
+  - adding updated Model and production updates for automatic synching
+  - Adding updates for HIS DB real time ML Probability syncing
+  - Fixing name of the riskengine host
+  - Initial set of fixes
+  - Fixing bugs on encounters without EncounterEnd. Fixing discharge location code table differencies between HISDB and the riskengine.
+  - Documentation
+
 ## 2.2.2 (January 31, 2020)
   - Bump version to 2.2.1.
   - Merge branch 'master' of https://github.com/intersystems-community/irisdemo-demo-readmission
