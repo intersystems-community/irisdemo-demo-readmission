@@ -1,3 +1,7 @@
+## 2.3.1 (February 28, 2020)
+- Adding new landing page
+- Fixing BPL annotation from 50% to 15%
+
 ## 2.3.0 (February 03, 2020)
   - patch fix for missing DTL property
   - Merge pull request #15 from intersystems-community/integrated-merge-improvements
