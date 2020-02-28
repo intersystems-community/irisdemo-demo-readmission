@@ -104,7 +104,7 @@ XData BPL [ XMLNamespace = "http://www.intersystems.com/bpl" ]
 <true>
 <if name='Risk Alert?' condition='(context.RiskScore&gt;11) || (context.MLReadmissionRisk &gt; 0.15)' xpos='335' ypos='800' xend='335' yend='1700' >
 <annotation><![CDATA[If LACE score is above 10 or if 
-ML readmission prediction is above 50%]]></annotation>
+ML readmission prediction is above 15%]]></annotation>
 <true>
 <assign name="Compose Alert Message" property="context.AlertMessage" value="&quot;Patient '&quot;_request.PatientID_&quot;' has just been discharged to '&quot;_request.DischargeLocation_&quot;' and has a &quot;_$select(context.RiskScore&gt;9:&quot;high&quot;,1:&quot;moderate&quot;)_&quot; risk of readmission&quot;_$char(13,10)_&quot;The scores are as follows:&quot;_$char(13,10)_&quot;Risk Score: &quot;_context.RiskScore_$char(13,10)_&quot;'L' Score (Length of stay): &quot;_context.LScore_$char(13,10)_&quot;'A' Score (Acuity): &quot;_context.AScore_$char(13,10)_&quot;'C' Score (Comorbidity): &quot;_context.CScore_$char(13,10)_&quot;'E' Score (Emergency department visits): &quot;_context.EScore_$char(13,10)_&quot;ML Readmission Risk Prediction: &quot;_(context.MLReadmissionRisk*100)_&quot;%&quot;" action="set" xpos='470' ypos='950' />
 <call name='Add Patient to Risk Program' target='Care Team' async='1' xpos='470' ypos='1050' >
