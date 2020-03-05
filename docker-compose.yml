@@ -15,7 +15,7 @@ services:
       target: /hl7files
 
   riskengine:   # Readmission Risk LACE Service
-    image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.3.1
+    image: docker.iscinternal.com/intersystems/iris:2020.2.0ML.242.0
     hostname: riskengine
     depends_on:
     - risksrv
