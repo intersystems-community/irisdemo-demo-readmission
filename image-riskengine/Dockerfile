@@ -1,6 +1,6 @@
 FROM intersystemsdc/irisdemo-base-synthea:readmission-demo-5000 AS synthea-patients
 
-FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.5
+FROM docker.iscinternal.com/intersystems/iris:2020.2.0ML.242.0
 
 LABEL maintainer="Amir Samary <amir.samary@intersystems.com>"
 
