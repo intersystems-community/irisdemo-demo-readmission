@@ -198,7 +198,7 @@ ClassMethod PublishABT(pCubeName As %String = "", pABTName As %String = "", pFul
 			{
 				Set oMethodModelDrop = ##class(%Dictionary.MethodDefinition).%New()
 				Set oMethodModelDrop.parent=oGeneratedClass
-				Set oMethodModelDrop.Name="ModelDrop"
+				Set oMethodModelDrop.Name="IntegratedMLModelDrop"
 				Set oMethodModelDrop.ClassMethod=1
 				Set oMethodModelDrop.FormalSpec="pModelName:%String="""_pABTName_""""
 				Set oMethodModelDrop.ReturnType="%Status"
@@ -212,7 +212,7 @@ ClassMethod PublishABT(pCubeName As %String = "", pABTName As %String = "", pFul
 				
 				Set oMethodModelCreate = ##class(%Dictionary.MethodDefinition).%New()
 				Set oMethodModelCreate.parent=oGeneratedClass
-				Set oMethodModelCreate.Name="ModelCreate"
+				Set oMethodModelCreate.Name="IntegratedMLModelCreate"
 				Set oMethodModelCreate.ClassMethod=1
 				Set oMethodModelCreate.FormalSpec="pModelName:%String="""_pABTName_""",pParams:%String="""""
 				Set oMethodModelCreate.ReturnType="%Status"
@@ -230,9 +230,9 @@ ClassMethod PublishABT(pCubeName As %String = "", pABTName As %String = "", pFul
 
 				Set oMethodModelTrain = ##class(%Dictionary.MethodDefinition).%New()
 				Set oMethodModelTrain.parent=oGeneratedClass
-				Set oMethodModelTrain.Name="ModelTrain"
+				Set oMethodModelTrain.Name="IntegratedMLModelTrain"
 				Set oMethodModelTrain.ClassMethod=1
-				Set oMethodModelTrain.FormalSpec="pModelName:%String="""_pABTName_""",pParams:%String="""",pASync:%Integer=1"
+				Set oMethodModelTrain.FormalSpec="pModelName:%String="""_pABTName_""",pParams:%String="""",pASync:%Integer=0"
 				Set oMethodModelTrain.ReturnType="%Status"
 				Do oMethodModelTrain.Implementation.WriteLine(" Set tSC = $$$OK")
 				Do oMethodModelTrain.Implementation.WriteLine(" Write ""Training model ""_pModelName_"" via IntegratedML."",!")
@@ -249,6 +249,22 @@ ClassMethod PublishABT(pCubeName As %String = "", pABTName As %String = "", pFul
 				Do oMethodModelTrain.Implementation.WriteLine("   }")
 				Do oMethodModelTrain.Implementation.WriteLine(" } Catch (oException) { Set tSC = oException.AsStatus() }")
 				Do oMethodModelTrain.Implementation.WriteLine(" Quit tSC")
+				
+				Set oMethodModelPredict = ##class(%Dictionary.MethodDefinition).%New()
+				Set oMethodModelPredict.parent=oGeneratedClass
+				Set oMethodModelPredict.Name="IntegratedMLModelPredict"
+				Set oMethodModelPredict.ClassMethod=1
+				Set oMethodModelPredict.FormalSpec="pSourceId:%String="""",pModelName:%String="""_pABTName_""",pCopyColumns:%String="""_^PublishedABT(pABTName,"Target")_""""
+				Set oMethodModelPredict.ReturnType="%SQL.StatementResult"
+				If $Piece($Extract(^PublishedABT(pABTName,"ROWSPEC"),$Find(^PublishedABT(pABTName,"ROWSPEC"),^PublishedABT(pABTName,"Target")_":"),*),",",1) = "%Double" {
+					Do oMethodModelPredict.Implementation.WriteLine(" Set tQueried = ""PREDICT(""_pModelName_"") As Prediction""")
+				}
+				Else {
+					Do oMethodModelPredict.Implementation.WriteLine(" Set tQueried = ""PREDICT(""_pModelName_"") As Prediction,PROBABILITY(""_pModelName_"") As Probability""")
+				}
+				Do oMethodModelPredict.Implementation.WriteLine(" If pCopyColumns '= """" { Set tQueried = tQueried_"",""_pCopyColumns }")
+				Do oMethodModelPredict.Implementation.WriteLine(" zw ""SELECT ""_tQueried_"" FROM ("_tGeneratedClassName_"GetFeatures(""_pSourceId_""))""")
+				Do oMethodModelPredict.Implementation.WriteLine(" Quit ##class(%SQL.Statement).%ExecDirect("""",""SELECT ""_tQueried_"" FROM ("_tGeneratedClassName_"GetFeatures(""_pSourceId_""))"")")
 				
 				Set mRS = ##class(%SQL.Statement).%ExecDirect(,"DROP MODEL "_pABTName)
 			}
