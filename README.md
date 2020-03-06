@@ -1,6 +1,10 @@
 # Using Realtime Machine Learning to reduce Readmission Risks
 
-Patient Readmissions are said to be the "Hello World of Machine Learning" in Healthcare. On this demo, we use this problem to show how IRIS can be used to **safely build and operationalize** ML models for real time predictions and how this can be integrated into a random application. This **IRIS for Health** demo seeks to show how a full solution for this problem can be built. It shows:
+Patient Readmissions are said to be the "Hello World of Machine Learning" in Healthcare. On this demo, we use this problem to show how IRIS can be used to **safely build and operationalize** ML models for real time predictions and how this can be integrated into a random application. This **IRIS for Health** demo seeks to show how a full solution for this problem can be built. 
+
+Watch this [very nice video](https://www.youtube.com/watch?v=v1l4z7Jm3_g) of this demo in action!
+
+As you will realize, it shows:
 * **IRIS Interoperability** extracting data from HL7v2 messages send by a simulated EMR
 * **IRIS Database** storing the normalized data and helping with the data preparation steps. We use IRIS Analytics and a Cube for this purpose. The cube can be exposed as an [Analytical Base Table (ABT)](https://en.wikipedia.org/wiki/Analytical_base_table) for building the ML model.
 * **Spark Cluster and a Zeppelin Notebook** being used to consume the data from the ABT in IRIS and build the model. The model is then exported as [PMML](https://en.wikipedia.org/wiki/Predictive_Model_Markup_Language).
@@ -52,9 +56,9 @@ When starting, you will see lots of messages from all the containers that are st
 
 When it is done, it will just hang there, without returning control to you. That is fine too. Just leave this window open. If you CTRL+C on this window, docker compose will stop all the containers and stop the demo.
 
-After all the containers have started, open a browser at [http://localhost:9092/csp/appint/demo.csp](http://localhost:9092/csp/appint/demo.csp) to see the landing page of the demo. When requested, use the credentials SuperUser/sys to log in. 
+After all the containers have started, open a browser at [http://localhost:9092/csp/appint/demo.csp](http://localhost:9092/csp/appint/demo.csp) to see the landing page of the demo. When requested, use the credentials **SuperUser/sys** to log in. 
 
-A video about this demo will be published here soon. But for now, you can press at the **Instructions** button at the bottom right of the page to see one example of how to use the demo. The demo has different stories for different publics. 
+You can press the **Instructions** button at the bottom right of the page to see one example of how to use the demo. The demo has different stories for different publics. You can also watch this [very nice video](https://www.youtube.com/watch?v=v1l4z7Jm3_g)!
 
 I like to open EMR's UI and click on the "Patient Census" tab to see the three patients that are hospitalized and their risk scores. I show that ML did a better job than lace, scoring a patient with a 55% risk of readmission while LACE was scoring around 7%. You can click on the LACE score to see its individual components and an explanation about how the score relates to a % risk of readmission. I like to click on the ML % score and show that I can simulate sending the patient to a Nursing Home to see the impact of this decision on the ML % risk score in real time. It reduces the risk to 30% or so. Then I actually discharge the patient to a Nursing Home. This is a very high level demo and you could stop there if you want to. Or you can open other parts of IRIS and show how we got the HL7 discharge message on the **risksrv** layer and extracted the data and used the ML model on **riskengine** to compute the risk score and decide if we should alert the care team and add the patient to a program to be monitored. There are plenty to show and many possible stories!
 
@@ -87,7 +91,7 @@ If you want to see how many features we are feeding into the model, run the foll
 call PublishedABT.MLEncounterGetFeatures()
 ```
 
-The final model being used is a **Random Forest**. The list bellow has the total number of features fed into the model (44) and the bold ones are the ones that the algorithm has actually chosen as relevant (35) for the readmission problem on this dataset: 
+The final model being used is a **Random Forest**. The PMML model for this random forest was exported from the Zeppelin notebook and imported into the data warehouse (riskengine) during build time. The list bellow has the total number of features fed into the model (44) and the bold ones are the ones that the algorithm has actually chosen as relevant (35) for the readmission problem on this dataset: 
 1. **AdmitReason**
 2. **Com_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN**
 3. **Com_CEREBROVASCULAR_DISEASE**
