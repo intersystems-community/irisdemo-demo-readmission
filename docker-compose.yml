@@ -16,6 +16,7 @@ services:
 
   riskengine:   # Readmission Risk LACE Service
     image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.3.1
+    command: --key /irislicense/iris.key
     hostname: riskengine
     depends_on:
     - risksrv
@@ -27,6 +28,9 @@ services:
     - type: bind
       source: ./common_shared/
       target: /common_shared
+    - type: bind
+      source: ./image-riskengine/IRISLicense/
+      target: /irislicense
 
   hisdb:
     image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.3.1

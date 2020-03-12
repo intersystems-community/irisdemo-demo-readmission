@@ -282,6 +282,11 @@ ClassMethod PublishABT(pCubeName As %String = "", pABTName As %String = "", pFul
 		Quit tSC
 }
 
+ClassMethod PublishCubeAsABT(pCubeName As %String = "", pABTName As %String = "", pFullColumnExpansion As %Boolean = 0, pDataPrep As %String = "")
+{
+		Quit PublishABT(pCubeName,pABTName,pFullColumnExpansion,pDataPrep)
+}
+
 ClassMethod RunModelOnABTSourceId(pPublishedABTName As %String, pSourceID As %String, pModel As %DeepSee.PMML.Model.AbstractModel, pModelDataOutput, pSynchronizeFirst As %Boolean = 0)
 {
 		Set tSC = $$$OK

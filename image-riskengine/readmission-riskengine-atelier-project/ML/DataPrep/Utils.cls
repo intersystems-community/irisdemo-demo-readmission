@@ -180,6 +180,11 @@ ClassMethod PrepareAll(pABTName As %String, pDataPrepLists As %List)
 		Set $Extract(^PublishedABT(pABTName, "ABTDefinitionQuery"),1) = ""
 	}
 	
+	If ^PublishedABT(pABTName, "ABTDefinitionQuery") = ""
+	{
+		Return
+	}
+	
 	Set tQuery = "Select Top 1 "_^PublishedABT(pABTName, "ABTDefinitionQuery")_" from "_^PublishedABT(pABTName,"FACTTABLENAME")
 
 	Set oRS = ##class(%SQL.Statement).%ExecDirect(, tQuery)

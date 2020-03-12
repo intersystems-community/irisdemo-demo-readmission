@@ -33,7 +33,7 @@ ClassMethod LoadDemoData(debug As %Boolean = 0)
 	write !!,"Generating Demo Patient Data finished",!!
 	
 	Write !!,"Publishing MLEncounterV2 Cube as ABT",!!
-    Do ##class(ML.Director).PublishCubeAsABT("MLEncounterV2","MLEncounter")
+   Do ##class(ML.Director).PublishABT("MLEncounterV2","MLEncounter")
     
    Write !!,"Adding Probabilities to demo encounters",!!
    Do ..AddProbabilitiesToDemoEncounters()

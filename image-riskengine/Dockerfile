@@ -1,11 +1,12 @@
 FROM intersystemsdc/irisdemo-base-synthea:readmission-demo-5000 AS synthea-patients
 
-FROM docker.iscinternal.com/intersystems/iris:2020.2.0ML.242.0
+FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.6.3
 
 LABEL maintainer="Amir Samary <amir.samary@intersystems.com>"
 
 # Name of the project folder ex.: my-atelier-project
 ARG IRIS_PROJECT_FOLDER_NAME=readmission-riskengine-atelier-project
+ARG IRIS_APP_SOURCEDIR=/tmp/iris_project/
 
 # Adding source code that will be loaded by the installer
 ADD --chown=irisowner:irisuser ./${IRIS_PROJECT_FOLDER_NAME}/ $IRIS_APP_SOURCEDIR
@@ -13,6 +14,9 @@ ADD --chown=irisowner:irisuser ./${IRIS_PROJECT_FOLDER_NAME}/ $IRIS_APP_SOURCEDI
 # This file will be loaded into the APP namespace and deleted by the IRISConfig.Installer
 # These are the clinical data files for comorbidity indices, clinical data and SNOMED->ICD mapping
 ADD ./ComorbidityIndexMapping.tar.gz /tmp/
+
+# Only necessary for the sake of IntegratedML which isn't public yet and therefore needs an IRIS License key.
+ADD ./IRISLicense/iris.key /tmp/
 
 # ADD the compressed machine learning model to IRIS because the PMML file is 25MB
 ADD --chown=irisowner:irisuser ./IRISDemo.ImportedModel.RandomForest.pmml.tar.gz /tmp/
