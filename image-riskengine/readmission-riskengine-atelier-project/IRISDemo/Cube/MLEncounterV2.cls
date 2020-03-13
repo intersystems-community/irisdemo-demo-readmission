@@ -72,7 +72,7 @@ XData Cube [ XMLNamespace = "http://www.intersystems.com/deepsee" ]
   </measure>
   <measure name="NumDiagTwelveMonth" displayName="NumDiagTwelveMonth" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).NumDiagnosisInXMonths(%source.%ID, 12,%source.EncounterStart, %source.Patient.%ID)" factName="MxNumDiagTwelveMonth" aggregate="SUM" hidden="false" searchable="false">
   </measure>
-  <measure name="WillReAdmit" displayName="WillReAdmit" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).WillReAdmit(%source.EncounterEnd, %source.Patient.%ID)" factName="MxWillReAdmit" aggregate="SUM" hidden="false" searchable="false">
+  <measure name="WillReAdmit" displayName="WillReAdmit" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).WillReAdmit(%source.EncounterEnd, %source.Patient.%ID)" factName="MxWillReAdmit" aggregate="SUM" type="integer" hidden="false" searchable="false">
   </measure>
   <measure name="Alcohol" displayName="Alcohol" disabled="false" sourceExpression="##class(IRISDemo.Cube.MLEncounterV2Utils).Alcohol(%source.Patient)" factName="MxAlcohol" aggregate="SUM" hidden="false" searchable="false">
   </measure>
