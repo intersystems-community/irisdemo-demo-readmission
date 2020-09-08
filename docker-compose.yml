@@ -48,7 +48,7 @@ services:
     - "9098:4200" # Where Nodejs Will be listening
 
   zeppelin:
-    image: intersystemsdc/irisdemo-base-zeppelin:latest
+    image: intersystemsdc/irisdemo-base-zeppelin:version-1.3
     init: true
     depends_on:
     - hisui
@@ -67,7 +67,7 @@ services:
 
     environment:
     - IRIS_MASTER_HOST=riskengine # DNS based on the name of the service!
-    - IRIS_MASTER_PORT=51773
+    - IRIS_MASTER_PORT=1972
     - IRIS_MASTER_USERNAME=SuperUser
     - IRIS_MASTER_PASSWORD=sys
     - IRIS_MASTER_NAMESPACE=APPINT

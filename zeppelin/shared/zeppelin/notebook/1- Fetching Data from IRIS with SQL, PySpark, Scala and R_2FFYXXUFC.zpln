@@ -44,7 +44,7 @@
       "title": "Merchant Categories",
       "text": "%irisjdbc\n\ncall PublishedABT.MLEncounterGetFeatures()\n\n ",
       "user": "anonymous",
-      "dateUpdated": "2020-08-10 15:45:05.766",
+      "dateUpdated": "2020-08-31 19:47:15.945",
       "config": {
         "editorSetting": {
           "language": "sql",
@@ -154,8 +154,8 @@
       "jobName": "paragraph_1597074296647_270597621",
       "id": "20180827-231906_879263362",
       "dateCreated": "2020-08-10 15:44:56.647",
-      "dateStarted": "2020-08-10 15:45:05.794",
-      "dateFinished": "2020-08-10 15:45:10.419",
+      "dateStarted": "2020-08-31 19:47:15.975",
+      "dateFinished": "2020-08-31 19:47:18.854",
       "status": "FINISHED"
     },
     {
