@@ -48,12 +48,12 @@ services:
     - "9098:4200" # Where Nodejs Will be listening
 
   zeppelin:
-    image: intersystemsdc/irisdemo-base-zeppelin:version-1.3
+    image: intersystemsdc/irisdemo-base-zeppelin:latest
     init: true
     depends_on:
     - hisui
     ports:
-    - "10000:9090"     # Zeppelin
+    - "10000:8080"     # Zeppelin
     - "10001:4040"     # Zeppelin Spark UI
     volumes:
     # - common_shared:/common_shared   # The production will be looking into this folder for new PMML files
@@ -62,8 +62,29 @@ services:
       source: ./common_shared/
       target: /common_shared
     - type: bind
-      source: ./zeppelin/shared/
-      target: /shared
+      source: ./zeppelin/shared/zeppelin/logs
+      target: /shared/zeppelin/logs
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/conf
+      target: /shared/zeppelin/conf
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/notebook
+      target: /shared/zeppelin/notebook
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/interpreter/jdbc/interpreter-setting.json
+      target: /zeppelin/interpreter/jdbc/interpreter-setting.json
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/interpreter/python/interpreter-setting.json
+      target: /zeppelin/interpreter/python/interpreter-setting.json
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/interpreter/r/interpreter-setting.json
+      target: /zeppelin/interpreter/r/interpreter-setting.json
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/interpreter/spark/interpreter-setting.json
+      target: /zeppelin/interpreter/spark/interpreter-setting.json
+    - type: bind
+      source: ./zeppelin/shared/zeppelin/interpreter/sparql/interpreter-setting.json
+      target: /zeppelin/interpreter/sparql/interpreter-setting.json
 
     environment:
     - IRIS_MASTER_HOST=riskengine # DNS based on the name of the service!
