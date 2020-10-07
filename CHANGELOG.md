@@ -1,3 +1,6 @@
+## 2.4.0 (October 07, 2020)
+- Updated to IRIS 2020.3, Zeppelin 0.9.0, and Spark 2.4.4
+
 ## 2.3.1 (February 28, 2020)
 - Adding new landing page
 - Fixing BPL annotation from 50% to 15%
