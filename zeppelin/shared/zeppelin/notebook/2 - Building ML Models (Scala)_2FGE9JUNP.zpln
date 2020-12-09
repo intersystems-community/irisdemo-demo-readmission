@@ -76,9 +76,9 @@
     },
     {
       "title": "Importing required libraries",
-      "text": "%spark\n\n// So we can access IRIS!\n//import com.intersystems.spark._\nimport com.intersystems.jdbc.IRISDriver\n\nimport spark.implicits._\n\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\n\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\n\n// Transformers to prepare the features for training\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\n\n// Algorithms (Estimators) to train our models (Transformers)\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\n\n// To Evaluate the model against the test data\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\n\n// Models\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationModel\nimport org.apache.spark.ml.classification.GBTClassificationModel\n\n// Pipepeline to connect transformers and estimators \nimport org.apache.spark.ml.Pipeline\n\n// So we can export our final model to PMML\nimport com.intersystems.spark.ml._\n//import org.jpmml.sparkml._\nimport java.io.File\n",
+      "text": "%spark\n\n// So we can access IRIS!\nimport com.intersystems.spark._\nimport com.intersystems.jdbc.IRISDriver\n\nimport spark.implicits._\n\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\n\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\n\n// Transformers to prepare the features for training\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\n\n// Algorithms (Estimators) to train our models (Transformers)\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\n\n// To Evaluate the model against the test data\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\n\n// Models\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationModel\nimport org.apache.spark.ml.classification.GBTClassificationModel\n\n// Pipepeline to connect transformers and estimators \nimport org.apache.spark.ml.Pipeline\n\n// So we can export our final model to PMML\nimport com.intersystems.spark.ml._\nimport org.jpmml.sparkml._\nimport java.io.File\n",
       "user": "anonymous",
-      "dateUpdated": "2020-10-07 16:52:18.404",
+      "dateUpdated": "2020-12-08 22:56:34.662",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -102,7 +102,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "import com.intersystems.jdbc.IRISDriver\nimport spark.implicits._\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationModel\nimport org.apache.spark.ml.cla..."
+            "data": "import com.intersystems.spark._\nimport com.intersystems.jdbc.IRISDriver\nimport spark.implicits._\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationMode..."
           }
         ]
       },
@@ -111,15 +111,15 @@
       "jobName": "paragraph_1596830459613_843705750",
       "id": "20180918-013102_236592080",
       "dateCreated": "2020-08-07 20:00:59.613",
-      "dateStarted": "2020-10-07 16:52:18.433",
-      "dateFinished": "2020-10-07 16:52:40.404",
+      "dateStarted": "2020-12-08 22:56:34.690",
+      "dateFinished": "2020-12-08 22:57:03.264",
       "status": "FINISHED"
     },
     {
       "title": "Reading the data from IRIS",
-      "text": "%spark\n\nimport com.intersystems.jdbc._\nsqlContext.clearCache()\nval df \u003d spark.read.format(\"iris\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\ndf.cache()\ndf.count()\n",
+      "text": "%spark\n\nimport com.intersystems.jdbc._\nimport java.sql.SQLException\nsqlContext.clearCache()\n//    val df \u003d spark.read.format(\"iris\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\nval df \u003d spark.read.format(\"iris\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//df.cache()\n//df.count()\n",
       "user": "anonymous",
-      "dateUpdated": "2020-10-07 16:52:22.234",
+      "dateUpdated": "2020-12-08 22:57:24.693",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -144,7 +144,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "java.lang.Exception: Bad server port number: expected integer between 0 and 65535, but got \u0027-1\u0027\n  at com.intersystems.sqf.Utilities.fail(Utilities.java:72)\n  at com.intersystems.sqf.Address.\u003cinit\u003e(Address.java:126)\n  at com.intersystems.sqf.Address.\u003cinit\u003e(Address.java:91)\n  at com.intersystems.spark.core.Config$.DEFAULT_MASTER_ADDRESS(Config.scala:102)\n  at com.intersystems.spark.core.Address$.parse(Address.scala:172)\n  at com.intersystems.spark.core.DataSource.createRelation(DataSource.scala:94)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:318)\n  at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:223)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:167)\n  ... 53 elided\n"
+            "data": "java.sql.SQLException: Connection not open\n  at com.intersystems.jdbc.IRISConnection.prepareStatement(IRISConnection.java:1336)\n  at com.intersystems.jdbc.IRISConnection.prepareStatement(IRISConnection.java:230)\n  at com.intersystems.spark.core.Master$$anonfun$evaluate$1.apply(Master.scala:180)\n  at com.intersystems.spark.core.Master$$anonfun$evaluate$1.apply(Master.scala:180)\n  at resource.DefaultManagedResource.open(AbstractManagedResource.scala:110)\n  at resource.AbstractManagedResource.acquireFor(AbstractManagedResource.scala:87)\n  at resource.ManagedResourceOperations$$anon$2.acquireFor(ManagedResourceOperations.scala:49)\n  at resource.ManagedResourceOperations$class.apply(ManagedResourceOperations.scala:26)\n  at resource.ManagedResourceOperations$$anon$2.apply(ManagedResourceOperations.scala:47)\n  at resource.ManagedResourceOperations$class.acquireAndGet(ManagedResourceOperations.scala:25)\n  at resource.ManagedResourceOperations$$anon$2.acquireAndGet(ManagedResourceOperations.scala:47)\n  at com.intersystems.spark.core.Utilities$class.autoclose(Utilities.scala:156)\n  at com.intersystems.spark.core.Master.evaluate(Master.scala:179)\n  at com.intersystems.spark.core.Master.schema(Master.scala:104)\n  at com.intersystems.spark.core.Relation.schema$lzycompute(Relation.scala:66)\n  at com.intersystems.spark.core.Relation.schema(Relation.scala:64)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:403)\n  at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:223)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:167)\n  ... 57 elided\n"
           }
         ]
       },
@@ -153,8 +153,8 @@
       "jobName": "paragraph_1596830459614_-901290357",
       "id": "20180913-200917_773871114",
       "dateCreated": "2020-08-07 20:00:59.614",
-      "dateStarted": "2020-10-07 16:52:22.294",
-      "dateFinished": "2020-10-07 16:52:42.367",
+      "dateStarted": "2020-12-08 22:57:24.715",
+      "dateFinished": "2020-12-08 22:57:25.656",
       "status": "ERROR"
     },
     {

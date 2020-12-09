@@ -48,7 +48,7 @@ services:
     - "9098:4200" # Where Nodejs Will be listening
 
   zeppelin:
-    image: intersystemsdc/irisdemo-base-zeppelin:version-1.4.0
+    image: intersystemsdc/irisdemo-base-zeppelin:version-1.4.1
     init: true
     depends_on:
     - hisui
@@ -70,21 +70,6 @@ services:
     - type: bind
       source: ./zeppelin/shared/zeppelin/notebook
       target: /shared/zeppelin/notebook
-    - type: bind
-      source: ./zeppelin/shared/zeppelin/interpreter/jdbc/interpreter-setting.json
-      target: /zeppelin/interpreter/jdbc/interpreter-setting.json
-    - type: bind
-      source: ./zeppelin/shared/zeppelin/interpreter/python/interpreter-setting.json
-      target: /zeppelin/interpreter/python/interpreter-setting.json
-    - type: bind
-      source: ./zeppelin/shared/zeppelin/interpreter/r/interpreter-setting.json
-      target: /zeppelin/interpreter/r/interpreter-setting.json
-    - type: bind
-      source: ./zeppelin/shared/zeppelin/interpreter/spark/interpreter-setting.json
-      target: /zeppelin/interpreter/spark/interpreter-setting.json
-    - type: bind
-      source: ./zeppelin/shared/zeppelin/interpreter/sparql/interpreter-setting.json
-      target: /zeppelin/interpreter/sparql/interpreter-setting.json
 
     environment:
     - IRIS_MASTER_HOST=riskengine # DNS based on the name of the service!
@@ -92,6 +77,7 @@ services:
     - IRIS_MASTER_USERNAME=SuperUser
     - IRIS_MASTER_PASSWORD=sys
     - IRIS_MASTER_NAMESPACE=APPINT
+    - SPARK_MASTER_URL=spark://sparkmaster:7077
 
   sparkmaster:
     image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.0
