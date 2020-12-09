@@ -78,7 +78,7 @@
       "title": "Importing required libraries",
       "text": "%spark\n\n// So we can access IRIS!\nimport com.intersystems.spark._\nimport com.intersystems.jdbc.IRISDriver\n\nimport spark.implicits._\n\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\n\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\n\n// Transformers to prepare the features for training\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\n\n// Algorithms (Estimators) to train our models (Transformers)\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\n\n// To Evaluate the model against the test data\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\n\n// Models\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationModel\nimport org.apache.spark.ml.classification.GBTClassificationModel\n\n// Pipepeline to connect transformers and estimators \nimport org.apache.spark.ml.Pipeline\n\n// So we can export our final model to PMML\nimport com.intersystems.spark.ml._\nimport org.jpmml.sparkml._\nimport java.io.File\n",
       "user": "anonymous",
-      "dateUpdated": "2020-12-08 22:56:34.662",
+      "dateUpdated": "2020-12-09 21:50:04.583",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -111,15 +111,15 @@
       "jobName": "paragraph_1596830459613_843705750",
       "id": "20180918-013102_236592080",
       "dateCreated": "2020-08-07 20:00:59.613",
-      "dateStarted": "2020-12-08 22:56:34.690",
-      "dateFinished": "2020-12-08 22:57:03.264",
+      "dateStarted": "2020-12-09 21:50:04.626",
+      "dateFinished": "2020-12-09 21:50:35.732",
       "status": "FINISHED"
     },
     {
       "title": "Reading the data from IRIS",
-      "text": "%spark\n\nimport com.intersystems.jdbc._\nimport java.sql.SQLException\nsqlContext.clearCache()\n//    val df \u003d spark.read.format(\"iris\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\nval df \u003d spark.read.format(\"iris\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//df.cache()\n//df.count()\n",
+      "text": "%spark\n\nsqlContext.clearCache()\n//    val df \u003d spark.read.format(\"iris\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"iris\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\nval df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\ndf.cache()\ndf.count()\n",
       "user": "anonymous",
-      "dateUpdated": "2020-12-08 22:57:24.693",
+      "dateUpdated": "2020-12-09 21:50:45.642",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -140,11 +140,11 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "msg": [
           {
             "type": "TEXT",
-            "data": "java.sql.SQLException: Connection not open\n  at com.intersystems.jdbc.IRISConnection.prepareStatement(IRISConnection.java:1336)\n  at com.intersystems.jdbc.IRISConnection.prepareStatement(IRISConnection.java:230)\n  at com.intersystems.spark.core.Master$$anonfun$evaluate$1.apply(Master.scala:180)\n  at com.intersystems.spark.core.Master$$anonfun$evaluate$1.apply(Master.scala:180)\n  at resource.DefaultManagedResource.open(AbstractManagedResource.scala:110)\n  at resource.AbstractManagedResource.acquireFor(AbstractManagedResource.scala:87)\n  at resource.ManagedResourceOperations$$anon$2.acquireFor(ManagedResourceOperations.scala:49)\n  at resource.ManagedResourceOperations$class.apply(ManagedResourceOperations.scala:26)\n  at resource.ManagedResourceOperations$$anon$2.apply(ManagedResourceOperations.scala:47)\n  at resource.ManagedResourceOperations$class.acquireAndGet(ManagedResourceOperations.scala:25)\n  at resource.ManagedResourceOperations$$anon$2.acquireAndGet(ManagedResourceOperations.scala:47)\n  at com.intersystems.spark.core.Utilities$class.autoclose(Utilities.scala:156)\n  at com.intersystems.spark.core.Master.evaluate(Master.scala:179)\n  at com.intersystems.spark.core.Master.schema(Master.scala:104)\n  at com.intersystems.spark.core.Relation.schema$lzycompute(Relation.scala:66)\n  at com.intersystems.spark.core.Relation.schema(Relation.scala:64)\n  at org.apache.spark.sql.execution.datasources.DataSource.resolveRelation(DataSource.scala:403)\n  at org.apache.spark.sql.DataFrameReader.loadV1Source(DataFrameReader.scala:223)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:211)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:167)\n  ... 57 elided\n"
+            "data": "\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [AdmitReason: int, Com_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN: int ... 44 more fields]\n\u001b[1m\u001b[34mres1\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m \u003d 14047\n"
           }
         ]
       },
@@ -153,15 +153,15 @@
       "jobName": "paragraph_1596830459614_-901290357",
       "id": "20180913-200917_773871114",
       "dateCreated": "2020-08-07 20:00:59.614",
-      "dateStarted": "2020-12-08 22:57:24.715",
-      "dateFinished": "2020-12-08 22:57:25.656",
-      "status": "ERROR"
+      "dateStarted": "2020-12-09 21:50:45.667",
+      "dateFinished": "2020-12-09 21:51:06.531",
+      "status": "FINISHED"
     },
     {
       "title": "Did we have any null fields?",
       "text": "%spark\n\ndf.na.drop(\"any\").count()",
       "user": "anonymous",
-      "dateUpdated": "2020-08-19 14:37:30.408",
+      "dateUpdated": "2020-12-09 21:18:27.050",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -181,11 +181,11 @@
         "forms": {}
       },
       "results": {
-        "code": "SUCCESS",
+        "code": "ERROR",
         "msg": [
           {
             "type": "TEXT",
-            "data": "\u001b[1m\u001b[34mres2\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m \u003d 14047\n"
+            "data": "java.lang.RuntimeException: org.apache.thrift.transport.TTransportException: java.net.SocketException: Socket closed\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:132)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:225)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:477)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:74)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:172)\n\tat org.apache.zeppelin.scheduler.AbstractScheduler.runJob(AbstractScheduler.java:130)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:159)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\nCaused by: org.apache.thrift.transport.TTransportException: java.net.SocketException: Socket closed\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:455)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:354)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:243)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:77)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:227)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:211)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:230)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:226)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:128)\n\t... 13 more\nCaused by: java.net.SocketException: Socket closed\n\tat java.net.SocketInputStream.socketRead0(Native Method)\n\tat java.net.SocketInputStream.socketRead(SocketInputStream.java:116)\n\tat java.net.SocketInputStream.read(SocketInputStream.java:171)\n\tat java.net.SocketInputStream.read(SocketInputStream.java:141)\n\tat java.io.BufferedInputStream.fill(BufferedInputStream.java:246)\n\tat java.io.BufferedInputStream.read1(BufferedInputStream.java:286)\n\tat java.io.BufferedInputStream.read(BufferedInputStream.java:345)\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:125)\n\t... 23 more\n"
           }
         ]
       },
@@ -194,9 +194,9 @@
       "jobName": "paragraph_1596830459614_1756988924",
       "id": "20180914-175124_1973597318",
       "dateCreated": "2020-08-07 20:00:59.614",
-      "dateStarted": "2020-08-19 14:37:30.448",
-      "dateFinished": "2020-08-19 14:37:44.076",
-      "status": "FINISHED"
+      "dateStarted": "2020-12-09 21:18:27.089",
+      "dateFinished": "2020-12-09 21:49:59.846",
+      "status": "ABORT"
     },
     {
       "title": " ",
