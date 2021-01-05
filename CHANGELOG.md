@@ -1,3 +1,8 @@
+## 2.4.2 (January 05, 2021)
+  - added integratedml
+  - updated notebook
+  - updated Zeppelin
+
 ## 2.4.1 (October 07, 2020)
   - updated to IRIS 2020.3, Zeppelin 0.9.0, and Spark 2.4.4
 
