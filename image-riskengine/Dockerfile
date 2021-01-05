@@ -1,6 +1,6 @@
 FROM intersystemsdc/irisdemo-base-synthea:readmission-demo-5000 AS synthea-patients
 
-FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.8.1
+FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.9.0
 
 LABEL maintainer="Amir Samary <amir.samary@intersystems.com>"
 
