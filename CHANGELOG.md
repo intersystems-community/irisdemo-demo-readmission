@@ -1,3 +1,6 @@
+## 2.4.3 (January 06, 2021)
+  - updated riskengine Dockerfile
+
 ## 2.4.2 (January 05, 2021)
   - added integratedml
   - updated notebook
