@@ -78,7 +78,7 @@
       "title": "Importing required libraries",
       "text": "%spark\n\n// So we can access IRIS!\nimport com.intersystems.spark._\nimport com.intersystems.jdbc.IRISDriver\n\nimport spark.implicits._\n\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\n\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\n\n// Transformers to prepare the features for training\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\n\n// Algorithms (Estimators) to train our models (Transformers)\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\n\n// To Evaluate the model against the test data\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\n\n// Models\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationModel\nimport org.apache.spark.ml.classification.GBTClassificationModel\n\n// Pipepeline to connect transformers and estimators \nimport org.apache.spark.ml.Pipeline\n\n// So we can export our final model to PMML\nimport com.intersystems.spark.ml._\nimport org.jpmml.sparkml._\nimport java.io.File\n",
       "user": "anonymous",
-      "dateUpdated": "2020-12-10 16:17:33.228",
+      "dateUpdated": "2021-01-08 17:23:13.335",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -111,15 +111,15 @@
       "jobName": "paragraph_1596830459613_843705750",
       "id": "20180918-013102_236592080",
       "dateCreated": "2020-08-07 20:00:59.613",
-      "dateStarted": "2020-12-10 16:17:33.271",
-      "dateFinished": "2020-12-10 16:17:35.529",
+      "dateStarted": "2021-01-08 17:23:13.721",
+      "dateFinished": "2021-01-08 17:23:49.445",
       "status": "FINISHED"
     },
     {
       "title": "Reading the data from IRIS",
-      "text": "%spark\n\nsqlContext.clearCache()\n//val df \u003d spark.read.format(\"iris2\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\nval df \u003d spark.read.format(\"iris2\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\ndf.cache()\ndf.count()\n",
+      "text": "%spark\n\nsqlContext.clearCache()\n//val df \u003d spark.read.format(\"iris2\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"iris2\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\nval df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\ndf.cache()\ndf.count()\n",
       "user": "anonymous",
-      "dateUpdated": "2020-12-10 16:40:07.177",
+      "dateUpdated": "2021-01-08 17:23:19.608",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -140,11 +140,11 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "msg": [
           {
             "type": "TEXT",
-            "data": "java.sql.SQLException: Connection not open\n  at com.intersystems.jdbc.IRISConnection.prepareStatement(IRISConnection.java:1336)\n  at com.intersystems.jdbc.IRISConnection.prepareStatement(IRISConnection.java:230)\n  at com.intersystems.spark.core.Master$$anonfun$evaluate$1.apply(Master.scala:180)\n  at com.intersystems.spark.core.Master$$anonfun$evaluate$1.apply(Master.scala:180)\n  at resource.DefaultManagedResource.open(AbstractManagedResource.scala:110)\n  at resource.AbstractManagedResource.acquireFor(AbstractManagedResource.scala:87)\n  at resource.ManagedResourceOperations$$anon$2.acquireFor(ManagedResourceOperations.scala:49)\n  at resource.ManagedResourceOperations$class.apply(ManagedResourceOperations.scala:26)\n  at resource.ManagedResourceOperations$$anon$2.apply(ManagedResourceOperations.scala:47)\n  at resource.ManagedResourceOperations$class.acquireAndGet(ManagedResourceOperations.scala:25)\n  at resource.ManagedResourceOperations$$anon$2.acquireAndGet(ManagedResourceOperations.scala:47)\n  at com.intersystems.spark.core.Utilities$class.autoclose(Utilities.scala:156)\n  at com.intersystems.spark.core.Master.evaluate(Master.scala:179)\n  at com.intersystems.spark.core.Master.schema(Master.scala:104)\n  at com.intersystems.spark.core.DataSourceReader2.\u003cinit\u003e(DataSourceReader2.scala:83)\n  at com.intersystems.spark.core.DataSource2.createReader(DataSource2.scala:51)\n  at com.intersystems.spark.core.DataSource2.createReader(DataSource2.scala:34)\n  at org.apache.spark.sql.execution.datasources.v2.DataSourceV2Relation$SourceHelpers.createReader(DataSourceV2Relation.scala:155)\n  at org.apache.spark.sql.execution.datasources.v2.DataSourceV2Relation$.create(DataSourceV2Relation.scala:172)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:204)\n  at org.apache.spark.sql.DataFrameReader.load(DataFrameReader.scala:167)\n  ... 69 elided\n"
+            "data": "\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m \u003d [AdmitReason: int, Com_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN: int ... 44 more fields]\n\u001b[1m\u001b[34mres1\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m \u003d 14047\n"
           }
         ]
       },
@@ -153,15 +153,15 @@
       "jobName": "paragraph_1596830459614_-901290357",
       "id": "20180913-200917_773871114",
       "dateCreated": "2020-08-07 20:00:59.614",
-      "dateStarted": "2020-12-10 16:39:52.884",
-      "dateFinished": "2020-12-10 16:39:53.913",
-      "status": "ERROR"
+      "dateStarted": "2021-01-08 17:23:20.597",
+      "dateFinished": "2021-01-08 17:24:21.414",
+      "status": "FINISHED"
     },
     {
       "title": "Did we have any null fields?",
       "text": "%spark\n\ndf.na.drop(\"any\").count()",
       "user": "anonymous",
-      "dateUpdated": "2020-12-09 21:18:27.050",
+      "dateUpdated": "2021-01-08 17:23:26.418",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -181,11 +181,11 @@
         "forms": {}
       },
       "results": {
-        "code": "ERROR",
+        "code": "SUCCESS",
         "msg": [
           {
             "type": "TEXT",
-            "data": "java.lang.RuntimeException: org.apache.thrift.transport.TTransportException: java.net.SocketException: Socket closed\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:132)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter.interpret(RemoteInterpreter.java:225)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:477)\n\tat org.apache.zeppelin.notebook.Paragraph.jobRun(Paragraph.java:74)\n\tat org.apache.zeppelin.scheduler.Job.run(Job.java:172)\n\tat org.apache.zeppelin.scheduler.AbstractScheduler.runJob(AbstractScheduler.java:130)\n\tat org.apache.zeppelin.scheduler.RemoteScheduler$JobRunner.run(RemoteScheduler.java:159)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:266)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.access$201(ScheduledThreadPoolExecutor.java:180)\n\tat java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:293)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)\n\tat java.lang.Thread.run(Thread.java:748)\nCaused by: org.apache.thrift.transport.TTransportException: java.net.SocketException: Socket closed\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:127)\n\tat org.apache.thrift.transport.TTransport.readAll(TTransport.java:86)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readAll(TBinaryProtocol.java:455)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readI32(TBinaryProtocol.java:354)\n\tat org.apache.thrift.protocol.TBinaryProtocol.readMessageBegin(TBinaryProtocol.java:243)\n\tat org.apache.thrift.TServiceClient.receiveBase(TServiceClient.java:77)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.recv_interpret(RemoteInterpreterService.java:227)\n\tat org.apache.zeppelin.interpreter.thrift.RemoteInterpreterService$Client.interpret(RemoteInterpreterService.java:211)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:230)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreter$4.call(RemoteInterpreter.java:226)\n\tat org.apache.zeppelin.interpreter.remote.RemoteInterpreterProcess.callRemoteFunction(RemoteInterpreterProcess.java:128)\n\t... 13 more\nCaused by: java.net.SocketException: Socket closed\n\tat java.net.SocketInputStream.socketRead0(Native Method)\n\tat java.net.SocketInputStream.socketRead(SocketInputStream.java:116)\n\tat java.net.SocketInputStream.read(SocketInputStream.java:171)\n\tat java.net.SocketInputStream.read(SocketInputStream.java:141)\n\tat java.io.BufferedInputStream.fill(BufferedInputStream.java:246)\n\tat java.io.BufferedInputStream.read1(BufferedInputStream.java:286)\n\tat java.io.BufferedInputStream.read(BufferedInputStream.java:345)\n\tat org.apache.thrift.transport.TIOStreamTransport.read(TIOStreamTransport.java:125)\n\t... 23 more\n"
+            "data": "\u001b[1m\u001b[34mres2\u001b[0m: \u001b[1m\u001b[32mLong\u001b[0m \u003d 14047\n"
           }
         ]
       },
@@ -194,9 +194,9 @@
       "jobName": "paragraph_1596830459614_1756988924",
       "id": "20180914-175124_1973597318",
       "dateCreated": "2020-08-07 20:00:59.614",
-      "dateStarted": "2020-12-09 21:18:27.089",
-      "dateFinished": "2020-12-09 21:49:59.846",
-      "status": "ABORT"
+      "dateStarted": "2021-01-08 17:23:49.543",
+      "dateFinished": "2021-01-08 17:24:23.551",
+      "status": "FINISHED"
     },
     {
       "title": " ",
@@ -436,7 +436,7 @@
       "title": "Creating the Training Function",
       "text": "%spark\n\n// Arguably, we might be cross-contaminating our training and testing pools if we simply sample encounters, since some of our data\n// involves patient histories. (Indeed, on the real data, sampling encounters artificially boosted AUC by a small but noticeable amount.)\n// The sampleby string allows us to sample by patient instead of by encounter, eliminating this possibility.\n\ndef runPipelineOnData(fulldata: DataFrame, pipeline: Pipeline, PMMLClassNamePrefix: String, sampleby: String \u003d \"\") : PipelineModel \u003d {\n    \n    val splits \u003d sampleby\u003d\u003d\"\" match {\n        case true \u003d\u003e fulldata.randomSplit(Array(0.7, 0.3), 0)\n        case false \u003d\u003e fulldata.select(sampleby).distinct().randomSplit(Array(0.7, 0.3), 0)\n    }\n    val trainingData \u003d sampleby\u003d\u003d\"\" match {\n        case true \u003d\u003e splits(0)\n        case false \u003d\u003e fulldata.join(splits(0),usingColumn\u003dsampleby).drop(sampleby)\n    }\n    val testingData \u003d sampleby\u003d\u003d\"\" match {\n        case true \u003d\u003e splits(1)\n        case false \u003d\u003e fulldata.join(splits(1),usingColumn\u003dsampleby).drop(sampleby)\n    }\n\n    val pipelineModel \u003d pipeline.fit(trainingData)\n    val evaluator \u003d new BinaryClassificationEvaluator().setLabelCol(\"MxWillReAdmit\")\n    \n    val trainpred \u003d pipelineModel.transform(trainingData)\n\n    val train_auc \u003d evaluator.evaluate(trainpred)\n\n    val predictions \u003d pipelineModel.transform(testingData)\n    predictions.printSchema()\n\n    val test_auc \u003d evaluator.evaluate(predictions)\n\n    println(\"\\t\\tTrain AUC \u003d \" + (train_auc))\n    println(\"\\t\\tTest AUC \u003d \" + (test_auc))\n    \n    val fileName\u003d\"/common_shared/pmml/IRISDemo.ImportedModel.\"+PMMLClassNamePrefix+\".pmml\"\n    \n    println(\"\\t\\tExporting the model to PMML file \" + fileName)\n    \n    val file \u003d new File(fileName)\n    \n    val pmmlBuilder \u003d new org.jpmml.sparkml.PMMLBuilder(fulldata.schema, pipelineModel).buildFile(file)\n    \n    return pipelineModel\n\n}",
       "user": "anonymous",
-      "dateUpdated": "2020-08-21 18:37:54.261",
+      "dateUpdated": "2021-01-08 17:28:24.856",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -469,8 +469,8 @@
       "jobName": "paragraph_1596830459618_-1557648753",
       "id": "20180918-204224_1942830640",
       "dateCreated": "2020-08-07 20:00:59.618",
-      "dateStarted": "2020-08-21 18:37:54.287",
-      "dateFinished": "2020-08-21 18:37:56.190",
+      "dateStarted": "2021-01-08 17:28:24.884",
+      "dateFinished": "2021-01-08 17:28:27.273",
       "status": "FINISHED"
     },
     {
@@ -777,7 +777,7 @@
       "title": "Creating the basic infrastructure to be used when training our models",
       "text": "%spark\n\n// Include as independent variables all non-discarded columns except Patient ID (which we will use to sample) and the dependent variable, whether the\n// encounter was followed by a readmission.\nval collist \u003d df.columns.filter(! _.contains(\"MxPatientID\")).filter(! _.contains(\"MxWillReAdmit\"))\n\nfor (c \u003c- collist) println(c)\n\nval vectorAssembler \u003d new VectorAssembler() \n    .setInputCols(collist)\n    .setOutputCol(\"rawFeatures\")\n\nval vectorIndexer \u003d new VectorIndexer().setInputCol(\"rawFeatures\").setOutputCol(\"features\").setMaxCategories(35)\n\nval pipeintro \u003d new Pipeline().setStages(Array(vectorAssembler, vectorIndexer))\nval pipeIntro \u003d pipeintro.fit(df)",
       "user": "anonymous",
-      "dateUpdated": "2020-08-21 18:38:00.771",
+      "dateUpdated": "2021-01-08 17:28:37.575",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -810,8 +810,8 @@
       "jobName": "paragraph_1596830459620_-213887545",
       "id": "20180929-222442_1424032271",
       "dateCreated": "2020-08-07 20:00:59.620",
-      "dateStarted": "2020-08-21 18:38:00.798",
-      "dateFinished": "2020-08-21 18:38:06.729",
+      "dateStarted": "2021-01-08 17:28:37.604",
+      "dateFinished": "2021-01-08 17:28:44.828",
       "status": "FINISHED"
     },
     {
@@ -937,7 +937,7 @@
       "title": "6.1.1 - Training the Model",
       "text": "%spark\n\n// The MaxBins parameter needs to be at least as large as the number of possible categories for any categorical variable. So, we set it to the same value as the VectorIndexer\u0027s MaxCategories parameter, which we\u0027d set earlier. MexDepth should be large enough to actually capture behavior, but not so large that it overfits the data. It\u0027s a tricky problem, but if you play with the parameters enough you can often get decent results.\nval decisionTreeClassifier \u003d new DecisionTreeClassifier().setLabelCol(\"MxWillReAdmit\").setFeaturesCol(\"features\").setPredictionCol(\"prediction\").setMaxDepth(17).setMaxBins(vectorIndexer.getMaxCategories).setMinInstancesPerNode(5)\n\n// Put together the full pipeline, including the pre-fit prep portion.\nval pipelineDTC \u003d new Pipeline().setStages(Array(pipeIntro, decisionTreeClassifier))\n\n// And now fit the model, sampling training/testing sets by patient ID.\nval pipelineModelDTC \u003d runPipelineOnData(df, pipelineDTC, \"DecisionTreeClassifier\", sampleby\u003d\"MxPatientID\")\n\nval decisionTreeClassificationModel \u003d pipelineModelDTC.stages(1).asInstanceOf[DecisionTreeClassificationModel]\n",
       "user": "anonymous",
-      "dateUpdated": "2020-08-21 18:39:24.672",
+      "dateUpdated": "2021-01-08 17:28:46.924",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -961,7 +961,7 @@
         "msg": [
           {
             "type": "TEXT",
-            "data": "root\n |-- AdmitReason: integer (nullable \u003d true)\n |-- Com_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN: integer (nullable \u003d true)\n |-- Com_CEREBROVASCULAR_DISEASE: integer (nullable \u003d true)\n |-- Com_CHRONIC_PULMONARY_DISEASE: integer (nullable \u003d true)\n |-- Com_DEMENTIA: integer (nullable \u003d true)\n |-- Com_DIABETES_WITHOUT_CHRONIC_COMPLICATION: integer (nullable \u003d true)\n |-- Com_HEMIPLEGIA_OR_PARAPLEGIA: integer (nullable \u003d true)\n |-- Com_MILD_LIVER_DISEASE: integer (nullable \u003d true)\n |-- Com_MYOCARDIAL_INFARCTION: integer (nullable \u003d true)\n |-- Com_PERIPHERY_VASCULAR_DISEASE: integer (nullable \u003d true)\n |-- Com_RENAL_DISEASE: integer (nullable \u003d true)\n |-- CurCom_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN: integer (nullable \u003d true)\n |-- CurCom_CEREBROVASCULAR_DISEASE: integer (nullable \u003d true)\n |-- CurCom_CHRONIC_PULMONARY_DISEASE: integer (nullable \u003d true)\n |-- CurCom_DEMENTIA: integer (nullable \u003d true)\n |-- CurCom_MILD_LIVER_DISEASE: integer (nullable \u003d true)\n |-- CurCom_MYOCARDIAL_INFARCTION: integer (nullable \u003d true)\n |-- CurCom_PERIPHERY_VASCULAR_DISEASE: integer (nullable \u003d true)\n |-- CurCom_RENAL_DISEASE: integer (nullable \u003d true)\n |-- DxAgeGroup: integer (nullable \u003d true)\n |-- DxDischargeLocation: integer (nullable \u003d true)\n |-- DxEncounterType: integer (nullable \u003d true)\n |-- DxGenderViaPatient: integer (nullable \u003d true)\n |-- LOS: integer (nullable \u003d true)\n |-- MxAgeDischarged: integer (nullable \u003d true)\n |-- MxAlcohol: double (nullable \u003d true)\n |-- MxDrugs: double (nullable \u003d true)\n |-- MxEncounterEndYear: integer (nullable \u003d true)\n |-- MxEncounterStartYear: integer (nullable \u003d true)\n |-- MxEndDateDayOfMonth: integer (nullable \u003d true)\n |-- MxEndDateDayOfWeek: integer (nullable \u003d true)\n |-- MxEndDateMonth: integer (nullable \u003d true)\n |-- MxExSmoker: double (nullable \u003d true)\n |-- MxNeverSmoked: double (nullable \u003d true)\n |-- MxNumAdmitsOneMonth: double (nullable \u003d true)\n |-- MxNumAdmitsSixMonth: double (nullable \u003d true)\n |-- MxNumAdmitsThreeMonth: double (nullable \u003d true)\n |-- MxNumAdmitsTwelveMonth: double (nullable \u003d true)\n |-- MxNumDiagOneMonth: double (nullable \u003d true)\n |-- MxNumDiagTwelveMonth: double (nullable \u003d true)\n |-- MxSmoker: double (nullable \u003d true)\n |-- MxStartDateDayOfMonth: integer (nullable \u003d true)\n |-- MxStartDateDayOfWeek: integer (nullable \u003d true)\n |-- MxStartDateMonth: integer (nullable \u003d true)\n |-- MxWillReAdmit: double (nullable \u003d true)\n |-- rawFeatures: vector (nullable \u003d true)\n |-- features: vector (nullable \u003d true)\n |-- rawPrediction: vector (nullable \u003d true)\n |-- probability: vector (nullable \u003d true)\n |-- prediction: double (nullable \u003d false)\n\n\t\tTrain AUC \u003d 0.8607092348568278\n\t\tTest AUC \u003d 0.7052093625335226\n\t\tExporting the model to PMML file /common_shared/pmml/IRISDemo.ImportedModel.DecisionTreeClassifier.pmml\n\u001b[1m\u001b[34mdecisionTreeClassifier\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.classification.DecisionTreeClassifier\u001b[0m \u003d dtc_b35a8aa27fba\n\u001b[1m\u001b[34mpipelineDTC\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.Pipeline\u001b[0m \u003d pipeline_374b25f8bef7\n\u001b[1m\u001b[34mpipelineModelDTC\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.PipelineModel\u001b[0m \u003d pipeline_374b25f8bef7\n\u001b[1m\u001b[34mdecisionTreeClassificationModel\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.classification.DecisionTreeClassificationModel\u001b[0m \u003d DecisionTreeClassificationModel (uid\u003ddtc_b35a8aa27fba) of depth 17 with 721 nodes\n"
+            "data": "root\n |-- AdmitReason: integer (nullable \u003d true)\n |-- Com_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN: integer (nullable \u003d true)\n |-- Com_CEREBROVASCULAR_DISEASE: integer (nullable \u003d true)\n |-- Com_CHRONIC_PULMONARY_DISEASE: integer (nullable \u003d true)\n |-- Com_DEMENTIA: integer (nullable \u003d true)\n |-- Com_DIABETES_WITHOUT_CHRONIC_COMPLICATION: integer (nullable \u003d true)\n |-- Com_HEMIPLEGIA_OR_PARAPLEGIA: integer (nullable \u003d true)\n |-- Com_MILD_LIVER_DISEASE: integer (nullable \u003d true)\n |-- Com_MYOCARDIAL_INFARCTION: integer (nullable \u003d true)\n |-- Com_PERIPHERY_VASCULAR_DISEASE: integer (nullable \u003d true)\n |-- Com_RENAL_DISEASE: integer (nullable \u003d true)\n |-- CurCom_ANY_MALIGNANCY_INCLUDING_LYMPHOMA_AND_LEUKEMIA_EXCEPT_MALIGNANT_NEOPLASM_OF_SKIN: integer (nullable \u003d true)\n |-- CurCom_CEREBROVASCULAR_DISEASE: integer (nullable \u003d true)\n |-- CurCom_CHRONIC_PULMONARY_DISEASE: integer (nullable \u003d true)\n |-- CurCom_DEMENTIA: integer (nullable \u003d true)\n |-- CurCom_MILD_LIVER_DISEASE: integer (nullable \u003d true)\n |-- CurCom_MYOCARDIAL_INFARCTION: integer (nullable \u003d true)\n |-- CurCom_PERIPHERY_VASCULAR_DISEASE: integer (nullable \u003d true)\n |-- CurCom_RENAL_DISEASE: integer (nullable \u003d true)\n |-- DxAgeGroup: integer (nullable \u003d true)\n |-- DxDischargeLocation: integer (nullable \u003d true)\n |-- DxEncounterType: integer (nullable \u003d true)\n |-- DxGenderViaPatient: integer (nullable \u003d true)\n |-- LOS: integer (nullable \u003d true)\n |-- MxAgeDischarged: integer (nullable \u003d true)\n |-- MxAlcohol: double (nullable \u003d true)\n |-- MxDrugs: double (nullable \u003d true)\n |-- MxEncounterEndYear: integer (nullable \u003d true)\n |-- MxEncounterStartYear: integer (nullable \u003d true)\n |-- MxEndDateDayOfMonth: integer (nullable \u003d true)\n |-- MxEndDateDayOfWeek: integer (nullable \u003d true)\n |-- MxEndDateMonth: integer (nullable \u003d true)\n |-- MxExSmoker: double (nullable \u003d true)\n |-- MxNeverSmoked: double (nullable \u003d true)\n |-- MxNumAdmitsOneMonth: double (nullable \u003d true)\n |-- MxNumAdmitsSixMonth: double (nullable \u003d true)\n |-- MxNumAdmitsThreeMonth: double (nullable \u003d true)\n |-- MxNumAdmitsTwelveMonth: double (nullable \u003d true)\n |-- MxNumDiagOneMonth: double (nullable \u003d true)\n |-- MxNumDiagTwelveMonth: double (nullable \u003d true)\n |-- MxSmoker: double (nullable \u003d true)\n |-- MxStartDateDayOfMonth: integer (nullable \u003d true)\n |-- MxStartDateDayOfWeek: integer (nullable \u003d true)\n |-- MxStartDateMonth: integer (nullable \u003d true)\n |-- MxWillReAdmit: double (nullable \u003d true)\n |-- rawFeatures: vector (nullable \u003d true)\n |-- features: vector (nullable \u003d true)\n |-- rawPrediction: vector (nullable \u003d true)\n |-- probability: vector (nullable \u003d true)\n |-- prediction: double (nullable \u003d false)\n\n\t\tTrain AUC \u003d 0.8607092348568278\n\t\tTest AUC \u003d 0.7061518932330938\n\t\tExporting the model to PMML file /common_shared/pmml/IRISDemo.ImportedModel.DecisionTreeClassifier.pmml\n\u001b[1m\u001b[34mdecisionTreeClassifier\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.classification.DecisionTreeClassifier\u001b[0m \u003d dtc_c4d4211cff14\n\u001b[1m\u001b[34mpipelineDTC\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.Pipeline\u001b[0m \u003d pipeline_95eebd31b641\n\u001b[1m\u001b[34mpipelineModelDTC\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.PipelineModel\u001b[0m \u003d pipeline_95eebd31b641\n\u001b[1m\u001b[34mdecisionTreeClassificationModel\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.ml.classification.DecisionTreeClassificationModel\u001b[0m \u003d DecisionTreeClassificationModel (uid\u003ddtc_c4d4211cff14) of depth 17 with 721 nodes\n"
           }
         ]
       },
@@ -970,8 +970,8 @@
       "jobName": "paragraph_1596830459621_-1609141929",
       "id": "20180918-041035_1716649505",
       "dateCreated": "2020-08-07 20:00:59.621",
-      "dateStarted": "2020-08-21 18:39:24.704",
-      "dateFinished": "2020-08-21 18:39:47.248",
+      "dateStarted": "2021-01-08 17:28:46.951",
+      "dateFinished": "2021-01-08 17:29:24.721",
       "status": "FINISHED"
     },
     {

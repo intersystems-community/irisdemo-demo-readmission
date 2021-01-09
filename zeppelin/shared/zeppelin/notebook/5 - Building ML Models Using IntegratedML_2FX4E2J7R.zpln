@@ -40,7 +40,7 @@
       "title": "Reading the data in IRIS",
       "text": "%jdbc\n\ncall PublishedABT.MLEncounterGetFeatures()",
       "user": "anonymous",
-      "dateUpdated": "2021-01-05 21:33:22.753",
+      "dateUpdated": "2021-01-08 17:23:56.676",
       "config": {
         "editorSetting": {
           "language": "text",
@@ -148,8 +148,8 @@
       "jobName": "paragraph_1609854148030_1276105879",
       "id": "20180913-200917_773871114",
       "dateCreated": "2021-01-05 13:42:28.030",
-      "dateStarted": "2021-01-05 21:33:28.259",
-      "dateFinished": "2021-01-05 21:33:50.359",
+      "dateStarted": "2021-01-08 17:23:56.742",
+      "dateFinished": "2021-01-08 17:24:03.171",
       "status": "FINISHED"
     },
     {
