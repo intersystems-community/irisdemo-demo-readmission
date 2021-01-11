@@ -1,3 +1,7 @@
+## 2.4.4 (January 11, 2021)
+  - updated all images to IntegratedML version
+  - updated all IRIS versions to match that used in riskengine
+
 ## 2.4.3 (January 06, 2021)
   - updated riskengine Dockerfile
 
