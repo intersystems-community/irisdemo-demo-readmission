@@ -30,6 +30,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459611_1257664198",
       "id": "20180918-171747_1379008521",
@@ -68,6 +69,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459613_930133833",
       "id": "20180913-200826_991580137",
@@ -78,7 +80,7 @@
       "title": "Importing required libraries",
       "text": "%spark\n\n// So we can access IRIS!\nimport com.intersystems.spark._\nimport com.intersystems.jdbc.IRISDriver\n\nimport spark.implicits._\n\nimport org.apache.spark.storage.StorageLevel\nimport org.apache.spark.sql.DataFrame\n\nimport org.apache.spark.sql.functions._\nimport org.apache.spark.ml.linalg._\n\n// Transformers to prepare the features for training\nimport org.apache.spark.ml.feature.VectorAssembler\nimport org.apache.spark.ml.feature.VectorIndexer\n\n// Algorithms (Estimators) to train our models (Transformers)\nimport org.apache.spark.ml.classification.RandomForestClassifier\nimport org.apache.spark.ml.classification.DecisionTreeClassifier\nimport org.apache.spark.ml.classification.GBTClassifier\n\n// To Evaluate the model against the test data\nimport org.apache.spark.ml.evaluation.BinaryClassificationEvaluator\n\n// Models\nimport org.apache.spark.ml.PipelineModel\nimport org.apache.spark.ml.classification.RandomForestClassificationModel\nimport org.apache.spark.ml.classification.DecisionTreeClassificationModel\nimport org.apache.spark.ml.classification.GBTClassificationModel\n\n// Pipepeline to connect transformers and estimators \nimport org.apache.spark.ml.Pipeline\n\n// So we can export our final model to PMML\nimport com.intersystems.spark.ml._\nimport org.jpmml.sparkml._\nimport java.io.File\n",
       "user": "anonymous",
-      "dateUpdated": "2021-01-08 17:23:13.335",
+      "dateUpdated": "2021-01-11 17:12:08.777",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -107,19 +109,20 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459613_843705750",
       "id": "20180918-013102_236592080",
       "dateCreated": "2020-08-07 20:00:59.613",
-      "dateStarted": "2021-01-08 17:23:13.721",
-      "dateFinished": "2021-01-08 17:23:49.445",
+      "dateStarted": "2021-01-11 17:12:08.831",
+      "dateFinished": "2021-01-11 17:12:25.636",
       "status": "FINISHED"
     },
     {
       "title": "Reading the data from IRIS",
       "text": "%spark\n\nsqlContext.clearCache()\n//val df \u003d spark.read.format(\"iris2\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\n//val df \u003d spark.read.format(\"iris2\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"query\",\"select * from (PublishedABT.MLEncounterGetFeatures())\").load()\nval df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://riskengine:1972/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\n//val df \u003d spark.read.format(\"jdbc\").option(\"url\", \"jdbc:IRIS://irisdemo-demo-readmission_riskengine_1:51773/APPINT\").option(\"user\",\"SuperUser\").option(\"password\",\"sys\").option(\"dbtable\",\"PublishedABT.MLEncounterGetFeatures()\").load()\ndf.cache()\ndf.count()\n",
       "user": "anonymous",
-      "dateUpdated": "2021-01-08 17:23:19.608",
+      "dateUpdated": "2021-01-11 17:12:16.896",
       "config": {
         "editorSetting": {
           "language": "scala",
@@ -149,12 +152,26 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://df18ef66bc39:4040/jobs/job?id\u003d0"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459614_-901290357",
       "id": "20180913-200917_773871114",
       "dateCreated": "2020-08-07 20:00:59.614",
-      "dateStarted": "2021-01-08 17:23:20.597",
-      "dateFinished": "2021-01-08 17:24:21.414",
+      "dateStarted": "2021-01-11 17:12:16.968",
+      "dateFinished": "2021-01-11 17:12:38.813",
       "status": "FINISHED"
     },
     {
@@ -190,6 +207,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459614_1756988924",
       "id": "20180914-175124_1973597318",
@@ -230,6 +248,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459614_1866753828",
       "id": "20180913-200944_722776012",
@@ -347,6 +366,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459614_-1641823422",
       "id": "20180917-214847_451933357",
@@ -388,6 +408,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459617_-2102789325",
       "id": "20180917-234026_719483720",
@@ -426,6 +447,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459617_1883734974",
       "id": "20180918-172036_1798997875",
@@ -465,6 +487,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459618_-1557648753",
       "id": "20180918-204224_1942830640",
@@ -503,6 +526,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459618_-1090798968",
       "id": "20180918-172147_839423680",
@@ -540,6 +564,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459618_-1100658102",
       "id": "20180918-034847_1303622092",
@@ -578,6 +603,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459619_628011895",
       "id": "20190318-150503_1841446169",
@@ -614,6 +640,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459619_-1990280358",
       "id": "20180918-172407_2140342279",
@@ -652,6 +679,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459619_-1579855448",
       "id": "20180929-222517_176232123",
@@ -690,6 +718,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459619_1837533475",
       "id": "20180929-222723_1895839244",
@@ -727,6 +756,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459619_-299553097",
       "id": "20180929-223757_1630009029",
@@ -767,6 +797,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459620_-1546384062",
       "id": "20190417-125525_1482958535",
@@ -806,6 +837,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459620_-213887545",
       "id": "20180929-222442_1424032271",
@@ -845,6 +877,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459620_651173945",
       "id": "20181009-155854_1101550713",
@@ -891,6 +924,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459621_-2122800769",
       "id": "20180929-224804_1883794398",
@@ -927,6 +961,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459621_565871699",
       "id": "20180918-151452_701599867",
@@ -966,6 +1001,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459621_-1609141929",
       "id": "20180918-041035_1716649505",
@@ -1007,6 +1043,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459622_-1487144486",
       "id": "20180930-144333_333084227",
@@ -1048,6 +1085,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459623_1122398696",
       "id": "20190417-202522_1220516717",
@@ -1087,6 +1125,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459623_1914257495",
       "id": "20180918-171233_1149874704",
@@ -1126,6 +1165,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459623_-228222066",
       "id": "20180918-030614_825977513",
@@ -1171,6 +1211,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459624_631096115",
       "id": "20180930-144928_212907788",
@@ -1211,6 +1252,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459625_726467975",
       "id": "20190417-203333_1638980127",
@@ -1247,6 +1289,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459626_-2028939559",
       "id": "20190418-171945_110154800",
@@ -1284,6 +1327,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459626_-1489703119",
       "id": "20190318-194839_2011656131",
@@ -1325,6 +1369,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459626_1259138844",
       "id": "20190418-172219_270231930",
@@ -1361,6 +1406,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459626_193252088",
       "id": "20190604-142929_1283387355",
@@ -1429,6 +1475,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459627_113218715",
       "id": "20190604-155054_133356713",
@@ -1465,6 +1512,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459627_-366101716",
       "id": "20190604-160017_893182109",
@@ -1533,6 +1581,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459627_1743445731",
       "id": "20190610-151450_2008529671",
@@ -1569,6 +1618,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459627_-2098849335",
       "id": "20190610-155824_573907998",
@@ -1607,6 +1657,7 @@
         ]
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459628_-177950578",
       "id": "20190604-194620_213030901",
@@ -1632,6 +1683,7 @@
         "forms": {}
       },
       "apps": [],
+      "runtimeInfos": {},
       "progressUpdateIntervalMs": 500,
       "jobName": "paragraph_1596830459628_-1068592361",
       "id": "20200203-184147_590527524",

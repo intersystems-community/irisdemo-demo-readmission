@@ -48,7 +48,7 @@ services:
     - "9098:4200" # Where Nodejs Will be listening
 
   zeppelin:
-    image: intersystemsdc/irisdemo-base-zeppelin:version-1.4.2
+    image: intersystemsdc/irisdemo-base-zeppelin:version-1.4.4
     init: true
     depends_on:
     - hisui
@@ -80,7 +80,7 @@ services:
     - SPARK_MASTER_URL=spark://sparkmaster:7077
 
   sparkmaster:
-    image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.1
+    image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.2
     hostname: sparkmaster # Must be always sparkmaster
     init: true
     depends_on:
@@ -107,7 +107,7 @@ services:
   worker1:
     depends_on:
       - sparkmaster
-    image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.1
+    image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.2
     hostname: worker1
     init: true
     environment:
@@ -134,7 +134,7 @@ services:
   # worker2:
   #   depends_on:
   #     - sparkmaster
-  #   image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.1
+  #   image: intersystemsdc/irisdemo-base-spark-iris:version-1.2.2
   #   hostname: worker2
   #   init: true
   #   environment:
