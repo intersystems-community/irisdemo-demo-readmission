@@ -185,7 +185,7 @@
       "progressUpdateIntervalMs": 500
     },
     {
-      "text": "var df \u003d spark.read\n    .format(\"jdbc\")\n    .option(\"driver\",\"com.intersystems.jdbc.IRISDriver\")\n    .option(\"url\",\"jdbc:IRIS://datalake:51773/APP\")\n    .option(\"user\",\"SuperUser\")\n    .option(\"password\",\"sys\")\n    .option(\"numPartitions\", 20)\n    .option(\"lowerBound\",1)\n    .option(\"upperBound\",500000)\n    .option(\"partitionColumn\",\"ID\")\n    .option(\"dbtable\",\"IRISDemo.BC_TRANSACTIONS\")\n    .load()\n    \ndf.explain()\n\ndf.show()\n\n",
+      "text": "var df \u003d spark.read\n    .format(\"jdbc\")\n    .option(\"driver\",\"com.intersystems.jdbc.IRISDriver\")\n    .option(\"url\",\"jdbc:IRIS://datalake:1972/APP\")\n    .option(\"user\",\"SuperUser\")\n    .option(\"password\",\"sys\")\n    .option(\"numPartitions\", 20)\n    .option(\"lowerBound\",1)\n    .option(\"upperBound\",500000)\n    .option(\"partitionColumn\",\"ID\")\n    .option(\"dbtable\",\"IRISDemo.BC_TRANSACTIONS\")\n    .load()\n    \ndf.explain()\n\ndf.show()\n\n",
       "user": "anonymous",
       "dateUpdated": "Nov 6, 2018 7:19:36 PM",
       "config": {

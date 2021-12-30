@@ -129,7 +129,7 @@
     },
     {
       "title": "Reading the data from IRIS",
-      "text": "%python\n\ndsn \u003d \"RRLACESrv\"\ndriver          \u003d \"/usr/lib/libirisodbc35.so\"\nHost            \u003d \"RRLACESrv\"\nNamespace       \u003d \"APPINT\"\nUID             \u003d \"SuperUser\"\nPassword        \u003d \"sys\"\nPort            \u003d 51773\nconnstring \u003d \u0027DRIVER\u003d{{{0}}};SERVER\u003d{1};PORT\u003d{2};DATABASE\u003d{3};UID\u003d{4};PWD\u003d{5}\u0027.format(driver, Host, Port, Namespace, UID, Password)\nprint(connstring)\nconn \u003d pyodbc.connect(connstring)\n\nconn.setdecoding(pyodbc.SQL_CHAR, encoding\u003d\u0027utf8\u0027)\nconn.setdecoding(pyodbc.SQL_WCHAR, encoding\u003d\u0027utf8\u0027)\nconn.setencoding(encoding\u003d\u0027utf8\u0027)\n\ndf \u003d pd.read_sql(\"CALL PublishedABT.MLEncounterDLGetFeatures()\",conn)\nlen(df)\n",
+      "text": "%python\n\ndsn \u003d \"RRLACESrv\"\ndriver          \u003d \"/usr/lib/libirisodbc35.so\"\nHost            \u003d \"RRLACESrv\"\nNamespace       \u003d \"APPINT\"\nUID             \u003d \"SuperUser\"\nPassword        \u003d \"sys\"\nPort            \u003d 1972\nconnstring \u003d \u0027DRIVER\u003d{{{0}}};SERVER\u003d{1};PORT\u003d{2};DATABASE\u003d{3};UID\u003d{4};PWD\u003d{5}\u0027.format(driver, Host, Port, Namespace, UID, Password)\nprint(connstring)\nconn \u003d pyodbc.connect(connstring)\n\nconn.setdecoding(pyodbc.SQL_CHAR, encoding\u003d\u0027utf8\u0027)\nconn.setdecoding(pyodbc.SQL_WCHAR, encoding\u003d\u0027utf8\u0027)\nconn.setencoding(encoding\u003d\u0027utf8\u0027)\n\ndf \u003d pd.read_sql(\"CALL PublishedABT.MLEncounterDLGetFeatures()\",conn)\nlen(df)\n",
       "user": "anonymous",
       "dateUpdated": "Aug 21, 2019 9:24:22 PM",
       "config": {

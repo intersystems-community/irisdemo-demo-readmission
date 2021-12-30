@@ -7,7 +7,7 @@ services:
     hostname: risksrv
     init: true
     ports:
-    - "9093:51773" # 51773 is the superserver default port
+    - "9093:1972" # 1972 is the superserver default port
     - "9092:52773" # 52773 is the webserver/management portal port
     volumes:
     - type: bind
@@ -19,9 +19,8 @@ services:
     hostname: riskengine
     depends_on:
     - risksrv
-    init: true
     ports:
-    - "9095:51773" # 51773 is the superserver default port
+    - "9095:1972" # 1972 is the superserver default port
     - "9094:52773" # 52773 is the webserver/management portal port
     volumes:
     - type: bind
@@ -33,9 +32,8 @@ services:
     hostname: hisdb
     depends_on:
     - riskengine
-    init: true
     ports:
-    - "9097:51773" # 51773 is the superserver default port
+    - "9097:1972" # 1972 is the superserver default port
     - "9096:52773" # 52773 is the webserver/management portal port
 
   hisui:
@@ -67,7 +65,7 @@ services:
 
     environment:
     - IRIS_MASTER_HOST=riskengine # DNS based on the name of the service!
-    - IRIS_MASTER_PORT=51773
+    - IRIS_MASTER_PORT=1972
     - IRIS_MASTER_USERNAME=SuperUser
     - IRIS_MASTER_PASSWORD=sys
     - IRIS_MASTER_NAMESPACE=APPINT
@@ -82,7 +80,7 @@ services:
       SPARK_NODE_TYPE: Master
       SPARK_PUBLIC_DNS: localhost
       IRIS_MASTER_HOST: riskengine
-      IRIS_MASTER_PORT: 51773
+      IRIS_MASTER_PORT: 1972
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
       IRIS_MASTER_NAMESPACE: APPINT
@@ -105,7 +103,7 @@ services:
     init: true
     environment:
       IRIS_MASTER_HOST: riskengine
-      IRIS_MASTER_PORT: 51773
+      IRIS_MASTER_PORT: 1972
       IRIS_MASTER_USERNAME: SuperUser
       IRIS_MASTER_PASSWORD: sys
       IRIS_MASTER_NAMESPACE: APPINT
@@ -132,7 +130,7 @@ services:
   #   init: true
   #   environment:
   #     IRIS_MASTER_HOST: riskengine
-  #     IRIS_MASTER_PORT: 51773
+  #     IRIS_MASTER_PORT: 1972
   #     IRIS_MASTER_USERNAME: SuperUser
   #     IRIS_MASTER_PASSWORD: sys
   #     IRIS_MASTER_NAMESPACE: APPINT
