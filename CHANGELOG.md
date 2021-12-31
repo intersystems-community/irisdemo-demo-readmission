@@ -1,8 +1,7 @@
-## 2.4.0 (December 30, 2021)
+## 2.5.0 (December 30, 2021)
   - Bumping IRIS version to 2021.2.0.619.0
   - Adding reference to the Kafka demo
   - Adding docker_safe_cleanup.sh script
-  - Changing demo architecture screen
   - Adding link to video
   - Adding information about the ML model and the features it uses
 
