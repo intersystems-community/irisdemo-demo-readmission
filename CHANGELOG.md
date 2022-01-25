@@ -1,3 +1,6 @@
+## 2.5.1 (January 25, 2022)
+  - Bumping IRIS version to 2021.2.0.649.0
+
 ## 2.5.0 (December 30, 2021)
   - Bumping IRIS version to 2021.2.0.619.0
   - Adding reference to the Kafka demo
