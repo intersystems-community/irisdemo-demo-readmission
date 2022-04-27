@@ -15,7 +15,7 @@
   "github": "https://github.com/davidjbradshaw/image-map-resizer",
   "main": "js/imageMapResizer.min.js",
   "devDependencies": {
-    "grunt": "0.4.1",
+    "grunt": "1.5.2",
     "grunt-bump": "0.0.x",
     "grunt-contrib-compress": "0.5.x",
     "grunt-contrib-jshint": "~0.6.x",
