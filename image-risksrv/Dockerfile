@@ -1,4 +1,4 @@
-FROM intersystemsdc/irisdemo-base-irishealthint-community:version-1.10.3
+FROM intersystemsdc/irisdemo-base-irishealthint-community:amd64-version-1.11.7
 
 LABEL maintainer="Amir Samary <amir.samary@intersystems.com>"
 

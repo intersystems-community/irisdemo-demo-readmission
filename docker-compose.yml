@@ -6,6 +6,7 @@ services:
     image: intersystemsdc/irisdemo-demo-readmission:risksrv-version-2.5.1
     hostname: risksrv
     init: true
+    command: --check-caps false
     ports:
     - "9093:1972" # 1972 is the superserver default port
     - "9092:52773" # 52773 is the webserver/management portal port
@@ -17,6 +18,7 @@ services:
   riskengine:   # Readmission Risk LACE Service
     image: intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.5.1
     hostname: riskengine
+    command: --check-caps false
     depends_on:
     - risksrv
     ports:
@@ -30,6 +32,7 @@ services:
   hisdb:
     image: intersystemsdc/irisdemo-demo-readmission:hisdb-version-2.5.1
     hostname: hisdb
+    command: --check-caps false
     depends_on:
     - riskengine
     ports:
