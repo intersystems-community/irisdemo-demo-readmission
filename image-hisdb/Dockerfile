@@ -2,7 +2,7 @@ ARG SOURCE_BRANCH
 
 FROM intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.5.2
 
-FROM intersystemsdc/irisdemo-base-irishealthint-community:amd64-version-1.11.7
+FROM intersystemsdc/irisdemo-base-irishealthint-community:amd64-version-1.12.5
 
 LABEL maintainer="Phillip Booth <phillip.booth@intersystems.com>"
 
