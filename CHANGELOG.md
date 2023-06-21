@@ -1,3 +1,6 @@
+## 2.6.0 (June 21, 2023)
+  - bumping to IRIS for Health 2023.2.0
+
 ## 2.5.2 (December 05, 2022)
   - Bumping IRIS version to 2022.1.0.209.0-zpm
 
