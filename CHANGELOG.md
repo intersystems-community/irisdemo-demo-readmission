@@ -1,3 +1,6 @@
+## 2.7.0 (May 23, 2024)
+  - Upgrade to IRIS for Health 2024.1
+
 ## 2.6.0 (June 21, 2023)
   - bumping to IRIS for Health 2023.2.0
 
