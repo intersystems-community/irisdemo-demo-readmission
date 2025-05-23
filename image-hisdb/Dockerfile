@@ -1,6 +1,6 @@
 ARG SOURCE_BRANCH
 
-FROM intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.7.0
+FROM intersystemsdc/irisdemo-demo-readmission:riskengine-version-2.8.0
 
 FROM intersystemsdc/irisdemo-base-irishealthint-community:amd64-version-1.14.0
 

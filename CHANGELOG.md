@@ -1,3 +1,6 @@
+## 2.8.0 (May 23, 2025)
+  - upgrading to IRIS 2025.1 community
+
 ## 2.7.0 (May 23, 2024)
   - Upgrade to IRIS for Health 2024.1
 
